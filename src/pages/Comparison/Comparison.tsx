@@ -102,7 +102,7 @@ const Comparison: React.FC = () => {
 		netCapitalGain,
 		inclusionRate,
 		marginalTaxRate,
-		taxableGain
+		taxableGain,
 	} = useMemo(() => {
 		const baseCost = initialBond + totalBuyingCosts;
 
@@ -115,7 +115,16 @@ const Comparison: React.FC = () => {
 			numberOfPeopleInJointBond
 		);
 		return calculator.calculate();
-	}, [initialBond, totalBuyingCosts, houseValueAfterAppreciationData, sellingYear, smallBusinessMarketValue, exclusionType, inclusionType, numberOfPeopleInJointBond]);
+	}, [
+		initialBond,
+		totalBuyingCosts,
+		houseValueAfterAppreciationData,
+		sellingYear,
+		smallBusinessMarketValue,
+		exclusionType,
+		inclusionType,
+		numberOfPeopleInJointBond,
+	]);
 
 	const totalSellingCosts = useMemo(() => {
 		return sellingCosts + otherSellingCosts + capitalGainsTax;
@@ -163,13 +172,13 @@ const Comparison: React.FC = () => {
 					Housing Cost Comparison
 				</h1>
 
-				<Salary/>
+				<Salary />
+
+				<h2 className="text-xl font-bold text-primary ">
+					House Value and Remaining Principal
+				</h2>
 
 				<form className="flex flex-col space-y-2">
-					<h2 className="text-xl font-bold text-primary ">
-						House Value and Remaining Principal
-					</h2>
-
 					<div className="flex flex-col md:flex-row gap-4">
 						<div className="flex flex-col space-y-2 w-full md:w-1/3">
 							<div className="relative flex items-center">
@@ -785,27 +794,43 @@ const Comparison: React.FC = () => {
 									</p>
 
 									<div>
-										<p className="text-sm">Capital Gain: R{' '}
-										{new Intl.NumberFormat('en-ZA', {
-											minimumFractionDigits: 2,
-											maximumFractionDigits: 2,
-										}).format(capitalGain)}</p>
-										<p className="text-sm">Exclusion: R {new Intl.NumberFormat('en-ZA', {
-											minimumFractionDigits: 2,
-											maximumFractionDigits: 2,
-										}).format(exclusion)}</p>
-										<p className="text-sm">Net Capital Gain: R {new Intl.NumberFormat('en-ZA', {
-											minimumFractionDigits: 2,
-											maximumFractionDigits: 2,
-										}).format(netCapitalGain)}</p>
-										<p className="text-sm">Taxable Gain: R {new Intl.NumberFormat('en-ZA', {
-											minimumFractionDigits: 2,
-											maximumFractionDigits: 2,
-										}).format(taxableGain)} ({inclusionRate*100}% of NCG)</p>
-										<p className="text-sm">Capital Gains Tax: R {new Intl.NumberFormat('en-ZA', {
-											minimumFractionDigits: 2,
-											maximumFractionDigits: 2,
-										}).format(capitalGainsTax)} ({marginalTaxRate * 100}% of TG)</p>
+										<p className="text-sm">
+											Capital Gain: R{' '}
+											{new Intl.NumberFormat('en-ZA', {
+												minimumFractionDigits: 2,
+												maximumFractionDigits: 2,
+											}).format(capitalGain)}
+										</p>
+										<p className="text-sm">
+											Exclusion: R{' '}
+											{new Intl.NumberFormat('en-ZA', {
+												minimumFractionDigits: 2,
+												maximumFractionDigits: 2,
+											}).format(exclusion)}
+										</p>
+										<p className="text-sm">
+											Net Capital Gain: R{' '}
+											{new Intl.NumberFormat('en-ZA', {
+												minimumFractionDigits: 2,
+												maximumFractionDigits: 2,
+											}).format(netCapitalGain)}
+										</p>
+										<p className="text-sm">
+											Taxable Gain: R{' '}
+											{new Intl.NumberFormat('en-ZA', {
+												minimumFractionDigits: 2,
+												maximumFractionDigits: 2,
+											}).format(taxableGain)}{' '}
+											({inclusionRate * 100}% of NCG)
+										</p>
+										<p className="text-sm">
+											Capital Gains Tax: R{' '}
+											{new Intl.NumberFormat('en-ZA', {
+												minimumFractionDigits: 2,
+												maximumFractionDigits: 2,
+											}).format(capitalGainsTax)}{' '}
+											({marginalTaxRate * 100}% of TG)
+										</p>
 									</div>
 
 									{/* <p className="text-sm bg-green-400 w-16 border-0 bg-opacity-50 rounded-full p-1 p-x-2 text-center">
