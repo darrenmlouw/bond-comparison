@@ -168,9 +168,9 @@ const Comparison: React.FC = () => {
 	return (
 		<div className="flex flex-col h-full w-full">
 			<div className="px-4 space-y-2">
-				<h1 className="text-3xl tracking-normal sm:text-4xl md:text-5xl sm:tracking-wider font-light mb-3">
-					Housing Cost Comparison
-				</h1>
+        <p className="sticky top-0 bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-b from-white/80 to-white/20 font-bold px-4 pointer-events-none text-3xl text-center md:text-4xl lg:text-7xl">
+          Bond Comparison
+        </p>
 
 				<Salary />
 
@@ -182,7 +182,7 @@ const Comparison: React.FC = () => {
 					<div className="flex flex-col md:flex-row gap-4">
 						<div className="flex flex-col space-y-2 w-full md:w-1/3">
 							<div className="relative flex items-center">
-								<div className="flex-shrink mr-2 border-[1px] bg-accent bg-opacity-100 rounded-full p-0.5 px-2 text-xs text-accent-foreground">
+								<div className="flex-shrink mr-2 border-[1px] bg-accent op bg-opacity-100 rounded-full p-0.5 px-2 text-xs text-accent-foreground">
 									Bond
 								</div>
 								<div className="flex-grow border-t text-accent"></div>

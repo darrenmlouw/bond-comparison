@@ -1,30 +1,33 @@
-import SidePanel from '@/components/SidePanel';
+// src/components/Layout.tsx
+import { FloatingDock } from '@/components/ui/floating-dock';
 import TopBar from '@/components/TopBar';
-import SidePanelContext from '@/contexts/SidePanelContext';
-import { useContext } from 'react';
 import { Outlet } from 'react-router-dom';
+import { HomeIcon, Layers, CircleDollarSign } from 'lucide-react';
 
 const Layout = () => {
-	const { sidePanelState, toggleSidePanel } = useContext(SidePanelContext);
+  const dockItems = [
+    { title: 'Home', icon: <HomeIcon />, href: '/Home' },
+    { title: 'Salary', icon: <CircleDollarSign />, href: '/Salary' },
+    { title: 'Comparison', icon: <Layers />, href: '/Comparison' },
 
-	return (
-		<div className="flex flex-row h-full w-full">
-			<SidePanel />
-			<div className="relative flex flex-col w-full h-full overflow-x-hidden overflow-y-auto">
-				<TopBar />
-				<div className="flex flex-1 overflow-y-auto overflow-x-hidden w-full h-full">
-					<Outlet />
-				</div>
-			</div>
-			{sidePanelState === 'expanded' ? (
-				<div className="w-full h-full backdrop-blur-[3px] bg-black bg-opacity-20 absolute top-0 left-0 z-10" onClick={
-					() => {
-						toggleSidePanel();
-					}
-				}/>
-			) : null}
-		</div>
-	);
+    // Add more items as needed
+  ];
+
+  return (
+    <>
+      <div className="flex relative flex-col h-full w-full overflow-hidden">
+        <TopBar />
+        <div className="flex-1 overflow-y-auto overflow-x-hidden w-full h-full">
+          <Outlet />
+        </div>
+      </div>
+
+      {/* Floating Dock at the bottom center */}
+      <div className="fixed bottom-0 left-1/2 backdrop-blur-md transform -translate-x-1/2 -translate-y-5 b shadow-2xl items-center justify-center z-20">
+        <FloatingDock items={dockItems} />
+      </div>
+    </>
+  );
 };
 
 export default Layout;
