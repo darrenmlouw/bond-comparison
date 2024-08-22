@@ -1,4 +1,3 @@
-import React from 'react'
 import Salarys from '@/pages/Comparison/components/Salary'
 
 const Salary = () => {
