@@ -19,7 +19,6 @@ export const calculateTax = (
 
 	let tax = 0;
 	const remainingIncome = annualIncome;
-	console.log('Rem: ', remainingIncome);
 	let threshold = thresholds.under65;
 
 	if (age >= 65 && age < 75) {

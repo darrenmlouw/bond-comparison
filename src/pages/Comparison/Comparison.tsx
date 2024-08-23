@@ -25,7 +25,6 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import ExclusionOption from '@/enums/ExclusionOptions';
 import InclusionOptions from '@/enums/InclusionOptions';
 import { CapitalGainsTaxCalculator } from '@/utils/CapitalGainsTaxCalculator';
-import Salary from '@/pages/Comparison/components/Salary';
 
 const Comparison: React.FC = () => {
 	// Bond Variables
@@ -168,11 +167,11 @@ const Comparison: React.FC = () => {
 	return (
 		<div className="flex flex-col h-full w-full">
 			<div className="px-4 space-y-2">
-        <p className="sticky top-0 bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-b from-white/80 to-white/20 font-bold px-4 pointer-events-none text-3xl text-center md:text-4xl lg:text-7xl">
+        <p className="pt-10 bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-b from-white/80 to-white/20 font-bold px-4 pointer-events-none text-3xl text-center md:text-4xl lg:text-7xl">
           Bond Comparison
         </p>
 
-				<Salary />
+				{/* <Salary /> */}
 
 				<h2 className="text-xl font-bold text-primary ">
 					House Value and Remaining Principal
