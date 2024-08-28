@@ -26,7 +26,7 @@ import ExclusionOption from '@/enums/ExclusionOptions';
 import InclusionOptions from '@/enums/InclusionOptions';
 import { CapitalGainsTaxCalculator } from '@/utils/CapitalGainsTaxCalculator';
 
-const Comparison: React.FC = () => {
+const ComparisonPage: React.FC = () => {
 	// Bond Variables
 	const [housePrice, setHousePrice] = useState(1200000);
 	const [deposit, setDeposit] = useState(50000);
@@ -985,4 +985,4 @@ const Comparison: React.FC = () => {
 	);
 };
 
-export default Comparison;
+export default ComparisonPage;

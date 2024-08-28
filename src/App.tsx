@@ -1,23 +1,27 @@
 // src/App.tsx
+import { useContext, useEffect, useState } from 'react';
 import './App.css';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Layout from '@/components/Layout';
-import { SidePanelProvider } from '@/contexts/SidePanelContext';
-import Comparison from '@/pages/Comparison/Comparison';
-import { SalaryProvider } from '@/contexts/SalaryContext';
+import HomePage from '@/pages/Home/HomePage';
+import SalaryPage from '@/pages/Salary/SalaryPage';
+import ComparisonPage from '@/pages/Comparison/ComparisonPage';
 import { BackgroundGradientAnimation } from '@/components/ui/background-gradient-animation';
-import Salary from '@/pages/Salary/Salary';
-import Home from '@/pages/Home/Home';
+import { SalaryProvider } from '@/contexts/SalaryContext';
 import ThemeContext from '@/contexts/ThemeContext';
-import { useContext, useEffect, useState } from 'react';
+
 
 function App() {
   const location = useLocation();
   const { theme } = useContext(ThemeContext);
 
-  // set gradient background start color based on theme
-  const [gradientBackgroundStart, setGradientBackgroundStart] = useState<string>(theme === 'dark' ? 'rgb(70, 0, 20)' : 'rgb(248, 251, 252)');
-  const [gradientBackgroundEnd, setGradientBackgroundEnd] = useState<string>(theme === 'dark' ? 'rgb(0, 17, 82)' : 'rgb(248, 251, 252)');
+  const [gradientBackgroundStart, setGradientBackgroundStart] =
+    useState<string>(
+      theme === 'dark' ? 'rgb(70, 0, 20)' : 'rgb(248, 251, 252)'
+    );
+  const [gradientBackgroundEnd, setGradientBackgroundEnd] = useState<string>(
+    theme === 'dark' ? 'rgb(0, 17, 82)' : 'rgb(248, 251, 252)'
+  );
 
   useEffect(() => {
     if (theme === 'dark') {
@@ -31,27 +35,25 @@ function App() {
     }
   }, [theme]);
 
-
   return (
-    
-      <SidePanelProvider>
-        <SalaryProvider>
-          <div className="relative w-screen h-screen overflow-hidden">
-            <BackgroundGradientAnimation interactive={false} gradientBackgroundStart={gradientBackgroundStart} gradientBackgroundEnd={gradientBackgroundEnd}/>
-            <div className="absolute inset-0 z-10 flex flex-col w-full h-full overflow-hidden">
-              <Routes location={location}>
-                <Route path="/" element={<Layout />}>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/Salary" element={<Salary />} />
-                  <Route path="/Comparison" element={<Comparison />} />
-                  
-                </Route>
-              </Routes>
-            </div>
-          </div>
-        </SalaryProvider>
-      </SidePanelProvider>
-    
+    <SalaryProvider>
+      <div className="relative w-screen h-screen overflow-hidden">
+        <BackgroundGradientAnimation
+          interactive={false}
+          gradientBackgroundStart={gradientBackgroundStart}
+          gradientBackgroundEnd={gradientBackgroundEnd}
+        />
+        <div className="absolute inset-0 z-10 flex flex-col w-full h-full overflow-hidden">
+          <Routes location={location}>
+            <Route path="/" element={<Layout />}>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/Salary" element={<SalaryPage />} />
+              <Route path="/Comparison" element={<ComparisonPage />} />
+            </Route>
+          </Routes>
+        </div>
+      </div>
+    </SalaryProvider>
   );
 }
 

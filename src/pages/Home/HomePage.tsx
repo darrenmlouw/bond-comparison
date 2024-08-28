@@ -1,5 +1,5 @@
 
-const Home = () => {
+const HomePage = () => {
   return (
     <div className="flex flex-col h-full w-full">
 			<div className="px-4 space-y-2">
@@ -24,4 +24,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default HomePage
