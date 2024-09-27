@@ -167,7 +167,7 @@ const ComparisonPage: React.FC = () => {
 	return (
 		<div className="flex flex-col h-full w-full">
       <div className="px-4 space-y-2">
-        <p className="pt-10 font-bold px-4 pointer-events-none text-3xl text-center md:text-4xl lg:text-7xl">
+        <p className="pt-10 font-bold px-4 pointer-events-none text-5xl text-center md:text-6xl lg:text-7xl">
           Rent vs Buy Comparison
         </p>
         <p className="text-center text-md ">
