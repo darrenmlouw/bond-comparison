@@ -6,19 +6,19 @@
 
 @layer base {
   :root {
-    --background: 210 20% 98%;
+    --background: 230 10% 70%;
     --foreground: 230 25% 20%;
 
-    --card: 210 15% 95%;
+    --card: 230 12% 62%;
     --card-foreground: 230 25% 20%;
 
     --popover: 210 10% 100%;
     --popover-foreground: 230 25% 20%;
 
-    --primary: 260 20% 80%;
+    --primary: 260 40% 70%;
     --primary-foreground: 260 25% 20%;
 
-    --secondary: 120 30% 90%;
+    --secondary: 260 20% 80%;
     --secondary-foreground: 120 30% 20%;
 
     --muted: 30 20% 80%;
@@ -41,7 +41,7 @@
     --background: 210 20% 10%;
     --foreground: 210 10% 90%;
 
-    --card: 210 25% 20%;
+    --card: 210 25% 15%;
     --card-foreground: 210 10% 90%;
 
     --popover: 210 30% 25%;
@@ -75,6 +75,7 @@
 @layer base {
 	* {
 		@apply border-border;
+    ::-webkit-scrollbar {display:none;}
 	}
 	body {
 		@apply bg-background text-foreground;
