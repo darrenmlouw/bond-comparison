@@ -166,12 +166,13 @@ const ComparisonPage: React.FC = () => {
 
 	return (
 		<div className="flex flex-col h-full w-full">
-			<div className="px-4 space-y-2">
-        <p className="pt-10 bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-b from-white/80 to-white/20 font-bold px-4 pointer-events-none text-3xl text-center md:text-4xl lg:text-7xl">
-          Bond Comparison
+      <div className="px-4 space-y-2">
+        <p className="pt-10 font-bold px-4 pointer-events-none text-3xl text-center md:text-4xl lg:text-7xl">
+          Rent vs Buy Comparison
         </p>
-
-				{/* <Salary /> */}
+        <p className="text-center text-md ">
+          Analyze and compare the costs of renting versus buying a home over time.
+        </p>
 
 				<h2 className="text-xl font-bold text-primary ">
 					House Value and Remaining Principal

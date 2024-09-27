@@ -1,0 +1,38 @@
+{
+	"short_name": "Bondi",
+	"name": "Bond Comparison",
+	"description": "A simple web-app designed to assist in the choice etween buying or renting a property",
+	"author": "Darren Louw",
+	"keywords": ["Bond", "House-Loan", "Rent", "Salary"],
+	"thumbnail": "Pluto",
+	"icons": [
+		{
+			"src": "HouseIcon.ico",
+			"sizes": "64x64",
+			"type": "image/x-icon"
+		},
+		{
+			"src": "HouseIcon64.png",
+			"type": "image/png",
+			"sizes": "64x64"
+		},
+		{
+			"src": "HouseIcon128.png",
+			"type": "image/png",
+			"sizes": "128x128"
+		},
+		{
+			"src": "HouseIcon256.png",
+			"type": "image/png",
+			"sizes": "256x256"
+		},
+		{
+			"src": "HouseIcon512.png",
+			"type": "image/png",
+			"sizes": "512x512"
+		}
+	],
+	"start_url": "/",
+	"display": "standalone",
+	"version": "1"
+}

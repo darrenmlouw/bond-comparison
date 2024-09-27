@@ -41,16 +41,16 @@
     --background: 210 20% 10%;
     --foreground: 210 10% 90%;
 
-    --card: 210 25% 15%;
+    --card: 210 25% 20%;
     --card-foreground: 210 10% 90%;
 
     --popover: 210 30% 25%;
     --popover-foreground: 210 10% 90%;
 
-    --primary: 260 20% 50%;
+    --primary: 260 30% 60%;
     --primary-foreground: 260 10% 90%;
 
-    --secondary: 120 30% 40%;
+    --secondary: 300 20% 30%;
     --secondary-foreground: 120 10% 90%;
 
     --muted: 30 20% 50%;

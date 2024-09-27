@@ -19,6 +19,15 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     document.documentElement.classList.remove('light', 'dark');
     document.documentElement.classList.add(theme);
     localStorage.setItem('theme', theme);
+
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    if (metaThemeColor) {
+      if (theme === 'dark') {
+        metaThemeColor.setAttribute('content', '#14191f'); // Dark theme color
+      } else {
+        metaThemeColor.setAttribute('content', '#f9fafb'); // Light theme color
+      }
+    }
   }, [theme]);
 
   const toggleTheme = () => {
