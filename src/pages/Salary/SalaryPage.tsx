@@ -67,7 +67,7 @@ const SalaryPage = () => {
 
                 <div className="flex flex-col w-1/2 gap-1.5">
                   <Label htmlFor="tax" className="text-sm ">
-                    Deductions Before Tax
+                    Tax Deductables
                   </Label>
                   <Input
                     type="number"

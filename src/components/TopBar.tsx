@@ -8,7 +8,7 @@ const TopBar = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
-    <div className="absolute top-2 right-2 flex justify-between items-center p-1 bg-transparent ">
+    <div className="fixed top-2 right-2 flex justify-between items-center p-1  z-50">
       <Button
         size="icon"
         variant="ghost"
