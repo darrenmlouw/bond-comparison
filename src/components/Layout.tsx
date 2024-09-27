@@ -16,14 +16,14 @@ const Layout = () => {
   return (
     <>
       <TopBar />
-      {/* <div className="flex relative flex-col h-full w-full overflow-hidden">
+      {/* <div className="flex relative flex-col h-full w-full overflow-hidden"> */}
         
-        <div className="flex-1 overflow-y-auto overflow-x-hidden w-full h-full scroll"> */}
+        {/* <div className="flex-1 overflow-y-auto overflow-x-hidden w-full h-full scroll"> */}
           <Outlet />
-        {/* </div>
-      </div> */}
+        {/* </div> */}
+      {/* // </div> */}
 
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 -translate-y-5 bg-neutral-900/60 backdrop-blur-md border-[1px]  border-neutral-600 rounded-2xl">
+      <div className="z-20 fixed bottom-12 sm:bottom-2 left-1/2 -translate-x-1/2  bg-neutral-900/60 backdrop-blur-md border-[1px]  border-neutral-600 rounded-2xl">
         <FloatingDock
           items={dockItems}
           desktopClassName="bg-transparent   shadow-xl"

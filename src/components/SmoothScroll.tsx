@@ -19,7 +19,7 @@ const SmoothScroll: React.FC<SmoothScrollProps> = ({ children }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const data = useRef<DataProps>({
-    ease: 0.02, // Adjust this value for smoother or faster scrolling
+    ease: 0.04, // Adjust this value for smoother or faster scrolling
     current: 0,
     previous: 0,
     rounded: 0,
