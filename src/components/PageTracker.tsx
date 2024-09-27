@@ -1,5 +1,5 @@
 // src/components/PageTracker.tsx
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 
 const sections = [
   { id: 'hero', label: 'Home' },

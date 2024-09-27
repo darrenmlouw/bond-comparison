@@ -12,6 +12,9 @@ numeral.register('locale', 'en-za', {
     billion: 'b',
     trillion: 't'
   },
+  ordinal: function (number) {
+    return number === 1 ? 'st' : 'th'; // Simple ordinal function (you can adjust based on your needs)
+  },
   currency: {
     symbol: 'R'
   }

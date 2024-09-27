@@ -1,5 +1,4 @@
 // src/components/Features.tsx
-import React from 'react';
 
 const Features = () => {
   return (

@@ -1,5 +1,4 @@
 // src/components/HowTo.tsx
-import React from 'react';
 
 const HowTo = () => {
   return (

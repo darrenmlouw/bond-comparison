@@ -1,5 +1,4 @@
 // src/components/Socials.tsx
-import React from 'react';
 import { Linkedin } from 'lucide-react';
 
 const Socials = () => {
