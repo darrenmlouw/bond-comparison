@@ -8,6 +8,7 @@ import {
   getTaxRebate,
 } from '@/utils/incomeTaxCalculations';
 import { formatNumber } from '@/utils/formatNumber'; // Import the utility function
+import TaxComparisonChart from '@/components/TaxComparisonChart';
 
 const SalaryPage = () => {
   const {
@@ -30,19 +31,19 @@ const SalaryPage = () => {
   return (
     <div className="flex flex-col h-full w-full items-center">
       <div className="pt-4 pb-4">
-        <p className="pt-4 pb-4 md:pt-10 mdpb-10 sticky top-0 drop-shadow-2xl font-bold px-4 pointer-events-none text-5xl text-center md:text-6xl lg:text-7xl">
-          Capital Gains
+        <p className="pt-4 pb-4 md:pt-10 md:pb-10 sticky top-0 bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-b from-white/80 to-white/20 font-bold px-4 pointer-events-none text-5xl text-center md:text-6xl lg:text-7xl">
+          Salary
         </p>
         <p className="text-center text-md text-gray-500">
           Calculate Tax Bracket and Capital Gains
         </p>
       </div>
-      <div className="flex flex-col w-full h-full px-4 sm:px-8">
+      <div className="flex flex-col w-full h-full px-4 sm:px-8 space-y-8">
         <form className="flex flex-col space-y-4">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex flex-col space-y-2 w-full md:w-1/3">
               <div className="relative flex items-center">
-                <div className="flex-shrink mr-2 border-[1px] bg-accent bg-opacity-100 rounded-full p-0.5 px-2 text-xs text-accent-foreground">
+                <div className="flex-shrink mr-2 border-[1px] bg-opacity-100 rounded-full p-0.5 px-2 text-xs text-accent-foreground">
                   Annual Income and Tax
                 </div>
                 <div className="flex-grow border-t text-accent"></div>
@@ -203,6 +204,14 @@ const SalaryPage = () => {
             </div>
           </div>
         </form>
+
+        <div className="flex flex-row h-96 bg-card opacity-75 outline outline-1 outline-slate-700 shadow-2xl p-4 rounded-xl">
+          <TaxComparisonChart />
+        </div>
+
+        <div className="flex flex-row min-h-96">
+
+        </div>
       </div>
     </div>
   );

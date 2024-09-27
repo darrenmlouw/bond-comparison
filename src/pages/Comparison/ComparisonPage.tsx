@@ -7,7 +7,7 @@ import {
 	calculateMoneyMadeFromSellingHouse,
 	calculateBondCost,
 	calculateRemainingPrincipal,
-} from '@/utils/calculations';
+} from '@/utils/bondRentCalculations';
 import { Input } from '@/components/ui/input';
 import 'tailwindcss/tailwind.css';
 import { Slider } from '@/components/ui/slider';
@@ -24,7 +24,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import ExclusionOption from '@/enums/ExclusionOptions';
 import InclusionOptions from '@/enums/InclusionOptions';
-import { CapitalGainsTaxCalculator } from '@/utils/CapitalGainsTaxCalculator';
+import { CapitalGainsTaxCalculator } from '@/utils/capitalGainsCalculations';
 
 const ComparisonPage: React.FC = () => {
 	// Bond Variables
