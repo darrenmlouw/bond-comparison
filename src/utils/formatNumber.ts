@@ -12,8 +12,8 @@ numeral.register('locale', 'en-za', {
     billion: 'b',
     trillion: 't'
   },
-  ordinal: (): string => {
-    return ''; // Ordinal suffix is not typically used in South African English
+  ordinal: function (number) {
+    return number === 1 ? 'st' : 'th'; // Simple ordinal function (you can adjust based on your needs)
   },
   currency: {
     symbol: 'R'

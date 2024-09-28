@@ -112,7 +112,7 @@ export const ExclusionCombobox = ({
             placeholder="Enter the market value of the small business"
             value={smallBusinessMarketValue}
             onChange={(e) =>
-              setSmallBusinessMarketValue(parseFloat(e.target.value))
+              onNumberOfPeopleInJointBondChange(parseFloat(e.target.value))
             }
           />
         </div>
@@ -126,7 +126,7 @@ export const ExclusionCombobox = ({
             placeholder="Enter the number of people in the joint bond"
             value={numberOfPeopleInJointBond}
             onChange={(e) =>
-              setNumberOfPeopleInJointBond(parseInt(e.target.value))
+              onSmallBusinessMarketValueChange(parseInt(e.target.value))
             }
           />
         </div>

@@ -23,7 +23,7 @@ import { InlineMath, BlockMath } from 'react-katex';
 import { Checkbox } from '@/components/ui/checkbox';
 import ExclusionOptions from '@/enums/ExclusionOptions';
 import InclusionOptions from '@/enums/InclusionOptions';
-import { CapitalGainsTaxCalculator } from '@/utils/CapitalGainsTaxCalculator';
+import { CapitalGainsTaxCalculator } from '@/utils/capitalGainsCalculations';
 import { ExclusionCombobox } from '@/components/ExclusionCombobox';
 import { InclusionCombobox } from '@/components/InclusionCombobox';
 import { SectionHeader } from '@/components/SectionHeader';
@@ -181,7 +181,7 @@ const ComparisonPage: React.FC = () => {
           House Value and Remaining Principal
         </h2>
 
-        <form className="flex flex-col space-y-2">
+        <div className="flex flex-col space-y-2">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex flex-col space-y-2 w-full md:w-1/3">
               <SectionHeader label="Bond" />
@@ -755,9 +755,7 @@ const ComparisonPage: React.FC = () => {
               </div>
             </div>
           </div>
-
-          
-        </form>
+        </div>
 
         <h2 className="text-xl font-bold text-primary ">
             Comparison of Rent and House Costs

@@ -13,7 +13,7 @@ import {
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
 import SalaryContext from '@/contexts/SalaryContext';
-import { calculateTax } from '@/utils/incomeTaxCalculations'; // Assuming this is the correct path to your functions
+import { calculateTax } from '@/utils/incomeTaxCalculations'; 
 
 ChartJS.register(
   CategoryScale,
@@ -46,12 +46,24 @@ const TaxComparisonChart: React.FC = () => {
     ],
   };
 
+  const abbreviateNumber = (value: number) => {
+    if (value >= 1000000) return (value / 1000000).toFixed(0) + 'M';
+    if (value >= 1000) return (value / 1000).toFixed(0) + 'K';
+    return value;
+  };
+
   const options: ChartOptions<'line'> = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
       legend: {
+        display: false,
         position: 'bottom',
+        labels: {
+          font: {
+            size: window.innerWidth < 768 ? 10 : 14, // Adjusts font size for mobile screens
+          },
+        },
       },
       annotation: {
         annotations: [
@@ -66,7 +78,7 @@ const TaxComparisonChart: React.FC = () => {
               position: 'start',
               backgroundColor: 'rgba(255, 0, 0, 0.5)',
               color: 'black',
-          },
+            },
           },
         ],
       },
@@ -76,14 +88,37 @@ const TaxComparisonChart: React.FC = () => {
         title: {
           display: true,
           text: 'Income (R)',
+          font: {
+            size: window.innerWidth < 768 ? 10 : 14, // Adjust font size for smaller screens
+          },
+        },
+        ticks: {
+          autoSkip: true, // Automatically skip labels for smaller screens
+          maxTicksLimit: window.innerWidth < 768 ? 5 : 10, // Limit the number of ticks on mobile
+          maxRotation: window.innerWidth < 768 ? 45 : 0, // Rotate labels on mobile for readability
+          font: {
+            size: window.innerWidth < 768 ? 10 : 12, // Font size adjustment for mobile
+          },
         },
       },
       y: {
         title: {
           display: true,
           text: 'Tax Paid (R)',
+          font: {
+            size: window.innerWidth < 768 ? 10 : 14, // Adjust font size for smaller screens
+          },
         },
         beginAtZero: true,
+        ticks: {
+          callback: (value) => abbreviateNumber(value as number), // Abbreviates the labels on the y-axis
+          font: {
+            size: window.innerWidth < 768 ? 10 : 12, // Font size adjustment for mobile
+          },
+        },
+        grid: {
+          display: window.innerWidth >= 768, // Optionally hide gridlines on mobile for less clutter
+        },
       },
     },
   };

@@ -4,14 +4,24 @@ import Layout from '@/components/Layout';
 import HomePage from '@/pages/Home/HomePage';
 import SalaryPage from '@/pages/Salary/SalaryPage';
 import ComparisonPage from '@/pages/Comparison/ComparisonPage';
-import { SalaryProvider } from '@/contexts/SalaryContext';
+import { useEffect, useState } from 'react';
+import { WebsiteLoadingScreen } from '@/components/WebsiteLoadingScreen';
 
 function App() {
   const location = useLocation();
 
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 900);
+  }, []);
+
   return (
-    <SalaryProvider>
-      <div className="absolute flex flex-col w-full h-full">
+    <>
+      {loading ? (
+        <WebsiteLoadingScreen/>
+      ) : (
         <Routes location={location}>
           <Route path="/" element={<Layout />}>
             <Route path="/" element={<HomePage />} />
@@ -19,8 +29,8 @@ function App() {
             <Route path="/Comparison" element={<ComparisonPage />} />
           </Route>
         </Routes>
-      </div>
-    </SalaryProvider>
+      )}
+    </>
   );
 }
 
