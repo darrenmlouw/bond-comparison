@@ -16,13 +16,7 @@ const Layout = () => {
   return (
     <>
       <TopBar />
-      {/* <div className="flex relative flex-col h-full w-full overflow-hidden"> */}
-        
-        {/* <div className="flex-1 overflow-y-auto overflow-x-hidden w-full h-full scroll"> */}
-          <Outlet />
-        {/* </div> */}
-      {/* // </div> */}
-
+      <Outlet />
       <div className="z-20 fixed bottom-12 sm:bottom-2 left-1/2 -translate-x-1/2  bg-neutral-900/60 backdrop-blur-md border-[1px]  border-neutral-600 rounded-2xl">
         <FloatingDock
           items={dockItems}

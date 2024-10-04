@@ -167,8 +167,8 @@ const ComparisonPage: React.FC = () => {
   }, [years, initialBond, deposit, interestRate]);
 
   return (
-    <div className="flex flex-col h-full w-full">
-      <div className="px-4 space-y-2">
+    <div className="flex flex-col h-full w-full justify-center items-center">
+      <div className="px-4 space-y-2 container">
         <p className="pt-10 font-bold px-4 pointer-events-none text-5xl text-center md:text-6xl lg:text-7xl">
           Rent vs Buy Comparison
         </p>
