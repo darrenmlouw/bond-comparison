@@ -24,12 +24,12 @@ const Hero = () => {
           {/* Rent text with permanent glow */}
           <h1 className="text-6xl sm:text-7xl md:text-8xl font-bold text-violet-400 dark:text-violet-600 
             filter 
-            drop-shadow-[0_15px_8px_rgba(24,4,73,0.6)] 
-            dark:drop-shadow-[0_0_15px_rgba(139,92,246,0.6)]
+            drop-shadow-[0_0.75rem_0.35rem_rgba(24,4,73,0.75)] 
+            dark:drop-shadow-[0_0_15px_rgba(139,92,246,0.75)]
             transition-all duration-300 
-            hover:drop-shadow-[0_20px_10px_rgba(24,4,73,0.55)] 
-            dark:hover:drop-shadow-[0_0_35px_rgba(139,92,246,1)]
-            hover:scale-105">
+            sm:hover:drop-shadow-[0_20px_10px_rgba(24,4,73,0.75)] 
+            sm:dark:hover:drop-shadow-[0_0_35px_rgba(139,92,246,1)]
+            sm:hover:scale-105">
             Rent
           </h1>
 
@@ -41,12 +41,12 @@ const Hero = () => {
           {/* Buy text with permanent glow */}
           <h1 className="text-6xl sm:text-7xl md:text-8xl font-bold text-pink-400 dark:text-pink-700 
             filter 
-            drop-shadow-[0_15px_8px_rgba(69,7,38,0.6)] 
-            dark:drop-shadow-[0_0_15px_rgba(236,72,153,0.6)]
+            drop-shadow-[0_0.75rem_0.35rem_rgba(69,7,38,0.75)] 
+            dark:drop-shadow-[0_0_15px_rgba(236,72,153,0.75)]
             transition-all duration-300 
-            hover:drop-shadow-[0_20px_10px_rgba(69,7,38,0.6)] 
-            dark:hover:drop-shadow-[0_0_35px_rgba(236,72,153,1)]
-            hover:scale-105">
+            sm:hover:drop-shadow-[0_20px_10px_rgba(69,7,38,0.75)] 
+            sm:dark:hover:drop-shadow-[0_0_35px_rgba(236,72,153,1)]
+            sm:hover:scale-105">
           Buy
           </h1>
         </div>

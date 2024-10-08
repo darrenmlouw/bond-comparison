@@ -1,12 +1,15 @@
 export const calculateRentCost = (
-	years: number,
-	monthlyRent: number
+  years: number,
+  monthlyRent: number,
+  annualRentIncrease: number
 ): number[] => {
-	const rentCost = [];
-	for (let i = 0; i <= years; i++) {
-		rentCost.push(-monthlyRent * 12 * i); // Negative value to indicate a cost
-	}
-	return rentCost;
+  const rentCost = [];
+  for (let i = 0; i <= years; i++) {
+    // Convert the percentage increase into a decimal
+    const adjustedMonthlyRent = monthlyRent * Math.pow(1 + annualRentIncrease / 100, i);
+    rentCost.push(-adjustedMonthlyRent * 12); // Negative value to indicate a cost for that year
+  }
+  return rentCost;
 };
 
 export const calculateHouseValueAfterAppreciation = (

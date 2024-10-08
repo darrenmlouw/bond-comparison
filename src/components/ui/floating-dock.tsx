@@ -7,6 +7,7 @@ import { useRef, useState } from "react";
 export const FloatingDock = ({
   items,
   desktopClassName,
+  mobileClassName,
 }: {
   items: { title: string; icon: React.ReactNode; href: string }[];
   desktopClassName?: string;
@@ -15,7 +16,32 @@ export const FloatingDock = ({
   return (
     <>
       <FloatingDockDesktop items={items} className={desktopClassName} />
+      <FloatingDockMobile items={items} className={mobileClassName} />
     </>
+  );
+};
+
+const FloatingDockMobile = ({
+  items,
+  className,
+}: {
+  items: { title: string; icon: React.ReactNode; href: string }[];
+  className?: string;
+}) => {
+  const mouseX = useMotionValue(Infinity);
+  return (
+      <div
+        // onMouseMove={(e) => mouseX.set(e.pageX)}
+        // onMouseLeave={() => mouseX.set(Infinity)}
+        className={cn(
+          "mx-auto flex h-16 gap-6 items-end rounded-2xl px-8 pb-3 md:hidden",
+          className
+        )}
+      >
+        {items.map((item) => (
+          <IconContainer mouseX={mouseX} key={item.title} {...item} />
+        ))}
+      </div>
   );
 };
 
@@ -32,7 +58,7 @@ const FloatingDockDesktop = ({
       onMouseMove={(e) => mouseX.set(e.pageX)}
       onMouseLeave={() => mouseX.set(Infinity)}
       className={cn(
-        "mx-auto flex h-16 gap-6 items-end rounded-2xl px-8 pb-3",
+        "mx-auto hidden md:flex h-16 gap-6 items-end rounded-2xl px-8 pb-3",
         className
       )}
     >
@@ -62,7 +88,7 @@ function IconContainer({
   });
 
   const widthTransform = useTransform(distance, [-150, 0, 150], [40, 55, 40]);
-  const heightTransform = useTransform(distance, [-150, 0, 150], [40, 55, 40]);
+  const heightTransform = useTransform(distance, [-100, 0, 150], [40, 55, 40]);
 
   const widthTransformIcon = useTransform(distance, [-150, 0, 150], [20, 40, 20]);
   const heightTransformIcon = useTransform(distance, [-150, 0, 150], [20, 40, 20]);
@@ -98,7 +124,7 @@ function IconContainer({
         style={{ width, height }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        className="aspect-square rounded-full bg-gray-200 dark:bg-slate-700/80 backdrop-blur-md flex items-center justify-center relative"
+        className="aspect-square rounded-full backdrop-blur-md flex items-center justify-center relative bg-primary/30 active:bg-primary/60"
       >
         <AnimatePresence>
           {hovered && (
@@ -106,7 +132,7 @@ function IconContainer({
               initial={{ opacity: 0, y: 10, x: "-50%" }}
               animate={{ opacity: 1, y: 0, x: "-50%" }}
               exit={{ opacity: 0, y: 2, x: "-50%" }}
-              className="px-2 py-0.5 whitespace-pre rounded-md bg-gray-100 border dark:bg-neutral-800 dark:border-neutral-900 dark:text-white border-gray-200 text-neutral-700 absolute left-1/2 -translate-x-1/2 -top-8 w-fit text-xs"
+              className="hidden md:flex px-2 py-0.5 whitespace-pre rounded-md bg-secondary absolute left-1/2 -translate-x-1/2 -top-8 w-fit text-xs"
             >
               {title}
             </motion.div>

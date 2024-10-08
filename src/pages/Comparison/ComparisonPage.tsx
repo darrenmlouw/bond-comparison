@@ -55,7 +55,8 @@ const ComparisonPage: React.FC = () => {
   const [otherSellingCosts, setOtherSellingCosts] = useState(50000);
 
   // Rent Variables
-  const [monthlyRent, setMonthlyRent] = useState(9000);
+  const [monthlyRent, setMonthlyRent] = useState(10000);
+  const [annualRentIncrease, setAnnualRentIncrease] = useState(10);
 
   // Capital Gains Variables
   const [exclusionType, setExclusionType] = useState<ExclusionOptions>(
@@ -85,8 +86,8 @@ const ComparisonPage: React.FC = () => {
   }, [levies, rates, insurance, otherMonthlyFees]);
 
   const rentData = useMemo(() => {
-    return calculateRentCost(years, monthlyRent);
-  }, [years, monthlyRent]);
+    return calculateRentCost(years, monthlyRent, annualRentIncrease);
+  }, [years, monthlyRent, annualRentIncrease]);
 
   const houseValueAfterAppreciationData = useMemo(() => {
     return calculateHouseValueAfterAppreciation(
@@ -235,7 +236,7 @@ const ComparisonPage: React.FC = () => {
 
               <SectionHeader label="Capital Gains Tax Variables" />
 
-              <div className='flex flex-row w-full gap-2'>
+              <div className='grid grid-cols-2 grid-rows-1 md:grid-cols-1 md:grid-rows-2 lg:grid-col-2 lg:grid-rows-1 xl:grid-col-2 xl:grid-rows-1  flex-wrap w-full gap-2'>
                 <ExclusionCombobox
                   exclusionType={exclusionType}
                   onExclusionTypeChange={setExclusionType}
@@ -385,10 +386,20 @@ const ComparisonPage: React.FC = () => {
                     onChange={(e) => setMonthlyRent(parseFloat(e.target.value))}
                   />
                 </div>
+
+                <div className="flex flex-col w-full gap-1.5">
+                  <Label htmlFor="monthlyRent">Annual Rent Increase (%)</Label>
+                  <Input
+                    id="annualRentIncrease"
+                    type="number"
+                    value={annualRentIncrease}
+                    onChange={(e) => setAnnualRentIncrease(parseFloat(e.target.value))}
+                  />
+                </div>
               </div>
             </div>
 
-            <div className="flex flex-col space-y-6 bg-card shadow-2xl p-4 rounded-xl max-h-full content-between w-full md:w-2/3 justify-between">
+            <div className="flex flex-col space-y-6 bg-card outline outline-1 outline-card-foreground/20 shadow-2xl p-4 rounded-xl max-h-full content-between w-full md:w-2/3 justify-between">
               <div className="flex flex-row justify-between">
                 <div className="flex flex-col justify-between items-start">
                   <div className="flex flex-row items-center">

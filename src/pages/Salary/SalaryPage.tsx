@@ -107,7 +107,7 @@ const SalaryPage = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-card w-full max-w-4xl h-auto p-6 opacity-75 outline outline-1 outline-slate-700 shadow-2xl rounded-xl">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-card w-full max-w-4xl h-auto p-6 opacity-75 outline outline-1 outline-card-foreground/20 shadow-xl rounded-xl">
           {/* Column 1 */}
           <div className="grid grid-cols-1 gap-6">
             <div className="flex flex-col">
@@ -167,7 +167,7 @@ const SalaryPage = () => {
           </div>
         </div>
 
-        <div className="flex flex-row bg-card w-full max-w-4xl h-96 opacity-75 outline outline-1 outline-slate-700 shadow-xl p-4 rounded-xl ">
+        <div className="flex flex-row bg-card w-full max-w-4xl h-96 opacity-75 outline outline-1 outline-card-foreground/20 shadow-2xl p-4 rounded-xl ">
           <TaxComparisonChart />
         </div>
 

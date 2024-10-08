@@ -3,6 +3,7 @@ import { FloatingDock } from '@/components/ui/floating-dock';
 import TopBar from '@/components/TopBar';
 import { Outlet } from 'react-router-dom';
 import { HomeIcon, Layers, CircleDollarSign } from 'lucide-react';
+import { Analytics } from '@vercel/analytics/react';
 
 const Layout = () => {
   const dockItems = [
@@ -17,10 +18,12 @@ const Layout = () => {
     <>
       <TopBar />
       <Outlet />
-      <div className="z-20 fixed bottom-12 sm:bottom-2 left-1/2 -translate-x-1/2  bg-neutral-900/60 backdrop-blur-md border-[1px]  border-neutral-600 rounded-2xl">
+      <Analytics />
+      <div className="z-20 fixed bottom-12 sm:bottom-2 left-1/2 -translate-x-1/2  bg-primary/20 backdrop-blur-[6px] outline outline-1 outline-foreground/30 rounded-2xl">
         <FloatingDock
           items={dockItems}
-          desktopClassName="bg-transparent   shadow-xl"
+          desktopClassName="shadow-xl"
+          mobileClassName="shadow-xl"
         />
       </div>
     </>
