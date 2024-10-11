@@ -46,14 +46,16 @@ const PageTracker = () => {
 
   return (
     <div
-      className="fixed left-4 top-1/2 transform -translate-y-1/2 space-y-6 z-20"
-      style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
+      className="fixed right-1.5 sm:left-3 md:left-4 bottom-1/2 transform translate-y-1/2 space-y-4 z-20"
+      style={{
+        paddingBottom: 'calc(env(safe-area-inset-bottom) + 16px)', // Adjust as needed
+      }}
     >
       {sections.map((section) => (
         <motion.button
           key={section.id}
           onClick={() => handleClick(section.id)}
-          className={`block w-4 h-4 rounded-full  ${
+          className={`block w-3 h-3 sm:w-3 sm:h-3 md:w-4 md:h-4 rounded-full ${
             activeSection === section.id ? 'bg-primary shadow-md' : 'bg-secondary'
           }`}
           animate={{
