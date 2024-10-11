@@ -112,7 +112,17 @@ module.exports = {
         fourth: 'moveHorizontal 40s ease infinite',
         fifth: 'moveInCircle 20s ease infinite',
       },
+      boxShadow: {
+        'neumorphism-sm': 'var(--neumorphism-sm)',
+        'neumorphism-md': 'var(--neumorphism-md)',
+        'neumorphism-lg': 'var(--neumorphism-lg)',
+      },
+      textShadow: {
+        inner: 'inset 2px 2px 4px rgba(0, 0, 0, 0.5)', // Example inner shadow
+      },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    require('tailwindcss-animate')
+  ],
 };

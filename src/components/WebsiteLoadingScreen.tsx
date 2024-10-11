@@ -4,7 +4,7 @@
 // The component should accept no props
 
 import React from 'react';
-import HouseLogo from '../../public/HouseIcon128.png';
+import HouseLogo from '/HouseIcon128.png';
 
 export const WebsiteLoadingScreen: React.FC = () => {
   return (

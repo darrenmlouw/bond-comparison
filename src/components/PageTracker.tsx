@@ -46,7 +46,7 @@ const PageTracker = () => {
 
   return (
     <div
-      className="fixed right-1.5 sm:left-3 md:left-4 bottom-1/2 transform translate-y-1/2 space-y-4 z-20"
+      className="fixed left-1.5 sm:left-3 md:left-4 bottom-1/2 transform translate-y-1/2 space-y-4 z-20"
       style={{
         paddingBottom: 'calc(env(safe-area-inset-bottom) + 16px)', // Adjust as needed
       }}

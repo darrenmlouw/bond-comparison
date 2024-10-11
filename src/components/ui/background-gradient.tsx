@@ -10,12 +10,16 @@ export const BackgroundGradient = ({
   containerClassName,
   initialGradient = "",
   borderColor = "border-white",
+  layoutId,
+  onClick,
 }: {
   children?: React.ReactNode;
   className?: string;
   containerClassName?: string;
   initialGradient?: string;
   borderColor?: string;
+  layoutId?: string;
+  onClick?: () => void;
 }) => {
   return (
     <motion.div
@@ -26,6 +30,8 @@ export const BackgroundGradient = ({
         stiffness: 400,
         damping: 15,
       }}
+      layoutId={layoutId}
+      onClick={onClick}
     >
       {/* Glowing Background */}
       <div
@@ -40,7 +46,9 @@ export const BackgroundGradient = ({
       {/* Gradient Border */}
       <div
         className={cn(
-          `absolute inset-0 rounded-[20px] z-[2] p-[3px] ${borderColor}`
+          `absolute inset-0 rounded-[20px] z-[2] p-[3px] border`,
+          borderColor,
+          initialGradient
         )}
         style={{
           background: initialGradient,
