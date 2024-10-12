@@ -3,7 +3,7 @@
 import { FloatingDock } from '@/components/FloatingDock';
 import TopBar from '@/components/TopBar';
 import { Outlet } from 'react-router-dom';
-import { HomeIcon, Layers, CircleDollarSign } from 'lucide-react';
+import { HomeIcon, Layers, CircleDollarSign, TestTube } from 'lucide-react';
 import { Analytics } from '@vercel/analytics/react';
 // import BuyMeCoffeeLogo from '../assets/BuyMeCoffeeLogo.png'; // Adjust the path if needed
 
@@ -19,6 +19,7 @@ const Layout = () => {
     { title: 'Home', icon: <HomeIcon />, href: '/' },
     { title: 'Salary', icon: <CircleDollarSign />, href: '/Salary' },
     { title: 'Comparison', icon: <Layers />, href: '/Comparison' },
+    { title: 'Test', icon: <TestTube />, href: '/Test' },
   ];
 
   return (
