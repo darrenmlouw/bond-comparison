@@ -1,0 +1,101 @@
+import { motion } from 'framer-motion';
+import AnimatedText from '@/components/AnimatedText'; // Import the AnimatedText component
+
+const Hero = () => {
+  const handleGetStartedClick = () => {
+    const element = document.getElementById('howto');
+    if (element) {
+      const offsetTop = element.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({
+        top: offsetTop,
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  const text =
+    'Compare renting and buying to make informed homeowner decisions.'.split(
+      ' '
+    );
+
+  return (
+    <section
+      id="hero"
+      className="h-screen flex items-center justify-center p-6 sm:p-9 md:p-12"
+    >
+      <motion.div 
+        initial={{
+          scale: 0.95,
+        }}
+        animate={{
+          scale: 1,
+        }}
+        transition={{
+          duration: 0.2,
+        }}
+      className="flex flex-col text-center h-full w-full outline outline-4 -outline-offset-4 dark:outline-white/70 outline-white/90 rounded-3xl sm:rounded-3xl md:rounded-3xl justify-center items-center">
+        <div className="flex flex-row space-x-3 sm:space-x-6 md:space-x-8 justify-center mb-6 flex-wrap">
+          <AnimatedText
+            text="Rent"
+            className="text-6xl sm:text-7xl md:text-8xl font-bold text-violet-400 dark:text-violet-600 
+              filter 
+              drop-shadow-[0_0.75rem_0.35rem_rgba(24,4,73,0.75)] 
+              dark:drop-shadow-[0_0_15px_rgba(139,92,246,0.75)]"
+          />
+
+          <AnimatedText
+            text="vs"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold items-end justify-center self-end mb-2 sm:mb-3 md:mb-4 
+              dark:text-white/40 text-black/30 filter drop-shadow-[0_5px_3px_rgba(0,0,0,0.8)]"
+          />
+
+          <AnimatedText
+            text="Buy"
+            className="text-6xl sm:text-7xl md:text-8xl font-bold text-pink-400 dark:text-pink-700 
+              filter 
+              drop-shadow-[0_0.75rem_0.35rem_rgba(69,7,38,0.75)] 
+              dark:drop-shadow-[0_0_15px_rgba(236,72,153,0.75)]"
+          />
+        </div>
+
+        <motion.h1
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="text-3xl sm:text-4xl md:text-5xl font-bold mb-24 text-foreground/60 mx-6"
+        >
+          Make the Right Choice
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 70 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
+          className="text-foreground/60 text-md sm:text-lg md:text-xl mb-16 mx-6"
+        >
+          Compare renting and buying to make informed homeowner decisions.
+        </motion.p>
+
+        <motion.button
+          initial={{ opacity: 0, y: 100 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.0 }}
+          whileHover={{
+            scale: 1.1,
+          }}
+          whileTap={{
+            scale: 0.9,
+          }}
+          onClick={() => {
+            setTimeout(handleGetStartedClick, 200);
+          }}
+          className="outline outline-1 outline-foreground/40 bg-primary/30 backdrop-blur-[6px] hover:bg-primary hover:outline-primary inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary-foreground h-10 px-4 py-2-8"
+        >
+          Get Started
+        </motion.button>
+      </motion.div>
+    </section>
+  );
+};
+
+export default Hero;

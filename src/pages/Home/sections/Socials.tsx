@@ -2,7 +2,7 @@
 
 import { FaLinkedin, FaGithub, FaEnvelope } from 'react-icons/fa';
 import { motion } from 'framer-motion';
-import BuyMeCoffeeLogo from '../assets/BuyMeCoffeeLogo.png'; // Adjust the path as needed
+import BuyMeCoffeeLogo from '@/assets/BuyMeCoffeeLogo.png';
 
 const Socials = () => {
   return (
@@ -17,7 +17,10 @@ const Socials = () => {
 
         {/* Introduction */}
         <p className="text-base sm:text-lg md:text-xl text-center mb-8 sm:mb-12 text-gray-700 dark:text-gray-300 px-2">
-          Hi, I'm Darren Louw, a dynamic Computer Engineer specializing in full-stack and embedded development. I love creating robust software solutions using React, TypeScript, .NET, and C++. Feel free to reach out to me on LinkedIn or check out my projects on GitHub!
+          Hi, I'm Darren Louw, a dynamic Computer Engineer specializing in
+          full-stack and embedded development. I love creating robust software
+          solutions using React, TypeScript, .NET, and C++. Feel free to reach
+          out to me on LinkedIn or check out my projects on GitHub!
         </p>
 
         <div className="flex flex-col md:flex-row items-center justify-center w-full space-y-3 sm:space-y-4 md:space-y-0 md:space-x-6">
@@ -74,7 +77,9 @@ const Socials = () => {
             Support My Work
           </h3>
           <p className="text-base sm:text-lg md:text-xl text-center mb-6 sm:mb-8 text-gray-700 dark:text-gray-300 max-w-xl px-2">
-            If you enjoy my content or find my projects useful, consider buying me a coffee. Your support helps me to keep creating and sharing more with the community.
+            If you enjoy my content or find my projects useful, consider buying
+            me a coffee. Your support helps me to keep creating and sharing more
+            with the community.
           </p>
           <motion.a
             href="https://www.buymeacoffee.com/darrenmlouw"

@@ -56,16 +56,16 @@ const PageTracker = () => {
           key={section.id}
           onClick={() => handleClick(section.id)}
           className={`block w-3 h-3 sm:w-3 sm:h-3 md:w-4 md:h-4 rounded-full ${
-            activeSection === section.id ? 'bg-primary shadow-md' : 'bg-secondary'
+            activeSection === section.id
+              ? 'bg-primary shadow-md'
+              : 'bg-secondary'
           }`}
           animate={{
             scale: activeSection === section.id ? 1.25 : 1,
           }}
           whileHover={{ scale: 1.5 }}
-          transition={{
-            type: 'spring',
-            stiffness: 400,
-            damping: 15,
+          whileTap={{
+            scale: 0.9,
           }}
         >
           <span className="sr-only">{section.label}</span>
