@@ -1,10 +1,10 @@
 // src/pages/Home/HomePage.tsx
 
-import Hero from '@/pages/home/sections/Hero';
-import Features from '@/pages/home/sections/Features';
-import HowTo from '@/pages/home/sections/HowTo';
-import Socials from '@/pages/home/sections/Socials';
-import PageTracker from '@/pages/home/components/PageTracker';
+import Hero from '@/pages/Home/sections/Hero';
+import Features from '@/pages/Home/sections/Features';
+import HowTo from '@/pages/Home/sections/HowTo';
+import Socials from '@/pages/Home/sections/Socials';
+import PageTracker from '@/pages/Home/components/PageTracker';
 import FEATURES from '@/constants/FEATURES';
 
 const HomePage = () => {
