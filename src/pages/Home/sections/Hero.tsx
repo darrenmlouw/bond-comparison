@@ -13,11 +13,6 @@ const Hero = () => {
     }
   };
 
-  const text =
-    'Compare renting and buying to make informed homeowner decisions.'.split(
-      ' '
-    );
-
   return (
     <section
       id="hero"

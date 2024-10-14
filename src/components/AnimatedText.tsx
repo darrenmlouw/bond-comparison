@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 const AnimatedText = ({ text, className }: { text: string; className: string }) => {
   const textAnimation = {
     hidden: { opacity: 0, y: -100 }, // Start above and hidden
-    visible: (i: number) => ({
+    visible: () => ({
       opacity: 1,
       y: 0, // Bring the letter to its normal position
       transition: {
