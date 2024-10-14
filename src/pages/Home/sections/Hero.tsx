@@ -18,7 +18,7 @@ const Hero = () => {
       id="hero"
       className="h-screen flex items-center justify-center p-6 sm:p-9 md:p-12"
     >
-      <motion.div 
+      <motion.div
         initial={{
           scale: 0.95,
         }}
@@ -28,7 +28,8 @@ const Hero = () => {
         transition={{
           duration: 0.2,
         }}
-      className="flex flex-col text-center h-full w-full outline outline-4 -outline-offset-4 dark:outline-white/70 outline-white/90 rounded-3xl sm:rounded-3xl md:rounded-3xl justify-center items-center">
+        className="flex flex-col text-center h-full w-full outline outline-4 -outline-offset-4 dark:outline-white/70 outline-white/90 rounded-3xl sm:rounded-3xl md:rounded-3xl justify-center items-center"
+      >
         <div className="flex flex-row space-x-3 sm:space-x-6 md:space-x-8 justify-center mb-6 flex-wrap">
           <AnimatedText
             text="Rent"
@@ -71,23 +72,26 @@ const Hero = () => {
           Compare renting and buying to make informed homeowner decisions.
         </motion.p>
 
-        <motion.button
+        <motion.span
           initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.0 }}
-          whileHover={{
-            scale: 1.1,
-          }}
-          whileTap={{
-            scale: 0.9,
-          }}
-          onClick={() => {
-            setTimeout(handleGetStartedClick, 200);
-          }}
-          className="outline outline-1 outline-foreground/40 bg-primary/30 backdrop-blur-[6px] hover:bg-primary hover:outline-primary inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary-foreground h-10 px-4 py-2-8"
         >
-          Get Started
-        </motion.button>
+          <motion.button
+            whileHover={{
+              scale: 1.1,
+            }}
+            whileTap={{
+              scale: 0.9,
+            }}
+            onClick={() => {
+              setTimeout(handleGetStartedClick, 200);
+            }}
+            className="outline outline-1 outline-foreground/40 bg-primary/30 backdrop-blur-[6px] hover:bg-primary hover:outline-primary inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary-foreground h-10 px-4 py-2-8"
+          >
+            Get Started
+          </motion.button>
+        </motion.span>
       </motion.div>
     </section>
   );

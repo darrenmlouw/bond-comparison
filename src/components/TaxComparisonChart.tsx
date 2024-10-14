@@ -14,6 +14,7 @@ import {
 import annotationPlugin from 'chartjs-plugin-annotation';
 import SalaryContext from '@/contexts/SalaryContext';
 import { calculateTax } from '@/utils/incomeTaxCalculations'; 
+import ThemeContext from '@/contexts/ThemeContext';
 
 ChartJS.register(
   CategoryScale,
@@ -27,22 +28,52 @@ ChartJS.register(
 );
 
 const TaxComparisonChart: React.FC = () => {
-  const { year, grossMonthlyIncome, age } = useContext(SalaryContext);
+  const { theme } = useContext(ThemeContext);
+  const { year, grossMonthlyIncome, age, deductions } = useContext(SalaryContext);
 
-  const income = grossMonthlyIncome * 12;
-  const taxThreshold = calculateTax(income, age, year); // Tax threshold is calculated for 0 income
+  const grossAnnualIncome = grossMonthlyIncome * 12;
+  const annualDeductions = deductions * 12;
+  const netIncome = grossAnnualIncome - annualDeductions
   const labels = Array.from({ length: 21 }, (_, i) => i * 100000);
 
   const data = {
     labels,
     datasets: [
       {
-        label: 'Tax Paid',
+        label: '2024',
         data: labels.map((income) => calculateTax(income, age, year)),
         borderColor: 'rgba(255, 159, 64, 1)',
         backgroundColor: 'rgba(255, 159, 64, 0.2)',
         fill: false,
       },
+      {
+        label: '2023',
+        data: labels.map((income) => calculateTax(income, age, 2023)),
+        borderColor: 'rgba(255, 159, 64, 0.4)',
+        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+        fill: false,
+      },
+      {
+        label: '2022',
+        data: labels.map((income) => calculateTax(income, age, 2022)),
+        borderColor: 'rgba(255, 159, 64, 0.3)',
+        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+        fill: false,
+      },
+      {
+        label: '2021',
+        data: labels.map((income) => calculateTax(income, age, 2021)),
+        borderColor: 'rgba(255, 159, 64, 0.2)',
+        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+        fill: false,
+      },
+      {
+        label: '2020',
+        data: labels.map((income) => calculateTax(income, age, 2020)),
+        borderColor: 'rgba(255, 159, 64, 0.1)',
+        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+        fill: false,
+      }
     ],
   };
 
@@ -61,66 +92,72 @@ const TaxComparisonChart: React.FC = () => {
         position: 'bottom',
         labels: {
           font: {
-            size: window.innerWidth < 768 ? 10 : 14, // Adjusts font size for mobile screens
+            size: window.innerWidth < 768 ? 10 : 14, // Adjust font size for mobile screens
           },
         },
       },
       annotation: {
         annotations: [
-          {
+          netIncome !== null && {
             type: 'line',
             scaleID: 'x',
-            value: taxThreshold,
-            borderColor: 'red',
+            value: netIncome,
+            borderColor: 'grey',
             borderWidth: 2,
+            borderDash: [5, 5],
             label: {
-              content: `Tax Threshold (R${taxThreshold.toLocaleString()})`,
+              display: true,
+              content: `Net Income: R${abbreviateNumber(netIncome)}`,
               position: 'start',
-              backgroundColor: 'rgba(255, 0, 0, 0.5)',
-              color: 'black',
+              backgroundColor: `${theme === 'dark' ? '#ffffff90' : '#00000090'}`,
+              color: `${theme === 'dark' ? '#000000d0' : '#ffffffd0'}`,
             },
+            // drawTime: 'beforeDatasetsDraw',
           },
-        ],
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ].filter(Boolean) as any,
       },
     },
     scales: {
-      x: {
-        title: {
-          display: true,
-          text: 'Income (R)',
-          font: {
-            size: window.innerWidth < 768 ? 10 : 14, // Adjust font size for smaller screens
-          },
-        },
-        ticks: {
-          autoSkip: true, // Automatically skip labels for smaller screens
-          maxTicksLimit: window.innerWidth < 768 ? 5 : 10, // Limit the number of ticks on mobile
-          maxRotation: window.innerWidth < 768 ? 45 : 0, // Rotate labels on mobile for readability
-          font: {
-            size: window.innerWidth < 768 ? 10 : 12, // Font size adjustment for mobile
-          },
-        },
-      },
-      y: {
-        title: {
-          display: true,
-          text: 'Tax Paid (R)',
-          font: {
-            size: window.innerWidth < 768 ? 10 : 14, // Adjust font size for smaller screens
-          },
-        },
-        beginAtZero: true,
-        ticks: {
-          callback: (value) => abbreviateNumber(value as number), // Abbreviates the labels on the y-axis
-          font: {
-            size: window.innerWidth < 768 ? 10 : 12, // Font size adjustment for mobile
-          },
-        },
-        grid: {
-          display: window.innerWidth >= 768, // Optionally hide gridlines on mobile for less clutter
-        },
+  x: {
+    type: 'linear',  // Set the x-axis to a linear scale
+    title: {
+      display: true,
+      text: 'Income (R)',
+      font: {
+        size: window.innerWidth < 768 ? 10 : 14,
       },
     },
+    min: 0,  // Ensure x-axis starts from 0 to prevent negative values
+    ticks: {
+      callback: (value) => abbreviateNumber(value as number),  // Abbreviate x-axis labels
+      autoSkip: true,  // Automatically skip some labels if space is tight
+      maxTicksLimit: window.innerWidth < 768 ? 5 : 10,  // Adjust tick number based on screen size
+      font: {
+        size: window.innerWidth < 768 ? 10 : 12,
+      },
+    },
+  },
+  y: {
+    title: {
+      display: true,
+      text: 'Tax Paid (R)',
+      font: {
+        size: window.innerWidth < 768 ? 10 : 14,
+      },
+    },
+    beginAtZero: true,  // Start y-axis at 0
+    ticks: {
+      callback: (value) => abbreviateNumber(value as number),  // Abbreviate y-axis labels
+      font: {
+        size: window.innerWidth < 768 ? 10 : 12,
+      },
+    },
+    grid: {
+      display: window.innerWidth >= 768,
+    },
+  },
+},
   };
 
   return <Line data={data} options={options} />;
