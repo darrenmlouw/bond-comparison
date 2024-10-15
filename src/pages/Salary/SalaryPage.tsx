@@ -184,7 +184,7 @@ const SalaryPage = () => {
           <TaxComparisonChart />
         </div>
 
-        <div className="flex flex-row min-h-96"></div>
+        <div className="flex flex-row min-h-32"></div>
       </div>
     </div>
   );

@@ -15,6 +15,7 @@ const HomePage = () => {
       <Features constantData={FEATURES} />
       <HowTo />
       <Socials />
+      <div className="flex flex-row min-h-32"></div>
     </>
   );
 };
