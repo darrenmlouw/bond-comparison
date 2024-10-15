@@ -9,13 +9,13 @@ import FEATURES from '@/constants/FEATURES';
 
 const HomePage = () => {
   return (
-    <div className="flex flex-col z-10">
+    <>
       <PageTracker />
       <Hero />
-      <Features constantData={FEATURES}/>
+      <Features constantData={FEATURES} />
       <HowTo />
       <Socials />
-    </div>
+    </>
   );
 };
 

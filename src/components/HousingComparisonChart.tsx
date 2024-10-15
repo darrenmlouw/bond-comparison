@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Line } from 'react-chartjs-2';
 import {
 	Chart as ChartJS,
@@ -12,7 +12,7 @@ import {
 	ChartOptions,
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
-import ThemeContext from '@/contexts/ThemeContext';
+import { useTheme } from '@/hooks/useTheme';
 
 ChartJS.register(
 	CategoryScale,
@@ -40,7 +40,7 @@ const HousingComparisonChart: React.FC<HousingComparisonChartProps> = ({
 	bondData,
 	sellingYear,
 }) => {
-	const { theme } = useContext(ThemeContext);
+	const { theme } = useTheme();
 	const labels = rentData.map((_, index) => `Year ${index}`);
 
 	const data = {

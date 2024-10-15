@@ -5,7 +5,7 @@ import HomePage from '@/pages/Home/HomePage';
 import SalaryPage from '@/pages/Salary/SalaryPage';
 import ComparisonPage from '@/pages/Comparison/ComparisonPage';
 import { useEffect, useState } from 'react';
-import { WebsiteLoadingScreen } from '@/components/WebsiteLoadingScreen';
+import { WebsiteInitialScreen } from '@/components/WebsiteInitialScreen';
 import ScrollToTop from '@/components/ScrollToTop'; // Import the ScrollToTop component
 
 function App() {
@@ -21,13 +21,13 @@ function App() {
   return (
     <>
       {loading ? (
-        <WebsiteLoadingScreen />
+        <WebsiteInitialScreen />
       ) : (
         <>
-          <ScrollToTop /> {/* Add this line */}
+          <ScrollToTop />
           <Routes location={location}>
             <Route path="/" element={<Layout />}>
-              <Route path="/" element={<HomePage />} />
+              <Route index element={<HomePage />} />
               <Route path="/Salary" element={<SalaryPage />} />
               <Route path="/Comparison" element={<ComparisonPage />} />
             </Route>

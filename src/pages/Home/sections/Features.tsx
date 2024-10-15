@@ -1,7 +1,8 @@
 import Feature from '@/types/Feature';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { X } from 'lucide-react';
+import useClickOutside from '@/hooks/useClickOutside';
 
 interface FeaturesProps {
   constantData: Feature[];
@@ -9,6 +10,8 @@ interface FeaturesProps {
 
 const Features = (props: FeaturesProps) => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useClickOutside(dialogRef, () => setSelectedId(null));
 
   const selectedFeature = props.constantData.find(
     (item) => item.id === selectedId
@@ -86,6 +89,7 @@ const Features = (props: FeaturesProps) => {
             <motion.div className="fixed inset-0 flex justify-center items-center z-50 my-6 sm:my-8 md:my-12">
               <motion.div
                 layoutId={selectedId.toString()}
+                ref={dialogRef}
                 className="relative p-1 rounded-2xl cursor-pointer h-full max-w-6xl w-full mx-6 sm:mx-8 md:mx-12"
                 style={{
                   background: props.constantData.find(

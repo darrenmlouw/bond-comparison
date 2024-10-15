@@ -5,11 +5,14 @@ const Hero = () => {
   const handleGetStartedClick = () => {
     const element = document.getElementById('howto');
     if (element) {
+      const contentWrapper = document.getElementById('content-wrapper');
       const offsetTop = element.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({
-        top: offsetTop,
-        behavior: 'smooth',
-      });
+      if (element && contentWrapper) {
+        contentWrapper.scrollTo({
+          top: offsetTop,
+          behavior: 'smooth',
+        });
+      }
     }
   };
 
@@ -87,7 +90,26 @@ const Hero = () => {
             onClick={() => {
               setTimeout(handleGetStartedClick, 200);
             }}
-            className="outline outline-1 outline-foreground/40 bg-primary/30 backdrop-blur-[6px] hover:bg-primary hover:outline-primary inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary-foreground h-10 px-4 py-2-8"
+            className="
+              border-2 border-primary 
+              bg-primary/30 hover:bg-primary 
+              hover:border-primary 
+              rounded-full text-base 
+              font-medium transition-colors 
+              text-primary-foreground 
+              h-10 px-4 py-2-8 
+              ring-2 
+              ring-primary
+              ring-offset-2 
+              ring-offset-background 
+              focus:ring-primary 
+              focus:outline-none 
+              active:ring-primary
+              focus-visible:ring-2 
+              focus-visible:ring-primary
+              focus-visible:ring-offset-2 
+              focus-visible:ring-offset-foreground
+            "
           >
             Get Started
           </motion.button>

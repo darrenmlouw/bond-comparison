@@ -1,22 +1,22 @@
 import { motion } from 'framer-motion';
-import ThemeContext from '@/contexts/ThemeContext';
 import { SunIcon } from '@radix-ui/react-icons';
 import { MoonIcon } from 'lucide-react';
-import { useContext } from 'react';
+import { useTheme } from '@/hooks/useTheme';
 
+// src/components/layout/components/TopBar.tsx
 const TopBar = () => {
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <div className="fixed top-1.5 right-1.5 md:top-1 md:right-1 lg:top-1 lg:right-1 flex justify-between items-center z-30">
       <motion.button
         layout
         whileHover={{
-          scale: 1.1, // Slightly scale up on hover
-          rotate: [0, 10, -10, 0], // Add a playful rotation on hover
+          scale: 1.1,
+          rotate: [0, 10, -10, 0],
         }}
         whileTap={{
-          scale: 0.9, // Scale down on click for a click feedback
+          scale: 0.9,
         }}
         onClick={toggleTheme}
         className="group rounded-full backdrop-blur-sm outline outline-1 outline-foreground/20 bg-transparent active:outline-1 active:bg-transparent hover:outline-1 hover:bg-transparent p-2"

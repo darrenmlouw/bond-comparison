@@ -35,9 +35,10 @@ const PageTracker = () => {
   }, []);
 
   const handleClick = (id: string) => {
+    const contentWrapper = document.getElementById('content-wrapper');
     const element = document.getElementById(id);
-    if (element) {
-      window.scrollTo({
+    if (element && contentWrapper) {
+      contentWrapper.scrollTo({
         top: element.offsetTop,
         behavior: 'smooth',
       });

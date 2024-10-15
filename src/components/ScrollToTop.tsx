@@ -6,7 +6,10 @@ const ScrollToTop = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    const contentWrapper = document.getElementById('content-wrapper');
+    if (contentWrapper) {
+      contentWrapper.scrollTo(0, 0); // Scroll the content area only
+    }
   }, [pathname]);
 
   return null;

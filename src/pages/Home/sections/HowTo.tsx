@@ -20,8 +20,8 @@ const HowTo = () => {
               <FaClipboardList className="text-4xl sm:text-5xl md:text-6xl text-primary" />
             }
             stepNumber={1}
-            title="Calculate Capital Gains"
-            description="Use our Capital Gains Tax Estimator to calculate potential capital gains tax when selling your property."
+            title="Calculate Annual Salary and Tax"
+            description="Enter your annual salary and deductions to calculate your net income after tax."
           />
 
           {/* Step 2 */}

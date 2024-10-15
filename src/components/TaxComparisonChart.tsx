@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -12,9 +12,9 @@ import {
   ChartOptions,
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
-import SalaryContext from '@/contexts/SalaryContext';
+import { useSalary } from '@/hooks/useSalary';
 import { calculateTax } from '@/utils/incomeTaxCalculations'; 
-import ThemeContext from '@/contexts/ThemeContext';
+import { useTheme } from '@/hooks/useTheme';
 
 ChartJS.register(
   CategoryScale,
@@ -28,8 +28,8 @@ ChartJS.register(
 );
 
 const TaxComparisonChart: React.FC = () => {
-  const { theme } = useContext(ThemeContext);
-  const { year, grossMonthlyIncome, age, deductions } = useContext(SalaryContext);
+  const { theme } = useTheme();
+  const { year, grossMonthlyIncome, age, deductions } = useSalary();
 
   const grossAnnualIncome = grossMonthlyIncome * 12;
   const annualDeductions = deductions * 12;

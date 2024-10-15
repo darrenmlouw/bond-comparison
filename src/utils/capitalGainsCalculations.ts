@@ -50,7 +50,6 @@ export class CapitalGainsTaxCalculator {
 	}{
 		// Calculate capital gain
 		const capitalGain = this.sellingPrice - this.baseCost;
-		console.log('capitalGain', capitalGain);
 
 		// Apply exclusions
 		let exclusion = 0;

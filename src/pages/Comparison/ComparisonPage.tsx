@@ -168,7 +168,7 @@ const ComparisonPage: React.FC = () => {
   }, [years, initialBond, deposit, interestRate]);
 
   return (
-    <div className="flex flex-col h-full w-full justify-center items-center">
+    <div className="flex flex-col h-full w-full items-center ">
       <div className="px-4 space-y-2 container">
         <p className="pt-10 font-bold px-4 pointer-events-none text-5xl text-center md:text-6xl lg:text-7xl">
           Rent vs Buy Comparison
@@ -781,6 +781,7 @@ const ComparisonPage: React.FC = () => {
             sellingYear={sellingYear}
           />
         </div>
+        <div className="flex flex-row min-h-32"></div>
       </div>
     </div>
   );

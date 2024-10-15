@@ -22,7 +22,7 @@ const FEATURES: Feature[] = [
   },
   {
     id: 3,
-    title: 'Rent vs Buy Calculator',
+    title: 'Rent vs Buy Statistics',
     subtitle: 'Analyze and compare the long-term costs of renting versus buying a home.',
     description: 'The Rent vs Buy Calculator helps you compare the financial aspects of renting versus owning a home. It factors in mortgage payments, rent costs, property appreciation, taxes, and maintenance to show how each option impacts your finances in the long term. This tool is designed to help you make informed decisions about homeownership based on your financial situation and goals.',
     icon: FaHome,

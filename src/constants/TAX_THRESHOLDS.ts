@@ -1,4 +1,4 @@
-const TAX_THRESHOLD: Record<number, { under65: number; from65to75: number; over75: number }> = {
+const TAX_THRESHOLDS: Record<number, { under65: number; from65to75: number; over75: number }> = {
   2024: {
     under65: 95950,
     from65to75: 148217,
@@ -31,4 +31,4 @@ const TAX_THRESHOLD: Record<number, { under65: number; from65to75: number; over7
   },
 };
 
-export default TAX_THRESHOLD;
+export default TAX_THRESHOLDS;

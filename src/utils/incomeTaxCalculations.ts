@@ -1,30 +1,30 @@
-import TAX_BRACKETS from '@/constants/taxBrackets';
-import TAX_REBATES from '@/constants/taxRebates';
-import TAX_THRESHOLD from '@/constants/taxThreshold';
+import TAX_BRACKETS from '@/constants/TAX_BRACKETS';
+import TAX_REBATES from '@/constants/TAX_REBATES';
+import TAX_THRESHOLDS from '@/constants/TAX_THRESHOLDS';
 
 export const calculateTax = (
 	annualIncome: number,
 	age: number,
 	year: number
 ) => {
-	const brackets = TAX_BRACKETS[year];
-	const rebates = TAX_REBATES[year];
-	const thresholds = TAX_THRESHOLD[year];
+	const BRACKETS = TAX_BRACKETS[year];
+	const REBATES = TAX_REBATES[year];
+	const THRESHOLDS = TAX_THRESHOLDS[year];
 
-	if (!brackets || !rebates || !thresholds) {
+	if (!BRACKETS || !REBATES || !THRESHOLDS) {
 		throw new Error(
-			`Tax brackets, rebates, or thresholds for the year ${year} are not defined.`
+			`Tax BRACKETS, REBATES, or THRESHOLDS for the year ${year} are not defined.`
 		);
 	}
 
 	let tax = 0;
 	const remainingIncome = annualIncome;
-	let threshold = thresholds.under65;
+	let threshold = THRESHOLDS.under65;
 
 	if (age >= 65 && age < 75) {
-		threshold = thresholds.from65to75;
+		threshold = THRESHOLDS.from65to75;
 	} else if (age >= 75) {
-		threshold = thresholds.over75;
+		threshold = THRESHOLDS.over75;
 	}
 
 	// If annual income is below the threshold, tax is 0
@@ -32,7 +32,7 @@ export const calculateTax = (
 		return 0;
 	}
 
-	for (const bracket of brackets) {
+	for (const bracket of BRACKETS) {
 		if (remainingIncome >= bracket.lower && remainingIncome <= bracket.upper) {
 			tax =
 				bracket.base + bracket.rate * (remainingIncome - (bracket.lower - 1));
@@ -40,45 +40,45 @@ export const calculateTax = (
 		}
 	}
 
-	let rebate = rebates.under65;
+	let rebate = REBATES.under65;
 	if (age >= 65 && age < 75) {
-		rebate = rebates.from65to75;
+		rebate = REBATES.from65to75;
 	} else if (age >= 75) {
-		rebate = rebates.over75;
+		rebate = REBATES.over75;
 	}
 
 	return Math.max(tax - rebate, 0); // Ensure that tax doesn't go negative after rebate
 };
 
 export const getTaxBracket = (annualIncome: number, year: number) => {
-	const brackets = TAX_BRACKETS[year];
+	const BRACKETS = TAX_BRACKETS[year];
 
-	if (!brackets) {
-		throw new Error(`Tax brackets for the year ${year} are not defined.`);
+	if (!BRACKETS) {
+		throw new Error(`Tax BRACKETS for the year ${year} are not defined.`);
 	}
 
-	for (const bracket of brackets) {
+	for (const bracket of BRACKETS) {
 		if (annualIncome <= bracket.upper) {
 			return bracket;
 		}
 	}
 
-	return brackets[brackets.length - 1];
+	return BRACKETS[BRACKETS.length - 1];
 };
 
 export const getTaxRebate = (age: number, year: number) => {
-	const rebates = TAX_REBATES[year];
+	const REBATES = TAX_REBATES[year];
 
-	if (!rebates) {
-		throw new Error(`Tax rebates for the year ${year} are not defined.`);
+	if (!REBATES) {
+		throw new Error(`Tax REBATES for the year ${year} are not defined.`);
 	}
 
 	if (age < 65) {
-		return rebates.under65;
+		return REBATES.under65;
 	} else if (age >= 65 && age < 75) {
-		return rebates.from65to75;
+		return REBATES.from65to75;
 	} else {
-		return rebates.over75;
+		return REBATES.over75;
 	}
 };
 

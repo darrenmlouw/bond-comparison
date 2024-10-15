@@ -1,15 +1,14 @@
-import { useContext } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import SalaryContext from '@/contexts/SalaryContext';
 import {
   calculateTax,
-  getTaxBracket,
-  getTaxRebate,
+  // getTaxBracket,
+  // getTaxRebate,
 } from '@/utils/incomeTaxCalculations';
 import { formatNumber } from '@/utils/formatNumber'; // Import the utility function
 import TaxComparisonChart from '@/components/TaxComparisonChart';
 import { SectionHeader } from '@/components/SectionHeader';
+import { useSalary } from '@/hooks/useSalary';
 
 const SalaryPage = () => {
   const {
@@ -21,13 +20,13 @@ const SalaryPage = () => {
     setAge,
     year,
     setYear,
-  } = useContext(SalaryContext);
+  } = useSalary();
 
   const netAnnualIncome = grossMonthlyIncome * 12 - deductions * 12;
 
   const tax = calculateTax(netAnnualIncome, age, year);
-  const taxBracket = getTaxBracket(netAnnualIncome, year);
-  const taxRebate = getTaxRebate(age, year);
+  // const taxBracket = getTaxBracket(netAnnualIncome, year);
+  // const taxRebate = getTaxRebate(age, year);
 
   return (
     <div className="flex flex-col h-full w-full items-center ">
@@ -40,7 +39,7 @@ const SalaryPage = () => {
       </p>
 
       <div className="px-4 sm:px-6 gap-4 sm:gap-6 md:gap-8 flex flex-col w-full justify-center items-center ">
-        <div className="flex flex-col w-full max-w-2xl">
+        <div className="flex flex-col w-full max-w-2xl gap-y-2">
           <SectionHeader label="Income Details" />
 
           <div className="flex flex-row w-full gap-2">
@@ -107,40 +106,54 @@ const SalaryPage = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-card w-full max-w-4xl h-auto p-6 opacity-75 outline outline-1 outline-card-foreground/20 shadow-xl rounded-xl">
+        <div className="flex bg-card justify-center gap-6 w-full max-w-2xl h-auto p-3 sm:p-4 md:p-6 opacity-75 outline outline-1 outline-card-foreground/20 shadow-xl rounded-xl">
           {/* Column 1 */}
-          <div className="grid grid-cols-1 gap-6">
-            <div className="flex flex-col">
-              <p className="text-md sm:text-lg">Gross Annual Income</p>
-              <p className="text-2xl sm:text-3xl font-light tracking-wide text-yellow-500">
-                R {formatNumber(grossMonthlyIncome * 12)}
-              </p>
+          <div className="grid grid-cols-2 w-full gap-y-4 sm:gap-y-6 md:gap-y-8">
+            <div className="flex justify-start">
+              <div className="flex flex-col">
+                <p className="text-sm sm:text-base md:text-lg">
+                  Gross Annual Income
+                </p>
+                <p className="text-xl sm:text-2xl md:text-3xl font-light tracking-wide text-green-700 dark:text-green-300 ">
+                  R {formatNumber(grossMonthlyIncome * 12)}
+                </p>
+              </div>
             </div>
 
-            <div className="flex flex-col">
-              <p className="text-md sm:text-lg">Annual Tax Deductions</p>
-              <p className="text-2xl sm:text-3xl font-light tracking-wide text-red-500">
-                R {formatNumber(deductions * 12)}
-              </p>
+            <div className="flex justify-end">
+              <div className="flex flex-col">
+                <p className="text-sm sm:text-base md:text-lg">
+                  Net Annual Income
+                </p>
+                <p className="text-xl sm:text-2xl md:text-3xl font-light tracking-wide text-green-600 dark:text-green-400">
+                  R {formatNumber(grossMonthlyIncome * 12 - deductions * 12)}
+                </p>
+              </div>
             </div>
 
-            <div className="flex flex-col">
-              <p className="text-md sm:text-lg">Net Annual Income</p>
-              <p className="text-2xl sm:text-3xl font-light tracking-wide text-green-500">
-                R {formatNumber(grossMonthlyIncome * 12 - deductions * 12)}
-              </p>
+            <div className="flex justify-start">
+              <div className="flex flex-col">
+                <p className="text-sm sm:text-base md:text-lg">
+                  Annual Tax Deductions
+                </p>
+                <p className="text-xl sm:text-2xl md:text-3xl font-light tracking-wide text-orange-700 dark:text-orange-400">
+                  R {formatNumber(deductions * 12)}
+                </p>
+              </div>
             </div>
 
-            <div className="flex flex-col">
-              <p className="text-md sm:text-lg">Annual Tax</p>
-              <p className="text-2xl sm:text-3xl font-light tracking-wide text-red-500">
-                R {formatNumber(tax)}
-              </p>
+            <div className="flex justify-end">
+              <div className="flex flex-col">
+                <p className="text-sm sm:text-base md:text-lg">Annual Tax</p>
+                <p className="text-xl sm:text-2xl md:text-3xl font-light tracking-wide text-red-500">
+                  R {formatNumber(tax)}
+                </p>
+              </div>
             </div>
           </div>
 
           {/* Column 2 */}
-          <div className="grid grid-cols-1 grid-rows-3 gap-6">
+          {/* <div className="grid grid-cols-1 grid-rows-3 gap-6">
             <div className="flex flex-col">
               <p className="text-sm sm:text-lg">Tax Bracket</p>
               <p className="text-md sm:text-xl font-light tracking-wide">
@@ -164,10 +177,10 @@ const SalaryPage = () => {
                 R{formatNumber(taxRebate)}
               </p>
             </div>
-          </div>
+          </div> */}
         </div>
 
-        <div className="flex flex-row bg-card w-full max-w-4xl h-96 opacity-75 outline outline-1 outline-card-foreground/20 shadow-2xl p-4 rounded-xl ">
+        <div className="flex flex-row bg-card w-full max-w-2xl h-96 opacity-75 outline outline-1 outline-card-foreground/20 shadow-2xl p-3 sm:p-4 md:p-6 rounded-xl ">
           <TaxComparisonChart />
         </div>
 

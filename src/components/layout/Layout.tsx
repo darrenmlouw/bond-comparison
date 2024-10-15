@@ -16,7 +16,13 @@ const Layout = () => {
   return (
     <>
       <TopBar />
-      <Outlet />
+      <div
+        id="content-wrapper"
+        className="h-screen w-screen overflow-y-auto"
+        style={{ scrollBehavior: 'smooth' }}
+      >
+        <Outlet />
+      </div>
       <Analytics />
       <div className="z-20 fixed bottom-12 sm:bottom-2 md:bottom-4 left-1/2 transform -translate-x-1/2 bg-primary/20 backdrop-blur-[6px] outline outline-1 outline-foreground/30 rounded-2xl">
         <FloatingDock
