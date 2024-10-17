@@ -10,8 +10,13 @@ import TaxComparisonChart from '@/components/TaxComparisonChart';
 import { SectionHeader } from '@/components/SectionHeader';
 import { useSalary } from '@/hooks/useSalary';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useRef, useState } from 'react';
+import useClickOutside from '@/hooks/useClickOutside';
 
 const SalaryPage = () => {
+  const [isGraphOpen, setIsGraphOpen] = useState(false);
+  const graphDialogRef = useRef<HTMLDivElement>(null);
+  useClickOutside(graphDialogRef, () => setIsGraphOpen(false));
   const {
     grossMonthlyIncome,
     setGrossMonthlyIncome,
@@ -184,17 +189,37 @@ const SalaryPage = () => {
         <motion.div 
         key={'TaxGraph'}
         layoutId='TaxGraph'
+        onClick={() => setIsGraphOpen(true)}
         className="flex flex-row bg-card w-full max-w-2xl h-96 opacity-75 outline outline-1 outline-card-foreground/20 shadow-2xl p-3 sm:p-4 md:p-6 rounded-xl ">
           <TaxComparisonChart />
         </motion.div>
 
-        {/* <AnimatePresence>
-          <motion.div 
-          layoutId='TaxGraph'
-          className='fixed flex top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50 justify-center items-center'>
-            
-          </motion.div>
-        </AnimatePresence> */}
+        <AnimatePresence>
+          {isGraphOpen !== false && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-black bg-opacity-20 backdrop-blur-sm z-40"
+              onClick={() => setIsGraphOpen(false)}
+            />
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {isGraphOpen !== false && (
+            <motion.div className="fixed inset-0 flex justify-center items-center z-50 my-6 sm:my-8 md:my-12">
+              <motion.div 
+                layoutId='TaxGraph'
+                ref={graphDialogRef}
+                className="relative bg-card p-2 rounded-2xl cursor-pointer h-1/2 sm:h-3/5 md:h-2/3 lg:h-full w-full mx-6 sm:mx-8 md:mx-12 outline outline-1 outline-card-foreground/20"
+                >
+                <TaxComparisonChart />
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <div className="flex flex-row min-h-32"></div>
       </div>
