@@ -9,6 +9,7 @@ import { formatNumber } from '@/utils/formatNumber'; // Import the utility funct
 import TaxComparisonChart from '@/components/TaxComparisonChart';
 import { SectionHeader } from '@/components/SectionHeader';
 import { useSalary } from '@/hooks/useSalary';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const SalaryPage = () => {
   const {
@@ -120,8 +121,8 @@ const SalaryPage = () => {
               </div>
             </div>
 
-            <div className="flex justify-end">
-              <div className="flex flex-col">
+            <div className="flex items-end">
+              <div className="flex flex-col text-left">
                 <p className="text-sm sm:text-base md:text-lg">
                   Net Annual Income
                 </p>
@@ -142,8 +143,8 @@ const SalaryPage = () => {
               </div>
             </div>
 
-            <div className="flex justify-end">
-              <div className="flex flex-col">
+            <div className="flex items-end">
+              <div className="flex flex-col text-left">
                 <p className="text-sm sm:text-base md:text-lg">Annual Tax</p>
                 <p className="text-xl sm:text-2xl md:text-3xl font-light tracking-wide text-red-500">
                   R {formatNumber(tax)}
@@ -180,9 +181,20 @@ const SalaryPage = () => {
           </div> */}
         </div>
 
-        <div className="flex flex-row bg-card w-full max-w-2xl h-96 opacity-75 outline outline-1 outline-card-foreground/20 shadow-2xl p-3 sm:p-4 md:p-6 rounded-xl ">
+        <motion.div 
+        key={'TaxGraph'}
+        layoutId='TaxGraph'
+        className="flex flex-row bg-card w-full max-w-2xl h-96 opacity-75 outline outline-1 outline-card-foreground/20 shadow-2xl p-3 sm:p-4 md:p-6 rounded-xl ">
           <TaxComparisonChart />
-        </div>
+        </motion.div>
+
+        {/* <AnimatePresence>
+          <motion.div 
+          layoutId='TaxGraph'
+          className='fixed flex top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50 justify-center items-center'>
+            
+          </motion.div>
+        </AnimatePresence> */}
 
         <div className="flex flex-row min-h-32"></div>
       </div>
