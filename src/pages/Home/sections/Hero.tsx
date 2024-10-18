@@ -31,15 +31,14 @@ const Hero = () => {
         transition={{
           duration: 0.2,
         }}
-        className="flex flex-col text-center h-full w-full outline outline-4 -outline-offset-4 dark:outline-white/70 outline-white/90 rounded-3xl sm:rounded-3xl md:rounded-3xl justify-center items-center"
+        className="flex flex-col text-center h-full w-full outline outline-4 -outline-offset-4 dark:outline-white/70 outline-black/70 rounded-3xl sm:rounded-3xl md:rounded-3xl justify-center items-center"
       >
         <div className="flex flex-row space-x-3 sm:space-x-6 md:space-x-8 justify-center mb-6 flex-wrap">
           <AnimatedText
             text="Rent"
             className="text-6xl sm:text-7xl md:text-8xl font-bold text-violet-400 dark:text-violet-600 
               filter 
-              drop-shadow-[0_0.75rem_0.35rem_rgba(24,4,73,0.75)] 
-              dark:drop-shadow-[0_0_15px_rgba(139,92,246,0.75)]"
+              drop-shadow-[0_0_15px_rgba(139,92,246,0.75)]"
           />
 
           <AnimatedText
@@ -51,9 +50,8 @@ const Hero = () => {
           <AnimatedText
             text="Buy"
             className="text-6xl sm:text-7xl md:text-8xl font-bold text-pink-400 dark:text-pink-700 
-              filter 
-              drop-shadow-[0_0.75rem_0.35rem_rgba(69,7,38,0.75)] 
-              dark:drop-shadow-[0_0_15px_rgba(236,72,153,0.75)]"
+              filter
+              drop-shadow-[0_0_15px_rgba(236,72,153,0.75)]"
           />
         </div>
 

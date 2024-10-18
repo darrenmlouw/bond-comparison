@@ -3,12 +3,14 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { X } from 'lucide-react';
 import useClickOutside from '@/hooks/useClickOutside';
+import { useTheme } from '@/hooks/useTheme';
 
 interface FeaturesProps {
   constantData: Feature[];
 }
 
 const Features = (props: FeaturesProps) => {
+  const { theme } = useTheme();
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   useClickOutside(dialogRef, () => setSelectedId(null));
@@ -39,7 +41,7 @@ const Features = (props: FeaturesProps) => {
                 className="relative p-1 rounded-2xl cursor-pointer"
                 style={{
                   background: item.borderGradient,
-                  boxShadow: `${item.boxShadow}`,
+                  boxShadow: `${theme === 'dark' ? item.boxShadowDark : item.boxShadowLight}`,
                 }}
               >
                 <div
@@ -95,7 +97,7 @@ const Features = (props: FeaturesProps) => {
                   background: props.constantData.find(
                     (item) => item.id === selectedId
                   )?.borderGradient,
-                  boxShadow: `${selectedFeature.boxShadow}`, // Glow effect
+                  boxShadow: `${theme === 'dark' ? selectedFeature.boxShadowDark : selectedFeature.boxShadowLight}`,
                 }}
               >
                 <motion.div

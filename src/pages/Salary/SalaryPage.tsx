@@ -112,7 +112,7 @@ const SalaryPage = () => {
           </div>
         </div>
 
-        <div className="flex bg-card justify-center gap-6 w-full max-w-2xl h-auto p-3 sm:p-4 md:p-6 opacity-75 outline outline-1 outline-card-foreground/20 shadow-xl rounded-xl">
+        <div className="flex bg-card justify-center gap-6 w-full max-w-4xl h-auto p-3 sm:p-4 md:p-6 opacity-75 outline outline-1 outline-card-foreground/20 shadow-xl rounded-xl">
           {/* Column 1 */}
           <div className="grid grid-cols-2 w-full gap-y-4 sm:gap-y-6 md:gap-y-8">
             <div className="flex justify-start">
@@ -190,7 +190,7 @@ const SalaryPage = () => {
         key={'TaxGraph'}
         layoutId='TaxGraph'
         onClick={() => setIsGraphOpen(true)}
-        className="flex flex-row bg-card w-full max-w-2xl h-96 opacity-75 outline outline-1 outline-card-foreground/20 shadow-2xl p-3 sm:p-4 md:p-6 rounded-xl ">
+        className="flex flex-row bg-card w-full max-w-4xl h-96 opacity-75 outline outline-1 outline-card-foreground/20 shadow-2xl p-3 sm:p-4 md:p-6 rounded-xl ">
           <TaxComparisonChart />
         </motion.div>
 
@@ -213,7 +213,7 @@ const SalaryPage = () => {
               <motion.div 
                 layoutId='TaxGraph'
                 ref={graphDialogRef}
-                className="relative bg-card p-2 rounded-2xl cursor-pointer h-1/2 sm:h-3/5 md:h-2/3 lg:h-full w-full mx-6 sm:mx-8 md:mx-12 outline outline-1 outline-card-foreground/20"
+                className="relative bg-card p-2 sm:p-4 md:p-6 lg:p-8 rounded-2xl cursor-pointer h-1/2 sm:h-3/5 md:h-2/3 lg:h-full w-full mx-6 sm:mx-8 md:mx-12 outline outline-1 outline-card-foreground/20"
                 >
                 <TaxComparisonChart />
               </motion.div>

@@ -1,6 +1,12 @@
 import { motion } from 'framer-motion';
 
-const AnimatedText = ({ text, className }: { text: string; className: string }) => {
+const AnimatedText = ({
+  text,
+  className,
+}: {
+  text: string;
+  className: string;
+}) => {
   const textAnimation = {
     hidden: { opacity: 0, y: -100 }, // Start above and hidden
     visible: () => ({
@@ -16,7 +22,17 @@ const AnimatedText = ({ text, className }: { text: string; className: string }) 
   };
 
   return (
-    <motion.div className={className}>
+    <motion.div
+      whileHover={{
+        scale: 1.1,
+      }}
+      transition={{
+        type: 'spring',
+        stiffness: 600,
+        damping: 10,
+      }}
+      className={className}
+    >
       {text.split('').map((letter, i) => (
         <motion.span
           key={i}

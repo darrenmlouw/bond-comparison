@@ -5,7 +5,8 @@ interface Feature {
   description: string;
   icon: React.ComponentType;
   borderGradient: string;
-  boxShadow: string;
+  boxShadowDark: string;
+  boxShadowLight: string;
 }
 
 export default Feature;
