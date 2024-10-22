@@ -1,4 +1,4 @@
-enum ExclusionOptions {
+enum exclusionOption {
   PrimaryResidence = 'primaryResidence',
   SecondProperty = 'secondProperty',
   JointBond = 'jointBond',
@@ -6,4 +6,4 @@ enum ExclusionOptions {
   SmallBusinessOwner = 'isSmallBusinessOwner',
   None = 'none', // Default option for no specific exclusion
 }
-export default ExclusionOptions
+export default exclusionOption

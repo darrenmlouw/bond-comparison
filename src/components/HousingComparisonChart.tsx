@@ -43,6 +43,10 @@ const HousingComparisonChart: React.FC<HousingComparisonChartProps> = ({
 	const { theme } = useTheme();
 	const labels = rentData.map((_, index) => `Year ${index}`);
 
+  // Find break even year looking for first index where value is more than 0
+  const breakEvenYear = moneyMadeFromSellingHouse.findIndex((value) => value > 0);
+  console.log(moneyMadeFromSellingHouse)
+
 	const data = {
 		labels,
 		datasets: [
@@ -137,6 +141,21 @@ const HousingComparisonChart: React.FC<HousingComparisonChartProps> = ({
 									: 'rgba(255, 50, 50, 0.6)',
 						},
 					},
+          //Show the breakeven year as a vertical line annotation
+          breakEvenYear !== null && {
+						type: 'line',
+						scaleID: 'x',
+						value: breakEvenYear,
+						borderColor: 'rgba(150, 150, 150, 0.6)',
+						borderWidth: 2,
+						label: {
+							display: true,
+							content:'Br Even',
+							position: 'start',
+							backgroundColor: 'rgba(150, 150, 150, 0.6)',
+						},
+					},
+
 					// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				].filter(Boolean) as any,
 			},

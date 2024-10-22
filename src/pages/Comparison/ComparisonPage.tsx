@@ -21,19 +21,25 @@ import { Button } from '@/components/ui/button';
 import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
 import { Checkbox } from '@/components/ui/checkbox';
-import ExclusionOptions from '@/enums/ExclusionOptions';
-import InclusionOptions from '@/enums/InclusionOptions';
+import exclusionOption from '@/enums/exclusionOption';
+import inclusionOption from '@/enums/inclusionOption';
 import { CapitalGainsTaxCalculator } from '@/utils/capitalGainsCalculations';
 import { ExclusionCombobox } from '@/components/ExclusionCombobox';
 import { InclusionCombobox } from '@/components/InclusionCombobox';
 import { SectionHeader } from '@/components/SectionHeader';
+import { useComparison } from '@/hooks/useComparison';
 
 const ComparisonPage: React.FC = () => {
-  // Bond Variables
-  const [housePrice, setHousePrice] = useState(1200000);
-  const [deposit, setDeposit] = useState(50000);
-  const [years, setYears] = useState(20);
-  const [interestRate, setInterestRate] = useState(11.75);
+  const {
+    housePrice,
+    setHousePrice,
+    deposit,
+    setDeposit,
+    years,
+    setYears,
+    interestRate,
+    setInterestRate
+  } = useComparison();
 
   // Appreciation Variables
   const [appreciationRate, setAppreciationRate] = useState(4);
@@ -59,11 +65,11 @@ const ComparisonPage: React.FC = () => {
   const [annualRentIncrease, setAnnualRentIncrease] = useState(10);
 
   // Capital Gains Variables
-  const [exclusionType, setExclusionType] = useState<ExclusionOptions>(
-    ExclusionOptions.None
+  const [exclusionType, setExclusionType] = useState<exclusionOption>(
+    exclusionOption.None
   );
-  const [inclusionType, setInclusionType] = useState<InclusionOptions>(
-    InclusionOptions.Individual
+  const [inclusionType, setInclusionType] = useState<inclusionOption>(
+    inclusionOption.Individual
   );
 
   const [smallBusinessMarketValue, setSmallBusinessMarketValue] = useState(0);
@@ -194,7 +200,7 @@ const ComparisonPage: React.FC = () => {
                     id="housePrice"
                     type="number"
                     value={housePrice}
-                    onChange={(e) => setHousePrice(parseFloat(e.target.value))}
+                    onChange={(e) => {setHousePrice(parseFloat(e.target.value))}}
                   />
                 </div>
 
@@ -236,7 +242,7 @@ const ComparisonPage: React.FC = () => {
 
               <SectionHeader label="Capital Gains Tax Variables" />
 
-              <div className='grid grid-cols-2 grid-rows-1 md:grid-cols-1 md:grid-rows-2 lg:grid-col-2 lg:grid-rows-1 xl:grid-col-2 xl:grid-rows-1  flex-wrap w-full gap-2'>
+              <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2  flex-wrap w-full gap-2'>
                 <ExclusionCombobox
                   exclusionType={exclusionType}
                   onExclusionTypeChange={setExclusionType}
@@ -316,7 +322,7 @@ const ComparisonPage: React.FC = () => {
                       />
                       <label
                         htmlFor="addBuyingCostsToBond"
-                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                       >
                         Add to Bond
                       </label>
@@ -400,10 +406,10 @@ const ComparisonPage: React.FC = () => {
             </div>
 
             <div className="flex flex-col space-y-6 bg-card outline outline-1 outline-card-foreground/20 shadow-2xl p-4 rounded-xl max-h-full content-between w-full md:w-2/3 justify-between">
-              <div className="flex flex-row justify-between">
+              <div className="flex flex-col sm:flex-row justify-between gap-2">
                 <div className="flex flex-col justify-between items-start">
                   <div className="flex flex-row items-center">
-                    <p className="text-lg">Monthly Bond Repayments</p>
+                    <p className="text-sm sm:text-base md:text-lg">Monthly Bond Repayments</p>
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button
@@ -447,7 +453,7 @@ const ComparisonPage: React.FC = () => {
                           </div>
 
                           <BlockMath>{String.raw`R = \frac{\text{${
-                            housePrice - deposit
+                            initialBond
                           }} \cdot \text{${(interestRate / 12 / 100).toFixed(
                             5
                           )}} \cdot (1 + \text{${(
@@ -482,7 +488,7 @@ const ComparisonPage: React.FC = () => {
 
                 <div className="flex flex-col justify-between items-start">
                   <div className="flex flex-row items-center">
-                    <p className="text-lg">Total Bond Repayment</p>
+                    <p className="text-sm sm:text-base md:text-lg">Total Bond Repayment</p>
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button
@@ -593,7 +599,7 @@ const ComparisonPage: React.FC = () => {
                     }).format(capitalGainsTax)}
                   </p>
 
-                  <div>
+                  {/* <div>
                     <p className="text-sm">
                       Capital Gain: R{' '}
                       {new Intl.NumberFormat('en-ZA', {
@@ -631,7 +637,7 @@ const ComparisonPage: React.FC = () => {
                       }).format(capitalGainsTax)}{' '}
                       ({marginalTaxRate * 100}% of TG)
                     </p>
-                  </div>
+                  </div> */}
 
                   {/* <p className="text-sm bg-green-400 w-16 border-0 bg-opacity-50 rounded-full p-1 p-x-2 text-center">
 										{(

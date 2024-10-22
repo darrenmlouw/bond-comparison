@@ -17,13 +17,13 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { Label } from '@/components/ui/label';
-import ExclusionOptions from '@/enums/ExclusionOptions'; // Import the ExclusionOptions enum
+import exclusionOption from '@/enums/exclusionOption';
 import { Input } from '@/components/ui/input';
 
 // Type definition for the props
 interface ExclusionComboboxProps {
-  exclusionType: ExclusionOptions;
-  onExclusionTypeChange: (value: ExclusionOptions) => void;
+  exclusionType: exclusionOption;
+  onExclusionTypeChange: (value: exclusionOption) => void;
   numberOfPeopleInJointBond: number;
   onNumberOfPeopleInJointBondChange: (value: number) => void;
   smallBusinessMarketValue: number;
@@ -32,12 +32,12 @@ interface ExclusionComboboxProps {
 
 // List of exclusion options
 const exclusionOptions = [
-  { value: ExclusionOptions.PrimaryResidence, label: 'Primary Residence' },
-  { value: ExclusionOptions.SecondProperty, label: 'Second Property' },
-  { value: ExclusionOptions.JointBond, label: 'Joint Bond' },
-  { value: ExclusionOptions.Deceased, label: 'Deceased' },
-  { value: ExclusionOptions.SmallBusinessOwner, label: 'Small Business Owner' },
-  { value: ExclusionOptions.None, label: 'None' },
+  { value: exclusionOption.PrimaryResidence, label: 'Primary Residence' },
+  { value: exclusionOption.SecondProperty, label: 'Second Property' },
+  { value: exclusionOption.JointBond, label: 'Joint Bond' },
+  { value: exclusionOption.Deceased, label: 'Deceased' },
+  { value: exclusionOption.SmallBusinessOwner, label: 'Small Business Owner' },
+  { value: exclusionOption.None, label: 'None' },
 ];
 
 export const ExclusionCombobox = ({
@@ -61,11 +61,11 @@ export const ExclusionCombobox = ({
             aria-expanded={open}
             className="w-full justify-between"
           >
-            {exclusionType !== ExclusionOptions.None
+            {exclusionType !== exclusionOption.None
               ? exclusionOptions.find(
                   (option) => option.value === exclusionType
                 )?.label
-              : 'Select exclusion type...'}
+              : 'Select Exclusion'}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
@@ -82,8 +82,8 @@ export const ExclusionCombobox = ({
                     onSelect={(currentValue) => {
                       onExclusionTypeChange(
                         currentValue === exclusionType
-                          ? ExclusionOptions.None
-                          : (currentValue as ExclusionOptions)
+                          ? exclusionOption.None
+                          : (currentValue as exclusionOption)
                       );
                       setOpen(false);
                     }}
@@ -104,7 +104,7 @@ export const ExclusionCombobox = ({
         </PopoverContent>
       </Popover>
 
-      {exclusionType === ExclusionOptions.SmallBusinessOwner && (
+      {exclusionType === exclusionOption.SmallBusinessOwner && (
         <div className="flex flex-col space-y-2 w-full">
           <Label>Small Business Market Value</Label>
           <Input
@@ -118,7 +118,7 @@ export const ExclusionCombobox = ({
         </div>
       )}
 
-      {exclusionType === ExclusionOptions.JointBond && (
+      {exclusionType === exclusionOption.JointBond && (
         <div className="flex flex-col space-y-2 w-full">
           <Label>Number of People in Joint Bond</Label>
           <Input

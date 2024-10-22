@@ -12,6 +12,9 @@ import { useSalary } from '@/hooks/useSalary';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRef, useState } from 'react';
 import useClickOutside from '@/hooks/useClickOutside';
+import { YearCombobox } from '@/components/YearCombobox';
+import { AgeCombobox } from '@/components/AgeCombobox';
+import ageCategory from '@/enums/ageCategory';
 
 const SalaryPage = () => {
   const [isGraphOpen, setIsGraphOpen] = useState(false);
@@ -54,6 +57,8 @@ const SalaryPage = () => {
                 Gross Monthly Income
               </Label>
               <Input
+              min={0}
+              max={1000000}
                 type="number"
                 id="income"
                 name="income"
@@ -86,13 +91,11 @@ const SalaryPage = () => {
               <Label htmlFor="age" className="text-sm ">
                 Age
               </Label>
-              <Input
-                type="number"
-                id="age"
-                name="age"
-                placeholder="Age"
-                value={age}
-                onChange={(e) => setAge(parseFloat(e.target.value))}
+              <AgeCombobox
+                age={age || ageCategory.None}
+                onAgeChange={(category) => {
+                  setAge(category);
+                }}
               />
             </div>
 
@@ -100,14 +103,7 @@ const SalaryPage = () => {
               <Label htmlFor="year" className="text-sm">
                 Year
               </Label>
-              <Input
-                type="number"
-                id="year"
-                name="year"
-                placeholder="Year"
-                value={year}
-                onChange={(e) => setYear(parseFloat(e.target.value))}
-              />
+              <YearCombobox year={year.toString()} onYearChange={setYear} />
             </div>
           </div>
         </div>
@@ -186,11 +182,12 @@ const SalaryPage = () => {
           </div> */}
         </div>
 
-        <motion.div 
-        key={'TaxGraph'}
-        layoutId='TaxGraph'
-        onClick={() => setIsGraphOpen(true)}
-        className="flex flex-row bg-card w-full max-w-4xl h-96 opacity-75 outline outline-1 outline-card-foreground/20 shadow-2xl p-3 sm:p-4 md:p-6 rounded-xl ">
+        <motion.div
+          key={'TaxGraph'}
+          layoutId="TaxGraph"
+          onClick={() => setIsGraphOpen(true)}
+          className="flex flex-row bg-card w-full max-w-4xl h-96 opacity-75 outline outline-1 outline-card-foreground/20 shadow-2xl p-3 sm:p-4 md:p-6 rounded-xl hover:bg-card/70 hover:cursor-pointer"
+        >
           <TaxComparisonChart />
         </motion.div>
 
@@ -210,11 +207,11 @@ const SalaryPage = () => {
         <AnimatePresence>
           {isGraphOpen !== false && (
             <motion.div className="fixed inset-0 flex justify-center items-center z-50 my-6 sm:my-8 md:my-12">
-              <motion.div 
-                layoutId='TaxGraph'
+              <motion.div
+                layoutId="TaxGraph"
                 ref={graphDialogRef}
-                className="relative bg-card p-2 sm:p-4 md:p-6 lg:p-8 rounded-2xl cursor-pointer h-1/2 sm:h-3/5 md:h-2/3 lg:h-full w-full mx-6 sm:mx-8 md:mx-12 outline outline-1 outline-card-foreground/20"
-                >
+                className="relative bg-card p-2 sm:p-4 md:p-6 lg:p-8 rounded-2xl h-1/2 sm:h-3/5 md:h-2/3 lg:h-full w-full mx-6 sm:mx-8 md:mx-12 outline outline-1 outline-card-foreground/20"
+              >
                 <TaxComparisonChart />
               </motion.div>
             </motion.div>

@@ -1,7 +1,7 @@
-enum InclusionOptions {
+enum inclusionOption {
 	Individual = 'individual',
 	Company = 'company',
 	Trust = 'trust'
 }
 
-export default InclusionOptions;
+export default inclusionOption;

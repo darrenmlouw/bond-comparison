@@ -17,19 +17,19 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Label } from "@/components/ui/label";
-import InclusionOptions from "@/enums/InclusionOptions"; // Import the InclusionOptions enum
+import inclusionOption from "@/enums/inclusionOption"; // Import the inclusionOptions enum
 
 // Type definition for the props
 interface InclusionComboboxProps {
-  inclusionType: InclusionOptions;
-  oninclusionTypeChange: (value: InclusionOptions) => void;
+  inclusionType: inclusionOption;
+  oninclusionTypeChange: (value: inclusionOption) => void;
 }
 
 // List of inclusion options
 const inclusionOptions = [
-  { value: InclusionOptions.Individual, label: "Individual" },
-  { value: InclusionOptions.Company, label: "Company" },
-  { value: InclusionOptions.Trust, label: "Trust" },
+  { value: inclusionOption.Individual, label: "Individual" },
+  { value: inclusionOption.Company, label: "Company" },
+  { value: inclusionOption.Trust, label: "Trust" },
 ];
 
 export const InclusionCombobox: React.FC<InclusionComboboxProps> = ({
@@ -51,7 +51,7 @@ export const InclusionCombobox: React.FC<InclusionComboboxProps> = ({
           >
             {inclusionType
               ? inclusionOptions.find((option) => option.value === inclusionType)?.label
-              : "Select inclusion type..."}
+              : "Select Inclusion"}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
@@ -66,7 +66,7 @@ export const InclusionCombobox: React.FC<InclusionComboboxProps> = ({
                     key={option.value}
                     value={option.value}
                     onSelect={(currentValue) => {
-                      oninclusionTypeChange(currentValue as InclusionOptions);
+                      oninclusionTypeChange(currentValue as inclusionOption);
                       setOpen(false);
                     }}
                   >

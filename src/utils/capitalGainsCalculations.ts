@@ -1,20 +1,20 @@
-import ExclusionOptions from '@/enums/ExclusionOptions';
-import InclusionOptions from '@/enums/InclusionOptions';
+import exclusionOption from '@/enums/exclusionOption';
+import inclusionOption from '@/enums/inclusionOption';
 
 export class CapitalGainsTaxCalculator {
 	sellingPrice: number;
 	baseCost: number;
 	smallBusinessMarketValue: number;
-	exclusion: ExclusionOptions;
-	inclusion: InclusionOptions;
+	exclusion: exclusionOption;
+	inclusion: inclusionOption;
 	numberOfPeopleInJointBond: number;
 
 	constructor(
 		sellingPrice: number,
 		baseCost: number,
 		smallBusinessMarketValue: number,
-		exclusion: ExclusionOptions,
-		inclusion: InclusionOptions,
+		exclusion: exclusionOption,
+		inclusion: inclusionOption,
 		numberofPeopleInJointBond: number
 	) {
 		this.sellingPrice = sellingPrice;
@@ -26,13 +26,13 @@ export class CapitalGainsTaxCalculator {
 	}
 
 	private calculateMarginalTaxRate(): number {
-		if (this.inclusion === InclusionOptions.Trust) {
+		if (this.inclusion === inclusionOption.Trust) {
 			return 0.36;
 		}
-		if (this.inclusion === InclusionOptions.Company) {
+		if (this.inclusion === inclusionOption.Company) {
 			return 0.216;
 		}
-		if (this.inclusion === InclusionOptions.Individual) {
+		if (this.inclusion === inclusionOption.Individual) {
 			return 0.18;
 		}
 
@@ -54,19 +54,19 @@ export class CapitalGainsTaxCalculator {
 		// Apply exclusions
 		let exclusion = 0;
 		switch (this.exclusion) {
-			case ExclusionOptions.PrimaryResidence:
+			case exclusionOption.PrimaryResidence:
 				exclusion = 2000000;
 				break;
-			case ExclusionOptions.SecondProperty:
+			case exclusionOption.SecondProperty:
 				exclusion = 40000;
 				break;
-			case ExclusionOptions.JointBond:
+			case exclusionOption.JointBond:
 				exclusion = 1000000 * this.numberOfPeopleInJointBond;
 				break;
-			case ExclusionOptions.Deceased:
+			case exclusionOption.Deceased:
 				exclusion = 300000;
 				break;
-			case ExclusionOptions.SmallBusinessOwner:
+			case exclusionOption.SmallBusinessOwner:
 				if (this.smallBusinessMarketValue <= 10000000) {
 					exclusion = 1800000;
 				}
@@ -78,11 +78,11 @@ export class CapitalGainsTaxCalculator {
 		const netCapitalGain = Math.max(0, capitalGain - exclusion);
 
 		let inclusionRate: number = 0;
-		if (this.inclusion === InclusionOptions.Individual) {
+		if (this.inclusion === inclusionOption.Individual) {
 			inclusionRate = 0.4;
-		} else if (this.inclusion === InclusionOptions.Company) {
+		} else if (this.inclusion === inclusionOption.Company) {
 			inclusionRate = 0.8;
-		} else if (this.inclusion === InclusionOptions.Trust) {
+		} else if (this.inclusion === inclusionOption.Trust) {
 			inclusionRate = 0.8;
 		} else {
 			throw new Error('Invalid inclusion option');
