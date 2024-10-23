@@ -105,12 +105,12 @@ const ComparisonPage: React.FC = () => {
 
   const {
     capitalGainsTax,
-    exclusion,
-    capitalGain,
-    netCapitalGain,
-    inclusionRate,
-    marginalTaxRate,
-    taxableGain,
+    // exclusion,
+    // capitalGain,
+    // netCapitalGain,
+    // inclusionRate,
+    // marginalTaxRate,
+    // taxableGain,
   } = useMemo(() => {
     const baseCost = initialBond + totalBuyingCosts;
 
