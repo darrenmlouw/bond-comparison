@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { InfoCircledIcon } from '@radix-ui/react-icons';
 import HousingComparisonChart from '@/components/HousingComparisonChart';
 import {
@@ -21,8 +21,6 @@ import { Button } from '@/components/ui/button';
 import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
 import { Checkbox } from '@/components/ui/checkbox';
-import exclusionOption from '@/enums/exclusionOption';
-import inclusionOption from '@/enums/inclusionOption';
 import { CapitalGainsTaxCalculator } from '@/utils/capitalGainsCalculations';
 import { ExclusionCombobox } from '@/components/ExclusionCombobox';
 import { InclusionCombobox } from '@/components/InclusionCombobox';
@@ -31,55 +29,59 @@ import { useComparison } from '@/hooks/useComparison';
 
 const ComparisonPage: React.FC = () => {
   const {
-    housePrice,
-    setHousePrice,
-    deposit,
-    setDeposit,
-    years,
-    setYears,
-    interestRate,
-    setInterestRate
+    propertyPrice,
+    setPropertyPrice,
+    depositAmount,
+    setDepositAmount,
+    loanTermYears,
+    setLoanTermYearsYears,
+    annualInterestRate,
+    setAnnualInterestRate,
+    annualAppreciationRate,
+    setAnnualAppreciationRate,
+    buyingCosts,
+    setBuyingCosts,
+    otherBuyingCosts,
+    setOtherBuyingCosts,
+    addBuyingCostsToBond,
+    setAddBuyingCostsToBond,
+    monthlyLevies,
+    setMonthlyLevies,
+    monthlyRates,
+    setMonthlyRates,
+    monthlyInsurance,
+    setMonthlyInsurance,
+    additionalMonthlyFees,
+    setAdditionalMonthlyFees,
+    yearOfSale,
+    setYearOfSale,
+    sellingCosts,
+    setSellingCosts,
+    otherSellingCosts,
+    setOtherSellingCosts,
+    monthlyRent,
+    setMonthlyRent,
+    annualRentIncrease,
+    setAnnualRentIncrease,
+    exclusionType,
+    setExclusionType,
+    inclusionType,
+    setInclusionType,
+    smallBusinessMarketValue,
+    setSmallBusinessMarketValue,
+    numberOfPeopleInJointBond,
+    setNumberOfPeopleInJointBond,
   } = useComparison();
 
-  // Appreciation Variables
-  const [appreciationRate, setAppreciationRate] = useState(4);
 
-  // Buying Variables
-  const [buyingCosts, setBuyingCosts] = useState(100000);
-  const [otherBuyingCosts, setOtherBuyingCosts] = useState(0);
-  const [addBuyingCostsToBond, setAddBuyingCostsToBond] = useState(false);
-
-  // Owning Variables
-  const [levies, setLevies] = useState(1000);
-  const [rates, setRates] = useState(1000);
-  const [insurance, setInsurance] = useState(1000);
-  const [otherMonthlyFees, setOtherMonthlyFees] = useState(500);
-
-  // Selling Variables
-  const [sellingYear, setSellingYear] = useState(4);
-  const [sellingCosts, setSellingCosts] = useState(50000);
-  const [otherSellingCosts, setOtherSellingCosts] = useState(50000);
-
-  // Rent Variables
-  const [monthlyRent, setMonthlyRent] = useState(10000);
-  const [annualRentIncrease, setAnnualRentIncrease] = useState(10);
-
-  // Capital Gains Variables
-  const [exclusionType, setExclusionType] = useState<exclusionOption>(
-    exclusionOption.None
-  );
-  const [inclusionType, setInclusionType] = useState<inclusionOption>(
-    inclusionOption.Individual
-  );
-
-  const [smallBusinessMarketValue, setSmallBusinessMarketValue] = useState(0);
-  const [numberOfPeopleInJointBond, setNumberOfPeopleInJointBond] = useState(2);
-
-  const initialBond = useMemo(() => {
+  const principleAmount = useMemo(() => {
     return addBuyingCostsToBond
-      ? buyingCosts + housePrice - deposit
-      : housePrice - deposit;
-  }, [addBuyingCostsToBond, buyingCosts, housePrice, deposit]);
+      ? buyingCosts + propertyPrice - depositAmount
+      : propertyPrice - depositAmount;
+  }, [addBuyingCostsToBond, buyingCosts, propertyPrice, depositAmount]);
+
+  console.log("=========================================")
+  console.log("Principle:\t\t\t\tR", principleAmount)
 
   const totalBuyingCosts = useMemo(() => {
     return addBuyingCostsToBond
@@ -87,35 +89,33 @@ const ComparisonPage: React.FC = () => {
       : buyingCosts + otherBuyingCosts;
   }, [addBuyingCostsToBond, buyingCosts, otherBuyingCosts]);
 
-  const totalMonthlyFees = useMemo(() => {
-    return levies + rates + insurance + otherMonthlyFees;
-  }, [levies, rates, insurance, otherMonthlyFees]);
+  console.log("Total Buying Costs: \tR", totalBuyingCosts)
+
+  const monthlyFees = useMemo(() => {
+    return monthlyLevies + monthlyRates + monthlyInsurance + additionalMonthlyFees;
+  }, [monthlyLevies, monthlyRates, monthlyInsurance, additionalMonthlyFees]);
+
+  console.log("Monthly Fees: \t\t\tR", monthlyFees)
 
   const rentData = useMemo(() => {
-    return calculateRentCost(years, monthlyRent, annualRentIncrease);
-  }, [years, monthlyRent, annualRentIncrease]);
+    return calculateRentCost(loanTermYears, monthlyRent, annualRentIncrease);
+  }, [loanTermYears, monthlyRent, annualRentIncrease]);
 
   const houseValueAfterAppreciationData = useMemo(() => {
     return calculateHouseValueAfterAppreciation(
-      years,
-      initialBond,
-      appreciationRate
+      loanTermYears,
+      principleAmount,
+      annualAppreciationRate
     );
-  }, [years, initialBond, appreciationRate]);
+  }, [loanTermYears, principleAmount, annualAppreciationRate]);
 
   const {
     capitalGainsTax,
-    // exclusion,
-    // capitalGain,
-    // netCapitalGain,
-    // inclusionRate,
-    // marginalTaxRate,
-    // taxableGain,
   } = useMemo(() => {
-    const baseCost = initialBond + totalBuyingCosts;
+    const baseCost = principleAmount + totalBuyingCosts;
 
     const calculator = new CapitalGainsTaxCalculator(
-      houseValueAfterAppreciationData[sellingYear],
+      houseValueAfterAppreciationData[yearOfSale],
       baseCost,
       smallBusinessMarketValue,
       exclusionType,
@@ -124,10 +124,10 @@ const ComparisonPage: React.FC = () => {
     );
     return calculator.calculate();
   }, [
-    initialBond,
+    principleAmount,
     totalBuyingCosts,
     houseValueAfterAppreciationData,
-    sellingYear,
+    yearOfSale,
     smallBusinessMarketValue,
     exclusionType,
     inclusionType,
@@ -140,38 +140,38 @@ const ComparisonPage: React.FC = () => {
 
   const moneyMadeFromSellingHouse = useMemo(() => {
     return calculateMoneyMadeFromSellingHouse(
-      years,
-      housePrice,
-      deposit,
-      appreciationRate,
+      loanTermYears,
+      propertyPrice,
+      depositAmount,
+      annualAppreciationRate,
       totalBuyingCosts,
       totalSellingCosts,
-      totalMonthlyFees,
-      interestRate
+      monthlyFees,
+      annualInterestRate
     );
   }, [
-    years,
-    housePrice,
-    deposit,
-    appreciationRate,
+    loanTermYears,
+    propertyPrice,
+    depositAmount,
+    annualAppreciationRate,
     totalBuyingCosts,
     totalSellingCosts,
-    totalMonthlyFees,
-    interestRate,
+    monthlyFees,
+    annualInterestRate,
   ]);
 
   const { bondCosts, monthlyPayment } = useMemo(() => {
-    return calculateBondCost(years, initialBond, deposit, interestRate);
-  }, [years, initialBond, deposit, interestRate]);
+    return calculateBondCost(loanTermYears, principleAmount, depositAmount, annualInterestRate);
+  }, [loanTermYears, principleAmount, depositAmount, annualInterestRate]);
 
   const remainingPrincipal = useMemo(() => {
     return calculateRemainingPrincipal(
-      years,
-      initialBond,
-      deposit,
-      interestRate
+      loanTermYears,
+      principleAmount,
+      depositAmount,
+      annualInterestRate
     );
-  }, [years, initialBond, deposit, interestRate]);
+  }, [loanTermYears, principleAmount, depositAmount, annualInterestRate]);
 
   return (
     <div className="flex flex-col h-full w-full items-center ">
@@ -195,22 +195,22 @@ const ComparisonPage: React.FC = () => {
 
               <div className="flex flex-row w-full gap-2">
                 <div className="flex flex-col w-1/2 gap-1.5">
-                  <Label htmlFor="housePrice">House Price (R)</Label>
+                  <Label htmlFor="propertyPrice">House Price (R)</Label>
                   <Input
-                    id="housePrice"
+                    id="propertyPrice"
                     type="number"
-                    value={housePrice}
-                    onChange={(e) => {setHousePrice(parseFloat(e.target.value))}}
+                    value={propertyPrice}
+                    onChange={(e) => {setPropertyPrice(parseFloat(e.target.value))}}
                   />
                 </div>
 
                 <div className="flex flex-col w-1/2 gap-1.5">
-                  <Label htmlFor="deposit">Deposit</Label>
+                  <Label htmlFor="depositAmount">Deposit</Label>
                   <Input
-                    id="deposit"
+                    id="depositAmount"
                     type="number"
-                    value={deposit}
-                    onChange={(e) => setDeposit(parseFloat(e.target.value))}
+                    value={depositAmount}
+                    onChange={(e) => setDepositAmount(parseFloat(e.target.value))}
                   />
                 </div>
               </div>
@@ -221,20 +221,20 @@ const ComparisonPage: React.FC = () => {
                   <Input
                     id="years"
                     type="number"
-                    value={years}
-                    onChange={(e) => setYears(parseInt(e.target.value))}
+                    value={loanTermYears}
+                    onChange={(e) => setLoanTermYearsYears(parseInt(e.target.value))}
                   />
                 </div>
 
                 <div className="flex flex-col w-1/2 gap-1.5">
-                  <Label htmlFor="interestRate">Interest Rate (%)</Label>
+                  <Label htmlFor="annualInterestRate">Interest Rate (%)</Label>
                   <Input
-                    id="interestRate"
+                    id="annualInterestRate"
                     type="number"
                     step="0.01"
-                    value={interestRate}
+                    value={annualInterestRate}
                     onChange={(e) =>
-                      setInterestRate(parseFloat(e.target.value))
+                      setAnnualInterestRate(parseFloat(e.target.value))
                     }
                   />
                 </div>
@@ -262,34 +262,34 @@ const ComparisonPage: React.FC = () => {
 
               <div className="flex flex-row w-full gap-2">
                 <div className="flex flex-col w-full gap-1.5">
-                  <Label htmlFor="rates">Rates</Label>
+                  <Label htmlFor="monthlyRates">Rates</Label>
                   <Input
-                    id="rates"
+                    id="monthlyRates"
                     type="number"
-                    value={rates}
-                    onChange={(e) => setRates(parseFloat(e.target.value))}
+                    value={monthlyRates}
+                    onChange={(e) => setMonthlyRates(parseFloat(e.target.value))}
                   />
                 </div>
 
                 <div className="flex flex-col w-full gap-1.5">
-                  <Label htmlFor="levies">Levies</Label>
+                  <Label htmlFor="monthlyLevies">Levies</Label>
                   <Input
-                    id="levies"
+                    id="monthlyLevies"
                     type="number"
-                    value={levies}
-                    onChange={(e) => setLevies(parseFloat(e.target.value))}
+                    value={monthlyLevies}
+                    onChange={(e) => setMonthlyLevies(parseFloat(e.target.value))}
                   />
                 </div>
               </div>
 
               <div className="flex flex-row w-full gap-2">
                 <div className="flex flex-col w-full gap-1.5">
-                  <Label htmlFor="insurance">Insurance</Label>
+                  <Label htmlFor="monthlyInsurance">Insurance</Label>
                   <Input
-                    id="insurance"
+                    id="monthlyInsurance"
                     type="number"
-                    value={insurance}
-                    onChange={(e) => setInsurance(parseFloat(e.target.value))}
+                    value={monthlyInsurance}
+                    onChange={(e) => setMonthlyInsurance(parseFloat(e.target.value))}
                   />
                 </div>
 
@@ -298,9 +298,9 @@ const ComparisonPage: React.FC = () => {
                   <Input
                     id="other"
                     type="number"
-                    value={otherMonthlyFees}
+                    value={additionalMonthlyFees}
                     onChange={(e) =>
-                      setOtherMonthlyFees(parseFloat(e.target.value))
+                      setAdditionalMonthlyFees(parseFloat(e.target.value))
                     }
                   />
                 </div>
@@ -433,13 +433,13 @@ const ComparisonPage: React.FC = () => {
                             <p className="text-xs">where:</p>
 
                             <div className="flex flex-row justify-between">
-                              <InlineMath math={`P = ${initialBond}`} />
+                              <InlineMath math={`P = ${principleAmount}`} />
                               <p>Principal Amount</p>
                             </div>
 
                             <div className="flex flex-row justify-between">
                               <InlineMath
-                                math={`r = ${(interestRate / 12 / 100).toFixed(
+                                math={`r = ${(annualInterestRate / 12 / 100).toFixed(
                                   6
                                 )}`}
                               />
@@ -447,25 +447,25 @@ const ComparisonPage: React.FC = () => {
                             </div>
 
                             <div className="flex flex-row justify-between">
-                              <InlineMath math={`n = ${years * 12}`} />
+                              <InlineMath math={`n = ${loanTermYears * 12}`} />
                               <p>Number of Months</p>
                             </div>
                           </div>
 
                           <BlockMath>{String.raw`R = \frac{\text{${
-                            initialBond
-                          }} \cdot \text{${(interestRate / 12 / 100).toFixed(
+                            principleAmount
+                          }} \cdot \text{${(annualInterestRate / 12 / 100).toFixed(
                             5
                           )}} \cdot (1 + \text{${(
-                            interestRate /
+                            annualInterestRate /
                             12 /
                             100
-                          ).toFixed(5)}})^\text{${years * 12}}}{(1 + \text{${(
-                            interestRate /
+                          ).toFixed(5)}})^\text{${loanTermYears * 12}}}{(1 + \text{${(
+                            annualInterestRate /
                             12 /
                             100
                           ).toFixed(5)}})^\text{${
-                            years * 12
+                            loanTermYears * 12
                           }} - 1}`}</BlockMath>
 
                           {/* calculate the monthly repayment */}
@@ -520,7 +520,7 @@ const ComparisonPage: React.FC = () => {
                             </div>
 
                             <div className="flex flex-row justify-between">
-                              <InlineMath math={`n = ${years * 12}`} />
+                              <InlineMath math={`n = ${loanTermYears * 12}`} />
                               <p>Number of Months</p>
                             </div>
                           </div>
@@ -532,14 +532,14 @@ const ComparisonPage: React.FC = () => {
 
                             <div className="flex flex-row justify-between">
                               <InlineMath
-                                math={`P = ${housePrice - deposit}`}
+                                math={`P = ${propertyPrice - depositAmount}`}
                               />
                               <p>Principal Amount</p>
                             </div>
 
                             <div className="flex flex-row justify-between">
                               <InlineMath
-                                math={`r = ${(interestRate / 12 / 100).toFixed(
+                                math={`r = ${(annualInterestRate / 12 / 100).toFixed(
                                   6
                                 )}`}
                               />
@@ -547,26 +547,26 @@ const ComparisonPage: React.FC = () => {
                             </div>
 
                             <div className="flex flex-row justify-between">
-                              <InlineMath math={`n = ${years * 12}`} />
+                              <InlineMath math={`n = ${loanTermYears * 12}`} />
                               <p>Number of Months</p>
                             </div>
                           </div>
 
                           <BlockMath>{String.raw`T = (\frac{\text{${
-                            housePrice - deposit
-                          }} \cdot \text{${(interestRate / 12 / 100).toFixed(
+                            propertyPrice - depositAmount
+                          }} \cdot \text{${(annualInterestRate / 12 / 100).toFixed(
                             5
                           )}} \cdot (1 + \text{${(
-                            interestRate /
+                            annualInterestRate /
                             12 /
                             100
-                          ).toFixed(5)}})^\text{${years * 12}}}{(1 + \text{${(
-                            interestRate /
+                          ).toFixed(5)}})^\text{${loanTermYears * 12}}}{(1 + \text{${(
+                            annualInterestRate /
                             12 /
                             100
                           ).toFixed(5)}})^\text{${
-                            years * 12
-                          }} - 1}) \cdot \text{${years * 12}}`}</BlockMath>
+                            loanTermYears * 12
+                          }} - 1}) \cdot \text{${loanTermYears * 12}}`}</BlockMath>
 
                           {/* calculate the monthly repayment */}
                           <BlockMath>{String.raw`R = \text{${monthlyPayment.toFixed(
@@ -582,7 +582,7 @@ const ComparisonPage: React.FC = () => {
                     {new Intl.NumberFormat('en-ZA', {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
-                    }).format(bondCosts[years])}
+                    }).format(bondCosts[loanTermYears])}
                   </p>
                 </div>
               </div>
@@ -641,9 +641,9 @@ const ComparisonPage: React.FC = () => {
 
                   {/* <p className="text-sm bg-green-400 w-16 border-0 bg-opacity-50 rounded-full p-1 p-x-2 text-center">
 										{(
-											((remainingPrincipal[sellingYear] +
-												(housePrice - deposit)) /
-												(housePrice - deposit)) *
+											((remainingPrincipal[yearOfSale] +
+												(propertyPrice - depositAmount)) /
+												(propertyPrice - depositAmount)) *
 											100
 										).toFixed(1)}
 										%
@@ -653,7 +653,7 @@ const ComparisonPage: React.FC = () => {
 
               <div>
                 <p className="text-lg">
-                  Remaining Principal after {sellingYear} years
+                  Remaining Principal after {yearOfSale} years
                 </p>
                 <div className="flex flex-row justify-between items-center">
                   <p className="text-3xl font-light tracking-wide">
@@ -661,14 +661,14 @@ const ComparisonPage: React.FC = () => {
                     {new Intl.NumberFormat('en-ZA', {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
-                    }).format(-remainingPrincipal[sellingYear])}
+                    }).format(-remainingPrincipal[yearOfSale])}
                   </p>
 
                   <p className="text-sm bg-green-400 w-16 border-0 bg-opacity-50 rounded-full p-1 p-x-2 text-center">
                     {(
-                      ((remainingPrincipal[sellingYear] +
-                        (housePrice - deposit)) /
-                        (housePrice - deposit)) *
+                      ((remainingPrincipal[yearOfSale] +
+                        (propertyPrice - depositAmount)) /
+                        (propertyPrice - depositAmount)) *
                       100
                     ).toFixed(1)}
                     %
@@ -677,7 +677,7 @@ const ComparisonPage: React.FC = () => {
               </div>
 
               <div>
-                <p className="text-lg">House Value after {sellingYear} years</p>
+                <p className="text-lg">House Value after {yearOfSale} years</p>
 
                 <div className="flex flex-row justify-between items-center">
                   <p className="text-3xl font-light tracking-wide">
@@ -685,14 +685,14 @@ const ComparisonPage: React.FC = () => {
                     {new Intl.NumberFormat('en-ZA', {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
-                    }).format(houseValueAfterAppreciationData[sellingYear])}
+                    }).format(houseValueAfterAppreciationData[yearOfSale])}
                   </p>
 
                   <p className="text-sm bg-green-400 w-16 border-0 bg-opacity-50 rounded-full p-1 p-x-2 text-center">
                     {(
-                      ((houseValueAfterAppreciationData[sellingYear] -
-                        housePrice) /
-                        housePrice) *
+                      ((houseValueAfterAppreciationData[yearOfSale] -
+                        propertyPrice) /
+                        propertyPrice) *
                       100
                     ).toFixed(1)}
                     %
@@ -709,18 +709,18 @@ const ComparisonPage: React.FC = () => {
                     {new Intl.NumberFormat('en-ZA', {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
-                    }).format(moneyMadeFromSellingHouse[sellingYear])}
+                    }).format(moneyMadeFromSellingHouse[yearOfSale])}
                   </p>
 
                   <p
                     className={`text-sm ${
-                      moneyMadeFromSellingHouse[sellingYear] > 0
+                      moneyMadeFromSellingHouse[yearOfSale] > 0
                         ? 'bg-green-400'
                         : 'bg-red-400'
                     } w-16 border-0 bg-opacity-50 rounded-full p-1 p-x-2 text-center`}
                   >
                     {(
-                      (moneyMadeFromSellingHouse[sellingYear] / housePrice) *
+                      (moneyMadeFromSellingHouse[yearOfSale] / propertyPrice) *
                       100
                     ).toFixed(1)}
                     %
@@ -730,42 +730,42 @@ const ComparisonPage: React.FC = () => {
 
               <div className="flex flex-row gap-2">
                 <div className="flex flex-col w-full gap-1.5">
-                  <Label htmlFor="sellingYear">Selling Year</Label>
+                  <Label htmlFor="yearOfSale">Selling Year</Label>
                   <Input
-                    id="sellingYear"
+                    id="yearOfSale"
                     type="number"
-                    value={sellingYear}
-                    onChange={(e) => setSellingYear(parseInt(e.target.value))}
+                    value={yearOfSale}
+                    onChange={(e) => setYearOfSale(parseInt(e.target.value))}
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                   />
                   <Slider
-                    defaultValue={[sellingYear]}
-                    max={years}
+                    defaultValue={[yearOfSale]}
+                    max={loanTermYears}
                     step={1}
-                    onValueChange={(value) => setSellingYear(value[0])}
+                    onValueChange={(value) => setYearOfSale(value[0])}
                     className="flex mt-1"
                   />
                 </div>
 
                 <div className="flex flex-col w-full gap-1.5">
-                  <Label htmlFor="appreciationRate">
+                  <Label htmlFor="annualAppreciationRate">
                     Appreciation Rate (%)
                   </Label>
                   <Input
-                    id="appreciationRate"
+                    id="annualAppreciationRate"
                     type="number"
                     step="0.01"
-                    value={appreciationRate}
+                    value={annualAppreciationRate}
                     onChange={(e) =>
-                      setAppreciationRate(parseFloat(e.target.value))
+                      setAnnualAppreciationRate(parseFloat(e.target.value))
                     }
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                   />
                   <Slider
-                    defaultValue={[appreciationRate]}
-                    max={years}
+                    defaultValue={[annualAppreciationRate]}
+                    max={loanTermYears}
                     step={0.01}
-                    onValueChange={(value) => setAppreciationRate(value[0])}
+                    onValueChange={(value) => setAnnualAppreciationRate(value[0])}
                     className="flex mt-1"
                   />
                 </div>
@@ -784,10 +784,10 @@ const ComparisonPage: React.FC = () => {
             houseValueAfterAppreciationData={houseValueAfterAppreciationData}
             moneyMadeFromSellingHouse={moneyMadeFromSellingHouse}
             bondData={bondCosts}
-            sellingYear={sellingYear}
+            sellingYear={yearOfSale}
           />
         </div>
-        <div className="flex flex-row min-h-32"></div>
+        <div className="flex flex-row min-h-32"/>
       </div>
     </div>
   );

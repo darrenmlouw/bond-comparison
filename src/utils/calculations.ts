@@ -1,16 +1,22 @@
 export const calculateRentCost = (
   years: number,
   monthlyRent: number,
-  annualRentIncrease: number
+  annualRentIncreaseRate: number
 ): number[] => {
-  const rentCost = [];
-  for (let i = 0; i <= years; i++) {
-    // Convert the percentage increase into a decimal
-    const adjustedMonthlyRent = monthlyRent * Math.pow(1 + annualRentIncrease / 100, i);
-    rentCost.push(-adjustedMonthlyRent * 12); // Negative value to indicate a cost for that year
+  const rentCosts: number[] = [0]; // Start with year 0 having a rent cost of 0
+  let cumulativeRent = 0;
+  let currentMonthlyRent = monthlyRent;
+
+  for (let year = 1; year <= years; year++) { // Start loop from year 1
+    const annualRent = currentMonthlyRent * 12; // Rent paid each year
+    cumulativeRent += annualRent;               // Add annual rent to cumulative total
+    rentCosts.push(-cumulativeRent);            // Push the cumulative total as negative value
+    currentMonthlyRent *= 1 + annualRentIncreaseRate / 100; // Apply annual rent increase
   }
-  return rentCost;
+
+  return rentCosts;
 };
+
 
 export const calculateHouseValueAfterAppreciation = (
 	years: number,

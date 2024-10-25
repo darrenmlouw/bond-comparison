@@ -45,7 +45,6 @@ const HousingComparisonChart: React.FC<HousingComparisonChartProps> = ({
 
   // Find break even year looking for first index where value is more than 0
   const breakEvenYear = moneyMadeFromSellingHouse.findIndex((value) => value > 0);
-  console.log(moneyMadeFromSellingHouse)
 
 	const data = {
 		labels,
