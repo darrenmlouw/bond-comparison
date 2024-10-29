@@ -1,8 +1,3 @@
-// wirte a component that will be displayed when the website is loading with nice animations
-// The component should be named WebsiteLoadingScreen
-// The component should be a functional component
-// The component should accept no props
-
 import React from 'react';
 import HouseLogo from '/HouseIcon128.png';
 

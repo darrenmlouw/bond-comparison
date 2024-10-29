@@ -132,7 +132,9 @@ function IconContainer({
       onMouseLeave={() => setHovered(false)}
       className={cn(
         'aspect-square rounded-full flex items-center justify-center relative overflow-hidden',
-        isImageIcon ? 'bg-transparent' : 'backdrop-blur-md bg-primary/30 active:bg-primary/60'
+        isImageIcon
+          ? 'bg-transparent'
+          : 'backdrop-blur-md bg-primary/30 active:bg-primary/60'
       )}
     >
       {/* Tooltip */}
@@ -170,11 +172,20 @@ function IconContainer({
 
   if (external) {
     return (
-      <a href={href} target="_blank" rel="noopener noreferrer">
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={title}
+      >
         {linkContent}
       </a>
     );
   } else {
-    return <Link to={href}>{linkContent}</Link>;
+    return (
+      <Link to={href} aria-label={title}>
+        {linkContent}
+      </Link>
+    );
   }
 }

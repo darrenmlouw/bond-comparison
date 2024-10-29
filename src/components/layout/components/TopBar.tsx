@@ -19,7 +19,8 @@ const TopBar = () => {
           scale: 0.9,
         }}
         onClick={toggleTheme}
-        className="group rounded-full backdrop-blur-sm outline outline-1 outline-foreground/20 bg-transparent active:outline-1 active:bg-transparent hover:outline-1 hover:bg-transparent p-2"
+        className="group rounded-full backdrop-blur-sm outline outline-1 outline-foreground/20 bg-transparent active:outline-1 active:bg-transparent hover:outline-1 hover:bg-transparent p-2 focus:outline-none focus:ring-2 focus:ring-primary"
+        aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
       >
         {theme === 'dark' ? (
           <motion.div
