@@ -1,8 +1,3 @@
-"use client";
-
-import React from "react";
-
-// Type definition for the props
 interface SectionHeaderProps {
   label: string; // The label to display inside the header
 }

@@ -1,6 +1,3 @@
-"use client";
-
-import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,6 +15,7 @@ import {
 } from "@/components/ui/popover";
 import { Label } from "@/components/ui/label";
 import inclusionOption from "@/enums/inclusionOption"; // Import the inclusionOptions enum
+import { useState } from "react";
 
 // Type definition for the props
 interface InclusionComboboxProps {
@@ -36,7 +34,7 @@ export const InclusionCombobox: React.FC<InclusionComboboxProps> = ({
   inclusionType,
   oninclusionTypeChange,
 }) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="flex flex-col space-y-2 w-full">
