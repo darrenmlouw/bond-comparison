@@ -5,21 +5,42 @@
     <link rel="icon" href="/HouseIcon.ico" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale = 1.0, user-scalable = no"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <meta name="theme-color" content="#14191f" />
-    <meta name="description" content="A simple web-app designed to assist in the choice etween buying or renting a property" />
-    <link
-			rel="apple-touch-icon"
-			size="180x180"
-			,
-			href="/HouseIconIOS.png" />
-
-    <meta name="mobile-web-app-capable" content="yes">
-		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-		<link rel="manifest" href="/manifest.json" />
+    <meta
+      name="description"
+      content="A simple web-app designed to assist in the choice between buying or renting a property"
+    />
+    <link rel="apple-touch-icon" sizes="180x180" href="/HouseIconIOS.png" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="manifest" href="/manifest.json" />
 
     <title>Bondi</title>
+
+    <!-- Structured Data for South African Audience -->
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "WebPage",
+        "name": "Bond Comparison South Africa",
+        "description": "A tool for South African property owners to compare bond options.",
+        "audience": {
+          "@type": "Audience",
+          "geographicArea": {
+            "@type": "Place",
+            "name": "South Africa"
+          }
+        },
+        "inLanguage": "en-ZA",
+        "isAccessibleForFree": true,
+        "primaryImageOfPage": {
+          "@type": "ImageObject",
+          "url": "https://bondi.co.za/BondiHero.PNG"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
