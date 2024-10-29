@@ -8,16 +8,49 @@
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <meta name="theme-color" content="#14191f" />
+
     <meta
       name="description"
-      content="A simple web-app designed to assist in the choice between buying or renting a property"
+      content="Bondi helps South African property owners compare bond options to make informed decisions."
     />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+      />
+    </noscript>
+
     <link rel="apple-touch-icon" sizes="180x180" href="/HouseIconIOS.png" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <link rel="manifest" href="/manifest.json" />
 
-    <title>Bondi</title>
+    <meta property="og:title" content="Bondi - Bond Comparison South Africa" />
+    <meta
+      property="og:description"
+      content="Compare bond options in South Africa with Bondi."
+    />
+
+    <meta property="og:image" content="https://bondi.co.za/BondiHero.PNG" />
+    <meta property="og:url" content="https://bondi.co.za/" />
+    <meta property="og:type" content="website" />
+
+    <!-- <meta name="twitter:card" content="summary_large_image" /> -->
+    <meta name="twitter:title" content="Bondi - Bond Comparison South Africa" />
+    <meta
+      name="twitter:description"
+      content="Compare bond options in South Africa with Bondi."
+    />
+    <meta name="twitter:image" content="https://bondi.co.za/BondiHero.PNG" />
 
     <!-- Structured Data for South African Audience -->
     <script type="application/ld+json">
@@ -41,9 +74,11 @@
         }
       }
     </script>
+
+    <title>Bondi - Bond Comparison South Africa</title>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="/src/main.tsx" defer></script>
   </body>
 </html>
