@@ -39,7 +39,8 @@
     "react-katex": "^3.0.1",
     "react-router-dom": "^6.23.1",
     "tailwind-merge": "^2.5.2",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "terser": "^5.36.0"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",
