@@ -1,17 +1,20 @@
 {
   "redirects": [
     {
-      "source": "https://www.bondi.co.za/:path*",
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.bondi.co.za" }],
       "destination": "https://bondi.co.za/:path*",
       "permanent": true
     },
     {
-      "source": "http://bondi.co.za/:path*",
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "bondi.co.za" }],
       "destination": "https://bondi.co.za/:path*",
       "permanent": true
     },
     {
-      "source": "http://www.bondi.co.za/:path*",
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.bondi.co.za" }],
       "destination": "https://bondi.co.za/:path*",
       "permanent": true
     }
