@@ -5,33 +5,28 @@
   "categories": ["finance", "real-estate", "business"],
   "icons": [
     {
-      "src": "HouseIcon.ico",
-      "sizes": "64x64",
-      "type": "image/x-icon"
-    },
-    {
       "src": "HouseIcon64.webp",
-      "type": "image/png",
+      "type": "image/webp",
       "sizes": "64x64"
     },
     {
       "src": "HouseIcon128.webp",
-      "type": "image/png",
+      "type": "image/webp",
       "sizes": "128x128"
     },
     {
       "src": "HouseIcon192.webp",
-      "type": "image/png",
+      "type": "image/webp",
       "sizes": "192x192"
     },
     {
       "src": "HouseIcon256.webp",
-      "type": "image/png",
+      "type": "image/webp",
       "sizes": "256x256"
     },
     {
       "src": "HouseIcon512.webp",
-      "type": "image/png",
+      "type": "image/webp",
       "sizes": "512x512",
       "purpose": "maskable"
     }
@@ -43,19 +38,19 @@
   "display": "standalone",
   "scope": "/",
   "orientation": "portrait",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "screenshots": [
     {
-      "src": "https://bondi.co.za/BondiHeroWide.png",
+      "src": "https://bondi.co.za/BondiHeroWide.webp",
       "sizes": "1920x1080",
-      "type": "image/png",
+      "type": "image/webp",
       "form_factor": "wide",
       "label": "Homepage showing property comparison tool"
     },
     {
-      "src": "https://bondi.co.za/BondiHeroNarrow.png",
+      "src": "https://bondi.co.za/BondiHeroNarrow.webp",
       "sizes": "1179x2379",
-      "type": "image/png",
+      "type": "image/webp",
       "form_factor": "narrow",
       "label": "Homepage showing property comparison tool"
     }

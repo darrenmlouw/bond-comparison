@@ -1,5 +1,5 @@
 import React from 'react';
-import HouseLogo from '/HouseIcon128.png';
+import HouseLogo from '/HouseIcon128.webp';
 
 export const WebsiteInitialScreen: React.FC = () => {
   return (
