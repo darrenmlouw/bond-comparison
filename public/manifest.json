@@ -1,38 +1,69 @@
 {
-	"short_name": "Bondi",
-	"name": "Bond Comparison",
-	"description": "A simple web-app designed to assist in the choice etween buying or renting a property",
-	"author": "Darren Louw",
-	"keywords": ["Bond", "House-Loan", "Rent", "Salary"],
-	"thumbnail": "Pluto",
-	"icons": [
-		{
-			"src": "HouseIcon.ico",
-			"sizes": "64x64",
-			"type": "image/x-icon"
-		},
-		{
-			"src": "HouseIcon64.png",
-			"type": "image/png",
-			"sizes": "64x64"
-		},
-		{
-			"src": "HouseIcon128.png",
-			"type": "image/png",
-			"sizes": "128x128"
-		},
-		{
-			"src": "HouseIcon256.png",
-			"type": "image/png",
-			"sizes": "256x256"
-		},
-		{
-			"src": "HouseIcon512.png",
-			"type": "image/png",
-			"sizes": "512x512"
-		}
-	],
-	"start_url": "/",
-	"display": "standalone",
-	"version": "1"
+  "short_name": "Bondi",
+  "name": "Bondi - Property Decision Assistant South Africa",
+  "description": "Bondi helps South Africans decide whether to buy or rent property, comparing financial and lifestyle factors to guide your choice.",
+  "author": "Darren Louw",
+  "keywords": ["Buying vs Renting", "Property Comparison", "South Africa", "Mortgage", "Real Estate", "Renting", "Property Investment", "House Loan", "Bond Comparison"],
+  "categories": ["finance", "real-estate", "business"],
+  "icons": [
+    {
+      "src": "HouseIcon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "HouseIcon64.png",
+      "type": "image/png",
+      "sizes": "64x64"
+    },
+    {
+      "src": "HouseIcon128.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "HouseIcon256.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "HouseIcon512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ],
+  "theme_color": "#14191f",
+  "background_color": "#ffffff",
+  "start_url": "/",
+  "id": "/",
+  "display": "standalone",
+  "scope": "/",
+  "orientation": "portrait",
+  "version": "1.0.1",
+  "screenshots": [
+    {
+      "src": "https://bondi.co.za/BondiHeroWide.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Homepage showing property comparison tool"
+    },
+    {
+      "src": "https://bondi.co.za/BondiHeroNarrow.png",
+      "sizes": "1179x2379",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Homepage showing property comparison tool"
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "bondi",
+      "url": "https://bondi.co.za?ref=%s"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "display_override": ["window-controls-overlay"]
 }
