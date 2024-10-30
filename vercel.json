@@ -8,13 +8,7 @@
     },
     {
       "source": "/:path*",
-      "has": [{ "type": "host", "value": "bondi.co.za" }],
-      "destination": "https://bondi.co.za/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.bondi.co.za" }],
+      "has": [{ "type": "host", "value": "bond-comparison.vercel.app" }],
       "destination": "https://bondi.co.za/:path*",
       "permanent": true
     }
