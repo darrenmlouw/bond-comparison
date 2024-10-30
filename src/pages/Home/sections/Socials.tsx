@@ -2,7 +2,7 @@
 
 import { FaLinkedin, FaGithub, FaEnvelope } from 'react-icons/fa';
 import { motion } from 'framer-motion';
-import BuyMeCoffeeLogo from '@/assets/BuyMeCoffeeLogo.png';
+import BuyMeCoffeeLogo from '@/assets/BuyMeCoffee/BuyMeCoffeeLogo32.webp';
 
 const Socials = () => {
   return (
@@ -91,9 +91,10 @@ const Socials = () => {
             <div className="relative flex items-center w-full px-3 py-2 sm:px-4 sm:py-3 rounded-full">
               <img
                 src={BuyMeCoffeeLogo}
-                alt="Buy Me A Coffee"
-                className="w-8 h-8 sm:w-10 sm:h-10 mr-2 sm:mr-3 rounded-full shadow-xl"
+                alt="Coffee logo"
+                className="w-[32px] h-[32px] rounded-full shadow-xl"
               />
+
               <span className="text-lg sm:text-xl font-medium text-center flex-grow">
                 Buy Me a Coffee
               </span>
