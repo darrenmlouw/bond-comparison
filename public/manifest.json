@@ -3,7 +3,17 @@
   "name": "Bondi - Property Decision Assistant South Africa",
   "description": "Bondi helps South Africans decide whether to buy or rent property, comparing financial and lifestyle factors to guide your choice.",
   "author": "Darren Louw",
-  "keywords": ["Buying vs Renting", "Property Comparison", "South Africa", "Mortgage", "Real Estate", "Renting", "Property Investment", "House Loan", "Bond Comparison"],
+  "keywords": [
+    "Buying vs Renting",
+    "Property Comparison",
+    "South Africa",
+    "Mortgage",
+    "Real Estate",
+    "Renting",
+    "Property Investment",
+    "House Loan",
+    "Bond Comparison"
+  ],
   "categories": ["finance", "real-estate", "business"],
   "icons": [
     {
@@ -59,8 +69,8 @@
   ],
   "protocol_handlers": [
     {
-      "protocol": "bondi",
-      "url": "https://bondi.co.za?ref=%s"
+      "protocol": "web+bondi",
+      "url": "/?ref=%s"
     }
   ],
   "related_applications": [],
