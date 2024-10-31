@@ -23,17 +23,20 @@ const SalaryPage = () => {
   const {
     grossMonthlyIncome,
     setGrossMonthlyIncome,
+    grossAnnualIncome,
     deductions,
     setDeductions,
+    annualDeductions,
     age,
     setAge,
     year,
     setYear,
   } = useSalary();
 
-  const netAnnualIncome = grossMonthlyIncome * 12 - deductions * 12;
+  console.log('!@#!@#!@#@!#!#!@');
+  console.log(grossMonthlyIncome, deductions, age, year);
 
-  const tax = calculateTax(netAnnualIncome, age, year);
+  const tax = calculateTax(grossAnnualIncome, annualDeductions, age, year);
   // const taxBracket = getTaxBracket(netAnnualIncome, year);
   // const taxRebate = getTaxRebate(age, year);
 
@@ -57,12 +60,13 @@ const SalaryPage = () => {
                 Gross Monthly Income
               </Label>
               <Input
-              min={0}
-              max={1000000}
+                min={0}
+                max={1000000}
                 type="number"
                 id="income"
+                step={1000}
                 name="income"
-                placeholder="Enter your annual income"
+                placeholder="Enter your monthly income"
                 value={grossMonthlyIncome}
                 onChange={(e) =>
                   setGrossMonthlyIncome(parseFloat(e.target.value))
@@ -78,7 +82,8 @@ const SalaryPage = () => {
                 type="number"
                 id="tax"
                 name="tax"
-                placeholder="Enter your tax rate"
+                defaultValue={0}
+                placeholder="Enter your tax deductables"
                 value={deductions}
                 step={0.01}
                 onChange={(e) => setDeductions(parseFloat(e.target.value))}
@@ -117,7 +122,7 @@ const SalaryPage = () => {
                   Gross Annual Income
                 </p>
                 <p className="text-xl sm:text-2xl md:text-3xl font-light tracking-wide text-green-700 dark:text-green-300 ">
-                  R {formatNumber(grossMonthlyIncome * 12)}
+                  R {formatNumber(grossAnnualIncome)}
                 </p>
               </div>
             </div>
@@ -128,7 +133,7 @@ const SalaryPage = () => {
                   Net Annual Income
                 </p>
                 <p className="text-xl sm:text-2xl md:text-3xl font-light tracking-wide text-green-600 dark:text-green-400">
-                  R {formatNumber(grossMonthlyIncome * 12 - deductions * 12)}
+                  R {formatNumber(grossAnnualIncome - annualDeductions)}
                 </p>
               </div>
             </div>
@@ -139,7 +144,9 @@ const SalaryPage = () => {
                   Annual Tax Deductions
                 </p>
                 <p className="text-xl sm:text-2xl md:text-3xl font-light tracking-wide text-orange-700 dark:text-orange-400">
-                  R {formatNumber(deductions * 12)}
+                  {!isNaN(deductions)
+                    ? `R ${formatNumber(deductions * 12)}`
+                    : 0}
                 </p>
               </div>
             </div>
@@ -148,7 +155,7 @@ const SalaryPage = () => {
               <div className="flex flex-col text-left">
                 <p className="text-sm sm:text-base md:text-lg">Annual Tax</p>
                 <p className="text-xl sm:text-2xl md:text-3xl font-light tracking-wide text-red-500">
-                  R {formatNumber(tax)}
+                  {!isNaN(tax) ? `R ${formatNumber(tax)}` : 0}
                 </p>
               </div>
             </div>

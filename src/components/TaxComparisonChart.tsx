@@ -29,13 +29,24 @@ ChartJS.register(
 );
 
 const TaxComparisonChart: React.FC = () => {
+  const value = 100000
   const { theme } = useTheme();
-  const { year, grossMonthlyIncome, age, deductions } = useSalary();
+  const { year, age, grossAnnualIncome, annualDeductions } = useSalary();
 
-  const grossAnnualIncome = grossMonthlyIncome * 12;
-  const annualDeductions = deductions * 12;
   const netIncome = grossAnnualIncome - annualDeductions;
-  const labels = Array.from({ length: 21 }, (_, i) => i * 100000);
+
+
+  const bracket = TAX_BRACKETS[year];
+
+  const maxLowerBound = bracket[bracket.length - 1].lower * 1.1
+
+
+  const lowerBound = 0;
+  const movingUpperBound = Math.ceil(Number((netIncome/ 100000).toFixed(0)))*1.1
+  const upperBound = Math.max(Math.ceil(Number((maxLowerBound / 100000).toFixed(0))), movingUpperBound)
+
+const labels = Array.from({ length: upperBound - lowerBound+1}, (_, i) => (i + lowerBound) * 100000);
+console.log(labels)
 
   const datasets = Object.keys(TAX_BRACKETS).map((taxYear, ) => {
     const isCurrentYear = parseInt(taxYear) === year;
@@ -43,7 +54,7 @@ const TaxComparisonChart: React.FC = () => {
     return {
       label: taxYear,
       data: labels.map((income) =>
-        calculateTax(income, age, parseInt(taxYear))
+        calculateTax(income, 0, age, parseInt(taxYear))
       ),
       borderColor: isCurrentYear
         ? 'rgba(255, 159, 64, 1.0)'
@@ -60,7 +71,7 @@ const TaxComparisonChart: React.FC = () => {
   });
 
   const abbreviateNumber = (value: number) => {
-    if (value >= 1000000) return (value / 1000000).toFixed(0) + 'M';
+    if (value >= 1000000) return (value / 1000000).toFixed(2) + 'M';
     if (value >= 1000) return (value / 1000).toFixed(0) + 'K';
     return value;
   };
@@ -111,7 +122,8 @@ const TaxComparisonChart: React.FC = () => {
             size: window.innerWidth < 768 ? 10 : 14,
           },
         },
-        min: 0, // Ensure x-axis starts from 0 to prevent negative values
+        min: lowerBound*100000,
+        max: upperBound*100000,
         ticks: {
           callback: (value) => abbreviateNumber(value as number), // Abbreviate x-axis labels
           autoSkip: true, // Automatically skip some labels if space is tight
@@ -122,6 +134,7 @@ const TaxComparisonChart: React.FC = () => {
         },
       },
       y: {
+
         title: {
           display: false,
           text: 'Tax Paid (R)',
@@ -130,6 +143,8 @@ const TaxComparisonChart: React.FC = () => {
           },
         },
         beginAtZero: true, // Start y-axis at 0
+        // min:Math.min(...datasets.map((dataset) => Math.min(...dataset.data))),
+        // max:Math.max(...datasets.map((dataset) => Math.max(...dataset.data))),
         ticks: {
           callback: (value) => abbreviateNumber(value as number), // Abbreviate y-axis labels
           font: {

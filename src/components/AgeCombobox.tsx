@@ -28,9 +28,9 @@ export function AgeCombobox({ age, onAgeChange }: AgeComboboxProps) {
   // Age categories, including "None"
   const ageCategories = [
     { label: 'None', value: ageCategory.None },
-    { label: 'Primary (Under 65)', value: ageCategory.Under65 },
-    { label: 'Secondary (65 to 74)', value: ageCategory.From65To74 },
-    { label: 'Tertiary (75 and older)', value: ageCategory.Over75 },
+    { label: 'Under 65', value: ageCategory.Under65 },
+    { label: '65 to 74', value: ageCategory.From65To74 },
+    { label: '75 and older', value: ageCategory.Over75 },
   ];
 
   return (
@@ -50,7 +50,7 @@ export function AgeCombobox({ age, onAgeChange }: AgeComboboxProps) {
       </PopoverTrigger>
       <PopoverContent className="w-full p-0">
         <Command>
-          <CommandInput placeholder="Search age category..." />
+          {/* <CommandInput placeholder="Search age category..." /> */}
           <CommandList>
             <CommandEmpty>No age category found.</CommandEmpty>
             <CommandGroup>

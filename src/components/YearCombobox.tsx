@@ -66,7 +66,7 @@ export function YearCombobox({ year, onYearChange }: YearComboboxProps) {
       </PopoverTrigger>
       <PopoverContent className="w-[full] p-0">
         <Command>
-          <CommandInput placeholder="Search year..." />
+          {/* <CommandInput placeholder="Search year..." /> */}
           <CommandList>
             <CommandEmpty>No year found.</CommandEmpty>
             <CommandGroup>
