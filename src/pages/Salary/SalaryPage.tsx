@@ -15,6 +15,7 @@ import useClickOutside from '@/hooks/useClickOutside';
 import { YearCombobox } from '@/components/YearCombobox';
 import { AgeCombobox } from '@/components/AgeCombobox';
 import ageCategory from '@/enums/ageCategory';
+import InfoPopOver from '@/components/InfoPopOver';
 
 const SalaryPage = () => {
   const [isGraphOpen, setIsGraphOpen] = useState(false);
@@ -56,9 +57,20 @@ const SalaryPage = () => {
 
           <div className="flex flex-row w-full gap-2">
             <div className="flex flex-col w-1/2 gap-1.5">
-              <Label htmlFor="income" className="text-sm ">
-                Gross Monthly Income
-              </Label>
+              <div className="flex flex-row, justify-start items-center">
+                <Label htmlFor="income" className="text-sm ">
+                  Gross Monthly Income
+                </Label>
+
+                <InfoPopOver
+                  children={
+                    <p className="text-pretty">
+                      This is the total amount of money you earn each month
+                      before any deductions.
+                    </p>
+                  }
+                />
+              </div>
               <Input
                 min={0}
                 max={1000000}
@@ -75,9 +87,21 @@ const SalaryPage = () => {
             </div>
 
             <div className="flex flex-col w-1/2 gap-1.5">
-              <Label htmlFor="tax" className="text-sm ">
-                Tax Deductables
-              </Label>
+              <div className="flex flex-row, justify-bet items-center">
+                <Label htmlFor="tax" className="text-sm ">
+                  Tax Deductables
+                </Label>
+
+                <InfoPopOver
+                  children={
+                    <p className="text-pretty">
+                      This is the total amount of money you can deduct from your
+                      income before tax is calculated. This includes medical
+                      aid, pension fund, and other
+                    </p>
+                  }
+                />
+              </div>
               <Input
                 type="number"
                 id="tax"
@@ -98,6 +122,7 @@ const SalaryPage = () => {
               </Label>
               <AgeCombobox
                 age={age || ageCategory.None}
+                taxYear={year} // Pass the tax year here
                 onAgeChange={(category) => {
                   setAge(category);
                 }}
@@ -106,7 +131,7 @@ const SalaryPage = () => {
 
             <div className="flex flex-col w-1/2 gap-1.5">
               <Label htmlFor="year" className="text-sm">
-                Year
+                Tax Year
               </Label>
               <YearCombobox year={year.toString()} onYearChange={setYear} />
             </div>

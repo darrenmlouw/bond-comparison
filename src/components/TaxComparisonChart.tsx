@@ -29,26 +29,37 @@ ChartJS.register(
 );
 
 const TaxComparisonChart: React.FC = () => {
-  const value = 100000
   const { theme } = useTheme();
   const { year, age, grossAnnualIncome, annualDeductions } = useSalary();
 
-  const netIncome = grossAnnualIncome - annualDeductions;
+  const LABEL_COUNT = 50; // Change this value to adjust the length of labels array
 
+  const netIncome = grossAnnualIncome - annualDeductions;
+  const tax = calculateTax(grossAnnualIncome, annualDeductions, age, year);
 
   const bracket = TAX_BRACKETS[year];
-
-  const maxLowerBound = bracket[bracket.length - 1].lower * 1.1
-
+  const maxLowerBound = bracket[bracket.length - 1].lower * 1.1;
 
   const lowerBound = 0;
-  const movingUpperBound = Math.ceil(Number((netIncome/ 100000).toFixed(0)))*1.1
-  const upperBound = Math.max(Math.ceil(Number((maxLowerBound / 100000).toFixed(0))), movingUpperBound)
+  const movingUpperBound =
+    Math.ceil(Number((netIncome / 100000).toFixed(0))) * 1.1;
+  const upperBound = Math.max(
+    Math.ceil(Number((maxLowerBound / 100000).toFixed(0))),
+    movingUpperBound
+  );
 
-const labels = Array.from({ length: upperBound - lowerBound+1}, (_, i) => (i + lowerBound) * 100000);
-console.log(labels)
+  // Calculate the step to ensure LABEL_COUNT labels
+  const step = ((upperBound - lowerBound) * 100000) / (LABEL_COUNT - 1);
 
-  const datasets = Object.keys(TAX_BRACKETS).map((taxYear, ) => {
+  // Create the labels array with LABEL_COUNT points
+  const labels = Array.from(
+    { length: LABEL_COUNT },
+    (_, i) => lowerBound * 100000 + i * step
+  );
+
+  console.log(labels);
+
+  const datasets = Object.keys(TAX_BRACKETS).map((taxYear) => {
     const isCurrentYear = parseInt(taxYear) === year;
 
     return {
@@ -83,11 +94,11 @@ console.log(labels)
       legend: {
         display: false,
         position: 'bottom',
-        // labels: {
-        //   font: {
-        //     size: window.innerWidth < 768 ? 10 : 14, // Adjust font size for mobile screens
-        //   },
-        // },
+        labels: {
+          font: {
+            size: window.innerWidth < 768 ? 10 : 14, // Adjust font size for mobile screens
+          },
+        },
       },
       annotation: {
         annotations: [
@@ -107,7 +118,33 @@ console.log(labels)
               }`,
               color: `${theme === 'dark' ? '#000000d0' : '#ffffffd0'}`,
             },
+            // xMin: netIncome,
+            // xMax: netIncome,
+            // yMin: 0,
+            // yMax: tax,
           },
+          tax !== null && {
+            type: 'line',
+            // scaleID: 'y',
+            value: tax,
+            borderColor: 'grey',
+            borderWidth: 2,
+            borderDash: [5, 5],
+            label: {
+              display: true,
+              content: `R${abbreviateNumber(tax)}`,
+              position: 'start',
+              backgroundColor: `${
+                theme === 'dark' ? '#ffffff80' : '#00000090'
+              }`,
+              color: `${theme === 'dark' ? '#000000d0' : '#ffffffd0'}`,
+            },
+            yMin: tax,
+            yMax: tax,
+            xMin: 0,
+            xMax: netIncome,
+          },
+
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ].filter(Boolean) as any,
       },
@@ -122,8 +159,8 @@ console.log(labels)
             size: window.innerWidth < 768 ? 10 : 14,
           },
         },
-        min: lowerBound*100000,
-        max: upperBound*100000,
+        min: lowerBound * 100000,
+        max: upperBound * 100000,
         ticks: {
           callback: (value) => abbreviateNumber(value as number), // Abbreviate x-axis labels
           autoSkip: true, // Automatically skip some labels if space is tight
@@ -134,7 +171,6 @@ console.log(labels)
         },
       },
       y: {
-
         title: {
           display: false,
           text: 'Tax Paid (R)',
