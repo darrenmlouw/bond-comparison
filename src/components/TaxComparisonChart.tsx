@@ -73,8 +73,8 @@ const TaxComparisonChart: React.FC = () => {
       backgroundColor: isCurrentYear
         ? 'rgba(255, 159, 64, 1.0)'
         : 'rgba(255, 159, 64, 0.2)', // Opacity for other years
-      borderWidth: isCurrentYear ? 3 : 1,
-      pointRadius: isCurrentYear ? 1 : 0,
+      borderWidth: isCurrentYear ? 2 : 1,
+      pointRadius: isCurrentYear ? 0.5 : 0,
       pointHoverRadius: isCurrentYear ? 3 : 0,
       fill: false,
       pointHitRadius: 5,
@@ -82,8 +82,11 @@ const TaxComparisonChart: React.FC = () => {
   });
 
   const abbreviateNumber = (value: number) => {
-    if (value >= 1000000) return (value / 1000000).toFixed(2) + 'M';
+    if (value >= 1000000) return (value / 1000000).toFixed(1) + 'M';
     if (value >= 1000) return (value / 1000).toFixed(0) + 'K';
+    // also abbreviate negative numbers
+    if (value <= -1000000) return (value / 1000000).toFixed(1) + 'M';
+    if (value <= -1000) return (value / 1000).toFixed(0) + 'K';
     return value;
   };
 
@@ -107,7 +110,7 @@ const TaxComparisonChart: React.FC = () => {
             scaleID: 'x',
             value: netIncome,
             borderColor: 'grey',
-            borderWidth: 2,
+            borderWidth: 1,
             borderDash: [5, 5],
             label: {
               display: true,

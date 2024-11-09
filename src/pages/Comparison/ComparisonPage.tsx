@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { InfoCircledIcon } from '@radix-ui/react-icons';
 import HousingComparisonChart from '@/components/HousingComparisonChart';
 import {
   calculateRentCost,
@@ -7,25 +6,28 @@ import {
   calculateMoneyMadeFromSellingHouse,
   calculateBondCost,
   calculateRemainingPrincipal,
+  calculateCapitalGainsTax,
 } from '@/utils/calculations';
 import { Input } from '@/components/ui/input';
 import 'tailwindcss/tailwind.css';
 import { Slider } from '@/components/ui/slider';
 import { Label } from '@/components/ui/label';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
-import { Button } from '@/components/ui/button';
 import 'katex/dist/katex.min.css';
-import { InlineMath, BlockMath } from 'react-katex';
 import { Checkbox } from '@/components/ui/checkbox';
-import { CapitalGainsTaxCalculator } from '@/utils/capitalGainsCalculations';
 import { ExclusionCombobox } from '@/components/ExclusionCombobox';
 import { InclusionCombobox } from '@/components/InclusionCombobox';
 import { SectionHeader } from '@/components/SectionHeader';
 import { useComparison } from '@/hooks/useComparison';
+import CapitalGainsExplanationPopover from '@/pages/Comparison/components/CapitalGainsExplanationPopover';
+import MonthlyBondExplanationPopover from '@/pages/Comparison/components/MonthlyBondExplanationPopover';
+import TotalBondRepaymentExplanationPopover from '@/pages/Comparison/components/TotalBondRepaymentExplanationPopover';
+import { formatNumber } from '@/utils/formatNumber';
+import RentVsHouseProfitPopover from '@/pages/Comparison/components/RentVsHouseProfitPopover';
+
+// creat a function for this return isNaN(value) ? 0 : value;
+const checkIfNumber = (value: number, defaultValue: number | undefined = 0) => {
+  return isNaN(value) ? defaultValue : value;
+};
 
 const ComparisonPage: React.FC = () => {
   const {
@@ -73,81 +75,71 @@ const ComparisonPage: React.FC = () => {
     setNumberOfPeopleInJointBond,
   } = useComparison();
 
-
   const principleAmount = useMemo(() => {
     return addBuyingCostsToBond
-      ? buyingCosts + propertyPrice - depositAmount
-      : propertyPrice - depositAmount;
+      ? checkIfNumber(buyingCosts) +
+          checkIfNumber(propertyPrice) -
+          checkIfNumber(depositAmount)
+      : checkIfNumber(propertyPrice) - checkIfNumber(depositAmount);
   }, [addBuyingCostsToBond, buyingCosts, propertyPrice, depositAmount]);
-
-  console.log("=========================================")
-  console.log("Principle:\t\t\t\tR", principleAmount)
 
   const totalBuyingCosts = useMemo(() => {
     return addBuyingCostsToBond
-      ? otherBuyingCosts
-      : buyingCosts + otherBuyingCosts;
+      ? checkIfNumber(otherBuyingCosts)
+      : checkIfNumber(buyingCosts) + checkIfNumber(otherBuyingCosts);
   }, [addBuyingCostsToBond, buyingCosts, otherBuyingCosts]);
 
-  console.log("Total Buying Costs: \tR", totalBuyingCosts)
-
   const monthlyFees = useMemo(() => {
-    return monthlyLevies + monthlyRates + monthlyInsurance + additionalMonthlyFees;
+    return (
+      checkIfNumber(monthlyLevies) +
+      checkIfNumber(monthlyRates) +
+      checkIfNumber(monthlyInsurance) +
+      checkIfNumber(additionalMonthlyFees)
+    );
   }, [monthlyLevies, monthlyRates, monthlyInsurance, additionalMonthlyFees]);
 
-  console.log("Monthly Fees: \t\t\tR", monthlyFees)
-
   const rentData = useMemo(() => {
-    return calculateRentCost(loanTermYears, monthlyRent, annualRentIncrease);
+    return calculateRentCost(
+      checkIfNumber(loanTermYears),
+      checkIfNumber(monthlyRent),
+      checkIfNumber(annualRentIncrease)
+    );
   }, [loanTermYears, monthlyRent, annualRentIncrease]);
 
   const houseValueAfterAppreciationData = useMemo(() => {
     return calculateHouseValueAfterAppreciation(
-      loanTermYears,
-      principleAmount,
-      annualAppreciationRate
+      checkIfNumber(loanTermYears),
+      checkIfNumber(propertyPrice),
+      checkIfNumber(annualAppreciationRate)
     );
-  }, [loanTermYears, principleAmount, annualAppreciationRate]);
-
-  const {
-    capitalGainsTax,
-  } = useMemo(() => {
-    const baseCost = principleAmount + totalBuyingCosts;
-
-    const calculator = new CapitalGainsTaxCalculator(
-      houseValueAfterAppreciationData[yearOfSale],
-      baseCost,
-      smallBusinessMarketValue,
-      exclusionType,
-      inclusionType,
-      numberOfPeopleInJointBond
-    );
-    return calculator.calculate();
-  }, [
-    principleAmount,
-    totalBuyingCosts,
-    houseValueAfterAppreciationData,
-    yearOfSale,
-    smallBusinessMarketValue,
-    exclusionType,
-    inclusionType,
-    numberOfPeopleInJointBond,
-  ]);
+  }, [loanTermYears, propertyPrice, annualAppreciationRate]);
 
   const totalSellingCosts = useMemo(() => {
-    return sellingCosts + otherSellingCosts + capitalGainsTax;
-  }, [sellingCosts, otherSellingCosts, capitalGainsTax]);
+    return checkIfNumber(sellingCosts) + checkIfNumber(otherSellingCosts);
+  }, [sellingCosts, otherSellingCosts]);
+
+  const { capitalGainsTax, marginalTaxRate, inclusionRate, exclusion } =
+    calculateCapitalGainsTax(
+      loanTermYears,
+      houseValueAfterAppreciationData,
+      propertyPrice,
+      inclusionType,
+      exclusionType,
+      numberOfPeopleInJointBond,
+      smallBusinessMarketValue
+    );
 
   const moneyMadeFromSellingHouse = useMemo(() => {
     return calculateMoneyMadeFromSellingHouse(
-      loanTermYears,
-      propertyPrice,
-      depositAmount,
-      annualAppreciationRate,
-      totalBuyingCosts,
-      totalSellingCosts,
-      monthlyFees,
-      annualInterestRate
+      checkIfNumber(loanTermYears, 1),
+      checkIfNumber(propertyPrice),
+      checkIfNumber(depositAmount),
+      checkIfNumber(annualAppreciationRate),
+      checkIfNumber(totalBuyingCosts),
+      checkIfNumber(totalSellingCosts),
+      checkIfNumber(monthlyFees),
+      checkIfNumber(annualInterestRate),
+      capitalGainsTax
     );
   }, [
     loanTermYears,
@@ -158,18 +150,24 @@ const ComparisonPage: React.FC = () => {
     totalSellingCosts,
     monthlyFees,
     annualInterestRate,
+    capitalGainsTax,
   ]);
 
   const { bondCosts, monthlyPayment } = useMemo(() => {
-    return calculateBondCost(loanTermYears, principleAmount, depositAmount, annualInterestRate);
+    return calculateBondCost(
+      checkIfNumber(loanTermYears),
+      checkIfNumber(principleAmount),
+      checkIfNumber(depositAmount),
+      checkIfNumber(annualInterestRate)
+    );
   }, [loanTermYears, principleAmount, depositAmount, annualInterestRate]);
 
   const remainingPrincipal = useMemo(() => {
     return calculateRemainingPrincipal(
-      loanTermYears,
-      principleAmount,
-      depositAmount,
-      annualInterestRate
+      checkIfNumber(loanTermYears),
+      checkIfNumber(principleAmount),
+      checkIfNumber(depositAmount),
+      checkIfNumber(annualInterestRate)
     );
   }, [loanTermYears, principleAmount, depositAmount, annualInterestRate]);
 
@@ -183,24 +181,24 @@ const ComparisonPage: React.FC = () => {
           Analyze and compare the costs of renting versus buying a home over
           time.
         </p>
-
         <h2 className="text-xl font-bold text-primary ">
           House Value and Remaining Principal
         </h2>
-
         <div className="flex flex-col space-y-2">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex flex-col space-y-2 w-full md:w-1/3">
               <SectionHeader label="Bond" />
 
-              <div className="flex flex-row w-full gap-2">
+              <div className="flex flex-row w-full gap-2 items-end">
                 <div className="flex flex-col w-1/2 gap-1.5">
                   <Label htmlFor="propertyPrice">House Price (R)</Label>
                   <Input
                     id="propertyPrice"
                     type="number"
                     value={propertyPrice}
-                    onChange={(e) => {setPropertyPrice(parseFloat(e.target.value))}}
+                    onChange={(e) => {
+                      setPropertyPrice(parseFloat(e.target.value));
+                    }}
                   />
                 </div>
 
@@ -210,19 +208,23 @@ const ComparisonPage: React.FC = () => {
                     id="depositAmount"
                     type="number"
                     value={depositAmount}
-                    onChange={(e) => setDepositAmount(parseFloat(e.target.value))}
+                    onChange={(e) =>
+                      setDepositAmount(parseFloat(e.target.value))
+                    }
                   />
                 </div>
               </div>
 
-              <div className="flex flex-row w-full gap-2">
+              <div className="flex flex-row w-full gap-2 items-end">
                 <div className="flex flex-col w-1/2 gap-1.5">
                   <Label htmlFor="years">Years</Label>
                   <Input
                     id="years"
                     type="number"
                     value={loanTermYears}
-                    onChange={(e) => setLoanTermYearsYears(parseInt(e.target.value))}
+                    onChange={(e) =>
+                      setLoanTermYearsYears(parseInt(e.target.value))
+                    }
                   />
                 </div>
 
@@ -240,14 +242,34 @@ const ComparisonPage: React.FC = () => {
                 </div>
               </div>
 
+              <div className="flex flex-row w-full gap-2 items-end">
+                <div className="flex flex-col w-full gap-1.5">
+                  <Label htmlFor="annualAppreciationRate">
+                    Appreciation Rate (%)
+                  </Label>
+                  <Input
+                    id="annualAppreciationRate"
+                    type="number"
+                    step="0.01"
+                    value={annualAppreciationRate}
+                    onChange={(e) =>
+                      setAnnualAppreciationRate(parseFloat(e.target.value))
+                    }
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                  />
+                </div>
+              </div>
+
               <SectionHeader label="Capital Gains Tax Variables" />
 
-              <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2  flex-wrap w-full gap-2'>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2  flex-wrap w-full gap-2  items-end">
                 <ExclusionCombobox
                   exclusionType={exclusionType}
                   onExclusionTypeChange={setExclusionType}
                   numberOfPeopleInJointBond={numberOfPeopleInJointBond}
-                  onNumberOfPeopleInJointBondChange={setNumberOfPeopleInJointBond}
+                  onNumberOfPeopleInJointBondChange={
+                    setNumberOfPeopleInJointBond
+                  }
                   smallBusinessMarketValue={smallBusinessMarketValue}
                   onSmallBusinessMarketValueChange={setSmallBusinessMarketValue}
                 />
@@ -260,14 +282,16 @@ const ComparisonPage: React.FC = () => {
 
               <SectionHeader label="Monthly Fees" />
 
-              <div className="flex flex-row w-full gap-2">
+              <div className="flex flex-row w-full gap-2 items-end">
                 <div className="flex flex-col w-full gap-1.5">
                   <Label htmlFor="monthlyRates">Rates</Label>
                   <Input
                     id="monthlyRates"
                     type="number"
                     value={monthlyRates}
-                    onChange={(e) => setMonthlyRates(parseFloat(e.target.value))}
+                    onChange={(e) =>
+                      setMonthlyRates(parseFloat(e.target.value))
+                    }
                   />
                 </div>
 
@@ -277,19 +301,23 @@ const ComparisonPage: React.FC = () => {
                     id="monthlyLevies"
                     type="number"
                     value={monthlyLevies}
-                    onChange={(e) => setMonthlyLevies(parseFloat(e.target.value))}
+                    onChange={(e) =>
+                      setMonthlyLevies(parseFloat(e.target.value))
+                    }
                   />
                 </div>
               </div>
 
-              <div className="flex flex-row w-full gap-2">
+              <div className="flex flex-row w-full gap-2 items-end">
                 <div className="flex flex-col w-full gap-1.5">
                   <Label htmlFor="monthlyInsurance">Insurance</Label>
                   <Input
                     id="monthlyInsurance"
                     type="number"
                     value={monthlyInsurance}
-                    onChange={(e) => setMonthlyInsurance(parseFloat(e.target.value))}
+                    onChange={(e) =>
+                      setMonthlyInsurance(parseFloat(e.target.value))
+                    }
                   />
                 </div>
 
@@ -308,7 +336,7 @@ const ComparisonPage: React.FC = () => {
 
               <SectionHeader label="Buying Costs" />
 
-              <div className="flex flex-row w-full gap-2">
+              <div className="flex flex-row w-full gap-2 items-end">
                 <div className="flex flex-col w-full gap-1.5">
                   <div className="flex flex-row justify-between">
                     <Label htmlFor="buyingCosts">Buying Costs</Label>
@@ -354,7 +382,7 @@ const ComparisonPage: React.FC = () => {
 
               <SectionHeader label="Selling Costs" />
 
-              <div className="flex flex-row w-full gap-2">
+              <div className="flex flex-row w-full gap-2 items-end">
                 <div className="flex flex-col w-full gap-1.5">
                   <Label htmlFor="sellingCosts">Selling Costs</Label>
                   <Input
@@ -382,7 +410,7 @@ const ComparisonPage: React.FC = () => {
 
               <SectionHeader label="Rent" />
 
-              <div className="flex flex-row w-full gap-2">
+              <div className="flex flex-row w-full gap-2 items-end">
                 <div className="flex flex-col w-full gap-1.5">
                   <Label htmlFor="monthlyRent">Monthly Rent</Label>
                   <Input
@@ -399,7 +427,9 @@ const ComparisonPage: React.FC = () => {
                     id="annualRentIncrease"
                     type="number"
                     value={annualRentIncrease}
-                    onChange={(e) => setAnnualRentIncrease(parseFloat(e.target.value))}
+                    onChange={(e) =>
+                      setAnnualRentIncrease(parseFloat(e.target.value))
+                    }
                   />
                 </div>
               </div>
@@ -409,245 +439,60 @@ const ComparisonPage: React.FC = () => {
               <div className="flex flex-col sm:flex-row justify-between gap-2">
                 <div className="flex flex-col justify-between items-start">
                   <div className="flex flex-row items-center">
-                    <p className="text-sm sm:text-base md:text-lg">Monthly Bond Repayments</p>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="w-6 h-6 rounded-full ml-1"
-                        >
-                          <InfoCircledIcon className="h-4 w-4 text-orange-400" />
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-80">
-                        <div className="flex flex-col space-y-2 text-xs">
-                          <p className="flex text-xs">
-                            The monthly repayment amount is calculated using the
-                            formula:
-                          </p>
-
-                          <BlockMath math="R = \frac{P \cdot r \cdot (1 + r)^n}{(1 + r)^n - 1}" />
-
-                          <div className="flex flex-col">
-                            <p className="text-xs">where:</p>
-
-                            <div className="flex flex-row justify-between">
-                              <InlineMath math={`P = ${principleAmount}`} />
-                              <p>Principal Amount</p>
-                            </div>
-
-                            <div className="flex flex-row justify-between">
-                              <InlineMath
-                                math={`r = ${(annualInterestRate / 12 / 100).toFixed(
-                                  6
-                                )}`}
-                              />
-                              <p>Monthly Interest Rate</p>
-                            </div>
-
-                            <div className="flex flex-row justify-between">
-                              <InlineMath math={`n = ${loanTermYears * 12}`} />
-                              <p>Number of Months</p>
-                            </div>
-                          </div>
-
-                          <BlockMath>{String.raw`R = \frac{\text{${
-                            principleAmount
-                          }} \cdot \text{${(annualInterestRate / 12 / 100).toFixed(
-                            5
-                          )}} \cdot (1 + \text{${(
-                            annualInterestRate /
-                            12 /
-                            100
-                          ).toFixed(5)}})^\text{${loanTermYears * 12}}}{(1 + \text{${(
-                            annualInterestRate /
-                            12 /
-                            100
-                          ).toFixed(5)}})^\text{${
-                            loanTermYears * 12
-                          }} - 1}`}</BlockMath>
-
-                          {/* calculate the monthly repayment */}
-                          <BlockMath>{String.raw`R = \text{${monthlyPayment.toFixed(
-                            2
-                          )}}`}</BlockMath>
-                        </div>
-                      </PopoverContent>
-                    </Popover>
+                    <p className="text-sm sm:text-base md:text-lg">
+                      Monthly Bond Repayments
+                    </p>
+                    <MonthlyBondExplanationPopover
+                      principleAmount={principleAmount}
+                      annualInterestRate={annualInterestRate}
+                      loanTermYears={loanTermYears}
+                      monthlyPayment={monthlyPayment}
+                    />
                   </div>
 
                   <p className="text-3xl font-light tracking-wide">
-                    R{' '}
-                    {new Intl.NumberFormat('en-ZA', {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    }).format(monthlyPayment)}
+                    R {formatNumber(monthlyPayment)}
                   </p>
                 </div>
 
                 <div className="flex flex-col justify-between items-start">
                   <div className="flex flex-row items-center">
-                    <p className="text-sm sm:text-base md:text-lg">Total Bond Repayment</p>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="w-6 h-6 rounded-full ml-1"
-                        >
-                          <InfoCircledIcon className="h-4 w-4 text-orange-400" />
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-80">
-                        <div className="flex flex-col space-y-2 text-xs">
-                          <p className="flex text-xs">
-                            The total repayment amount is calculated using the
-                            formula:
-                          </p>
-
-                          {/* display the formula to calculate the total repayment of the bond*/}
-                          <BlockMath math="T = R \cdot n" />
-
-                          <div>
-                            <p className="text-xs">where:</p>
-
-                            <div className="flex flex-row justify-between">
-                              <InlineMath
-                                math={`R = ${monthlyPayment.toFixed(2)}`}
-                              />
-                              <p>Monthly Repayment</p>
-                            </div>
-
-                            <div className="flex flex-row justify-between">
-                              <InlineMath math={`n = ${loanTermYears * 12}`} />
-                              <p>Number of Months</p>
-                            </div>
-                          </div>
-
-                          <BlockMath math="T = (\frac{P \cdot r \cdot (1 + r)^n}{(1 + r)^n - 1}) \cdot n" />
-
-                          <div className="flex flex-col">
-                            <p className="text-xs">where:</p>
-
-                            <div className="flex flex-row justify-between">
-                              <InlineMath
-                                math={`P = ${propertyPrice - depositAmount}`}
-                              />
-                              <p>Principal Amount</p>
-                            </div>
-
-                            <div className="flex flex-row justify-between">
-                              <InlineMath
-                                math={`r = ${(annualInterestRate / 12 / 100).toFixed(
-                                  6
-                                )}`}
-                              />
-                              <p>Monthly Interest Rate</p>
-                            </div>
-
-                            <div className="flex flex-row justify-between">
-                              <InlineMath math={`n = ${loanTermYears * 12}`} />
-                              <p>Number of Months</p>
-                            </div>
-                          </div>
-
-                          <BlockMath>{String.raw`T = (\frac{\text{${
-                            propertyPrice - depositAmount
-                          }} \cdot \text{${(annualInterestRate / 12 / 100).toFixed(
-                            5
-                          )}} \cdot (1 + \text{${(
-                            annualInterestRate /
-                            12 /
-                            100
-                          ).toFixed(5)}})^\text{${loanTermYears * 12}}}{(1 + \text{${(
-                            annualInterestRate /
-                            12 /
-                            100
-                          ).toFixed(5)}})^\text{${
-                            loanTermYears * 12
-                          }} - 1}) \cdot \text{${loanTermYears * 12}}`}</BlockMath>
-
-                          {/* calculate the monthly repayment */}
-                          <BlockMath>{String.raw`R = \text{${monthlyPayment.toFixed(
-                            2
-                          )}}`}</BlockMath>
-                        </div>
-                      </PopoverContent>
-                    </Popover>
+                    <p className="text-sm sm:text-base md:text-lg">
+                      Total Bond Repayment
+                    </p>
+                    <TotalBondRepaymentExplanationPopover
+                      monthlyPayment={monthlyPayment}
+                      propertyPrice={propertyPrice}
+                      depositAmount={depositAmount}
+                      annualInterestRate={annualInterestRate}
+                      loanTermYears={loanTermYears}
+                    />
                   </div>
 
                   <p className="text-3xl font-light tracking-wide">
-                    R{' '}
-                    {new Intl.NumberFormat('en-ZA', {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    }).format(bondCosts[loanTermYears])}
+                    R {formatNumber(bondCosts[loanTermYears])}
                   </p>
                 </div>
               </div>
 
               <div>
-                <p className="text-lg">Capital Gains Tax</p>
+                <div className="flex flex-row items-center">
+                  <p className="text-sm sm:text-base md:text-lg">
+                    Capital Gains Tax
+                  </p>
+                  <CapitalGainsExplanationPopover
+                    sellingPrice={houseValueAfterAppreciationData[yearOfSale]}
+                    baseCost={principleAmount + totalBuyingCosts}
+                    exclusion={exclusion}
+                    inclusionRate={inclusionRate}
+                    marginalTaxRate={marginalTaxRate}
+                  />
+                </div>
 
                 <div className="flex flex-row justify-between items-center">
                   <p className="text-3xl font-light tracking-wide">
-                    R{' '}
-                    {new Intl.NumberFormat('en-ZA', {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    }).format(capitalGainsTax)}
+                    R {formatNumber(capitalGainsTax[yearOfSale])}
                   </p>
-
-                  {/* <div>
-                    <p className="text-sm">
-                      Capital Gain: R{' '}
-                      {new Intl.NumberFormat('en-ZA', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      }).format(capitalGain)}
-                    </p>
-                    <p className="text-sm">
-                      Exclusion: R{' '}
-                      {new Intl.NumberFormat('en-ZA', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      }).format(exclusion)}
-                    </p>
-                    <p className="text-sm">
-                      Net Capital Gain: R{' '}
-                      {new Intl.NumberFormat('en-ZA', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      }).format(netCapitalGain)}
-                    </p>
-                    <p className="text-sm">
-                      Taxable Gain: R{' '}
-                      {new Intl.NumberFormat('en-ZA', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      }).format(taxableGain)}{' '}
-                      ({inclusionRate * 100}% of NCG)
-                    </p>
-                    <p className="text-sm">
-                      Capital Gains Tax: R{' '}
-                      {new Intl.NumberFormat('en-ZA', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      }).format(capitalGainsTax)}{' '}
-                      ({marginalTaxRate * 100}% of TG)
-                    </p>
-                  </div> */}
-
-                  {/* <p className="text-sm bg-green-400 w-16 border-0 bg-opacity-50 rounded-full p-1 p-x-2 text-center">
-										{(
-											((remainingPrincipal[yearOfSale] +
-												(propertyPrice - depositAmount)) /
-												(propertyPrice - depositAmount)) *
-											100
-										).toFixed(1)}
-										%
-									</p> */}
                 </div>
               </div>
 
@@ -657,11 +502,7 @@ const ComparisonPage: React.FC = () => {
                 </p>
                 <div className="flex flex-row justify-between items-center">
                   <p className="text-3xl font-light tracking-wide">
-                    R{' '}
-                    {new Intl.NumberFormat('en-ZA', {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    }).format(-remainingPrincipal[yearOfSale])}
+                    R {formatNumber(-remainingPrincipal[yearOfSale])}
                   </p>
 
                   <p className="text-sm bg-green-400 w-16 border-0 bg-opacity-50 rounded-full p-1 p-x-2 text-center">
@@ -682,10 +523,7 @@ const ComparisonPage: React.FC = () => {
                 <div className="flex flex-row justify-between items-center">
                   <p className="text-3xl font-light tracking-wide">
                     R{' '}
-                    {new Intl.NumberFormat('en-ZA', {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    }).format(houseValueAfterAppreciationData[yearOfSale])}
+                    {formatNumber(houseValueAfterAppreciationData[yearOfSale])}
                   </p>
 
                   <p className="text-sm bg-green-400 w-16 border-0 bg-opacity-50 rounded-full p-1 p-x-2 text-center">
@@ -705,11 +543,7 @@ const ComparisonPage: React.FC = () => {
 
                 <div className="flex flex-row justify-between items-center">
                   <p className="text-3xl font-light tracking-wide">
-                    R{' '}
-                    {new Intl.NumberFormat('en-ZA', {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    }).format(moneyMadeFromSellingHouse[yearOfSale])}
+                    R {formatNumber(moneyMadeFromSellingHouse[yearOfSale])}
                   </p>
 
                   <p
@@ -727,57 +561,103 @@ const ComparisonPage: React.FC = () => {
                   </p>
                 </div>
               </div>
-
-              <div className="flex flex-row gap-2">
-                <div className="flex flex-col w-full gap-1.5">
-                  <Label htmlFor="yearOfSale">Selling Year</Label>
-                  <Input
-                    id="yearOfSale"
-                    type="number"
-                    value={yearOfSale}
-                    onChange={(e) => setYearOfSale(parseInt(e.target.value))}
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
-                  />
-                  <Slider
-                    defaultValue={[yearOfSale]}
-                    max={loanTermYears}
-                    step={1}
-                    onValueChange={(value) => setYearOfSale(value[0])}
-                    className="flex mt-1"
-                  />
-                </div>
-
-                <div className="flex flex-col w-full gap-1.5">
-                  <Label htmlFor="annualAppreciationRate">
-                    Appreciation Rate (%)
-                  </Label>
-                  <Input
-                    id="annualAppreciationRate"
-                    type="number"
-                    step="0.01"
-                    value={annualAppreciationRate}
-                    onChange={(e) =>
-                      setAnnualAppreciationRate(parseFloat(e.target.value))
-                    }
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
-                  />
-                  <Slider
-                    defaultValue={[annualAppreciationRate]}
-                    max={loanTermYears}
-                    step={0.01}
-                    onValueChange={(value) => setAnnualAppreciationRate(value[0])}
-                    className="flex mt-1"
-                  />
-                </div>
-              </div>
             </div>
           </div>
         </div>
 
-        <h2 className="text-xl font-bold text-primary ">
-            Comparison of Rent and House Costs
-        </h2>
+        <h2 className="text-xl font-bold text-primary ">Rent vs House Costs</h2>
+        <div className="flex flex-col bg-card outline outline-1 outline-card-foreground/20 shadow-2xl p-4 rounded-xl w-full justify-around items-center">
+          <h3 className="text-2xl sm:text3xl md:text-3xl font-light my-4">
+            {moneyMadeFromSellingHouse[yearOfSale] > rentData[yearOfSale]
+              ? `Buying is Beneficial after ${yearOfSale} years`
+              : `Renting is Beneficial after ${yearOfSale} years`}
+          </h3>
 
+          <div className="w-full h-[1px] bg-foreground/10 my-4" />
+
+          <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 w-full justify-around items-center">
+            <div className="flex flex-col justify-center items-center">
+              <p className="text-foreground/50">
+                Rent Loss after {yearOfSale} years
+              </p>
+              <p className="text-3xl font-light tracking-wide">
+                R {formatNumber(Number(rentData[yearOfSale]))}
+              </p>
+            </div>
+            <p>vs</p>
+            <div className="flex flex-col justify-center items-center">
+              <p className="text-foreground/50">
+                {moneyMadeFromSellingHouse[yearOfSale] >= 0
+                  ? `House Profit after ${yearOfSale} years`
+                  : `House Loss after ${yearOfSale} years`}
+                {/* Net Money from Selling House after {yearOfSale} years */}
+              </p>
+              <p className="text-3xl font-light tracking-wide">
+                R {formatNumber(Number(moneyMadeFromSellingHouse[yearOfSale]))}
+              </p>
+            </div>
+          </div>
+
+          <div className="w-full h-[1px] bg-foreground/10 my-4" />
+
+          <div className="flex flex-col justify-center items-center my-4">
+            {/* Show whether renting or buying saved more money */}
+            {/* <p className="text-foreground/50">
+              {moneyMadeFromSellingHouse[yearOfSale] > rentData[yearOfSale]
+                ? `Buying becomes more beneficial after ${yearOfSale} years`
+                : `Renting is still more cost-effective after ${yearOfSale} years`}
+            </p> */}
+
+            <p className="text-foreground/50">
+              After {yearOfSale} years, you would have saved
+            </p>
+
+            <div className="flex flex-row justify-center items-center">
+              <p className="text-3xl font-light tracking-wide">
+                R{' '}
+                {formatNumber(
+                  Math.abs(
+                    Number(
+                      moneyMadeFromSellingHouse[yearOfSale] -
+                        rentData[yearOfSale]
+                    )
+                  )
+                )}
+              </p>
+              <RentVsHouseProfitPopover
+                moneyMadeFromSellingHouse={moneyMadeFromSellingHouse}
+                rentData={rentData}
+                yearOfSale={yearOfSale}
+              />
+            </div>
+            <p className="text-foreground/50">
+              by{' '}
+              {moneyMadeFromSellingHouse[yearOfSale] > rentData[yearOfSale]
+                ? 'BUYING a Property'
+                : 'RENTING a Property'}
+            </p>
+          </div>
+          <div className="w-full h-[1px] bg-foreground/10 my-4" />
+          <div className="flex flex-col gap-2 w-full">
+            <div className="flex flex-row w-full gap-1.5 justify-between">
+              <Label className='text-lg sm:text-xl font-light ' htmlFor="yearOfSale">Selling Year:</Label>
+              <Label className='text-lg sm:text-xl font-light ' htmlFor="yearOfSale">Year {yearOfSale}</Label>
+              
+          </div>
+
+          <Slider
+                defaultValue={[yearOfSale]}
+                min={0}
+                max={loanTermYears}
+                step={1}
+                onValueChange={(value) => setYearOfSale(value[0])}
+                className="flex mt-1"
+              />
+            </div>
+        </div>
+        <h2 className="text-xl font-bold text-primary ">
+          Comparison of Rent and House Costs
+        </h2>
         <div className="h-96 w-full bg-card rounded-xl p-4 shadow-xl">
           <HousingComparisonChart
             rentData={rentData}
@@ -787,7 +667,7 @@ const ComparisonPage: React.FC = () => {
             sellingYear={yearOfSale}
           />
         </div>
-        <div className="flex flex-row min-h-32"/>
+        <div className="flex flex-row min-h-32" />
       </div>
     </div>
   );

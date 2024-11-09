@@ -35,6 +35,7 @@ const exclusionOptions = [
   { value: exclusionOption.JointBond, label: 'Joint Bond' },
   { value: exclusionOption.Deceased, label: 'Deceased' },
   { value: exclusionOption.SmallBusinessOwner, label: 'Small Business Owner' },
+  { value: exclusionOption.Annual, label: 'Annual Exclusion' },
   { value: exclusionOption.None, label: 'None' },
 ];
 
@@ -110,7 +111,9 @@ export const ExclusionCombobox = ({
             placeholder="Enter the market value of the small business"
             value={smallBusinessMarketValue}
             onChange={(e) =>
-              onNumberOfPeopleInJointBondChange(parseFloat(e.target.value))
+              onSmallBusinessMarketValueChange(
+                parseFloat(e.target.value) || 0
+              )
             }
           />
         </div>
@@ -124,7 +127,9 @@ export const ExclusionCombobox = ({
             placeholder="Enter the number of people in the joint bond"
             value={numberOfPeopleInJointBond}
             onChange={(e) =>
-              onSmallBusinessMarketValueChange(parseInt(e.target.value))
+              onNumberOfPeopleInJointBondChange(
+                parseInt(e.target.value) || 0
+              )
             }
           />
         </div>

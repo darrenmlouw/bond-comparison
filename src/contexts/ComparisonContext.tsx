@@ -68,7 +68,7 @@ export const ComparisonContext = createContext<ComparisonContextType | undefined
 export const ComparisonProvider = ({ children }: { children: ReactNode }) => {
   // State Variables
   const [propertyPrice, setPropertyPrice, , storageAvailable] = useStorage('propertyPrice', '1000000', 'localStorage');
-  const [annualInterestRate, setAnnualInterestRate] = useStorage('annualInterestRate', '17.5', 'localStorage');
+  const [annualInterestRate, setAnnualInterestRate] = useStorage('annualInterestRate', '11.5', 'localStorage');
   const [depositAmount, setDepositAmount] = useStorage('depositAmount', '0', 'localStorage');
   const [loanTermYears, setLoanTermYearsYears] = useStorage('loanTermYears', '20', 'localStorage');
   const [annualAppreciationRate, setAnnualAppreciationRate] = useStorage('annualAppreciationRate', '4', 'localStorage');
@@ -85,7 +85,7 @@ export const ComparisonProvider = ({ children }: { children: ReactNode }) => {
   const [monthlyRent, setMonthlyRent] = useStorage('monthlyRent', '10000', 'localStorage');
   const [annualRentIncrease, setAnnualRentIncrease] = useStorage('annualRentIncrease', '8', 'localStorage');
 
-  const [storedExclusionType, setExclusionType] = useStorage('exclusionType', exclusionOption.None, 'localStorage');
+  const [storedExclusionType, setExclusionType] = useStorage('exclusionType', exclusionOption.PrimaryResidence, 'localStorage');
   const [storedInclusionType, setInclusionType] = useStorage('inclusionType', inclusionOption.Individual, 'localStorage');
   const parsedExclusionType = validateExclusionType(storedExclusionType);
   const parsedInclusionType = validateInclusionType(storedInclusionType);
