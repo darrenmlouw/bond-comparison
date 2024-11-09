@@ -6,8 +6,10 @@ import { createContext, ReactNode } from 'react';
 interface SalaryContextType {
   grossMonthlyIncome: number;
   setGrossMonthlyIncome: (income: number) => void;
+  grossAnnualIncome: number;
   deductions: number;
   setDeductions: (deductions: number) => void;
+  annualDeductions: number;
   age: ageCategory;
   setAge: (age: ageCategory) => void;
   year: number;
@@ -21,33 +23,41 @@ export const SalaryContext = createContext<SalaryContextType | undefined>(
 );
 
 export const SalaryProvider = ({ children }: { children: ReactNode }) => {
-  const [grossMonthlyIncome, setGrossMonthlyIncome, , storageAvailable] = useStorage('grossMonthlyIncome', '0', 'localStorage');
-  const [deductions, setDeductions] = useStorage('deductions', '0', 'localStorage');
-  const [age, setAge] = useStorage('age', ageCategory.None.toString(), 'localStorage');
-  const [year, setYear] = useStorage('year', new Date().getFullYear().toString(), 'localStorage');
-
-  // Ensure grossMonthlyIncome is not NaN and set it to 0 if it is
-  const handleSetGrossMonthlyIncome = (income: number) => {
-    setGrossMonthlyIncome(isNaN(income) ? '0' : income.toString());
-  };
-
-  // Ensure deductions is not NaN and set it to 0 if it is
-  const handleSetDeductions = (deductions: number) => {
-    setDeductions(isNaN(deductions) ? '0' : deductions.toString());
-  };
+  const [grossMonthlyIncome, setGrossMonthlyIncome, , storageAvailable] =
+    useStorage('grossMonthlyIncome', '0', 'localStorage');
+  const [deductions, setDeductions] = useStorage(
+    'deductions',
+    '0',
+    'localStorage'
+  );
+  const [age, setAge] = useStorage(
+    'age',
+    ageCategory.None.toString(),
+    'localStorage'
+  );
+  const [year, setYear] = useStorage(
+    'year',
+    new Date().getFullYear().toString(),
+    'localStorage'
+  );
+  const grossAnnualIncome = isNaN(Number(grossMonthlyIncome)) ? 0 : Number(grossMonthlyIncome) * 12;
+  const annualDeductions = isNaN(Number(deductions)) ? 0 : Number(deductions) * 12;
 
   return (
     <SalaryContext.Provider
       value={{
         grossMonthlyIncome: Number(grossMonthlyIncome),
-        setGrossMonthlyIncome: handleSetGrossMonthlyIncome,
+        setGrossMonthlyIncome: (value: number) =>
+          setGrossMonthlyIncome(value.toString()),
+        grossAnnualIncome,
         deductions: Number(deductions),
-        setDeductions: handleSetDeductions,
+        setDeductions: (value: number) => setDeductions(value.toString()),
+        annualDeductions,
         age: age as ageCategory,
-        setAge: (age: ageCategory) => setAge(age.toString()),
+        setAge: (value: ageCategory) => setAge(value.toString()),
         year: Number(year),
-        setYear: (year: number) => setYear(year.toString()),
-        storageAvailable, // Pass the storage availability state
+        setYear: (value: number) => setYear(value.toString()),
+        storageAvailable,
       }}
     >
       {children}

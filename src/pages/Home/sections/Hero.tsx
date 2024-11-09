@@ -68,7 +68,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 70 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7 }}
-          className="text-foreground/60 text-md sm:text-lg md:text-xl mb-16 mx-6"
+          className="text-foreground/60 text-md sm:text-lg md:text-xl mb-16 mx-6 text-pretty"
         >
           Compare renting and buying to make informed homeowner decisions.
         </motion.p>

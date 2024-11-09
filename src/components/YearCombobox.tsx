@@ -6,7 +6,6 @@ import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
@@ -64,9 +63,9 @@ export function YearCombobox({ year, onYearChange }: YearComboboxProps) {
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[full] p-0">
-        <Command>
-          <CommandInput placeholder="Search year..." />
+      <PopoverContent className="w-full p-0 border-primary/30 rounded-xl bg-card/30 backdrop-blur-md shadow-lg">
+        <Command className='rounded-xl bg-transparent '>
+          {/* <CommandInput placeholder="Search year..." /> */}
           <CommandList>
             <CommandEmpty>No year found.</CommandEmpty>
             <CommandGroup>
@@ -79,6 +78,11 @@ export function YearCombobox({ year, onYearChange }: YearComboboxProps) {
                     onYearChange(parseInt(currentValue));
                     setOpen(false);
                   }}
+                  className={cn(
+                    "p-2 rounded-lg", 
+                    year === y.value ? "bg-primary/10" : "hover:bg-primary/30"
+                    
+                  )}
                 >
                   <Check
                     className={cn(
