@@ -567,10 +567,13 @@ const ComparisonPage: React.FC = () => {
 
         <h2 className="text-xl font-bold text-primary ">Rent vs House Costs</h2>
         <div className="flex flex-col bg-card outline outline-1 outline-card-foreground/20 shadow-2xl p-4 rounded-xl w-full justify-around items-center">
-          <h3 className="text-2xl sm:text3xl md:text-3xl font-light my-4">
+          <h3 className="text-2xl sm:text3xl md:text-3xl font-light mt-4">
             {moneyMadeFromSellingHouse[yearOfSale] > rentData[yearOfSale]
-              ? `Buying is Beneficial after ${yearOfSale} years`
-              : `Renting is Beneficial after ${yearOfSale} years`}
+              ? `Buying is Beneficial`
+              : `Renting is Beneficial`}
+          </h3>
+          <h3 className="text-2xl sm:text3xl md:text-3xl font-light mb-4">
+            after {yearOfSale} years
           </h3>
 
           <div className="w-full h-[1px] bg-foreground/10 my-4" />
@@ -640,20 +643,29 @@ const ComparisonPage: React.FC = () => {
           <div className="w-full h-[1px] bg-foreground/10 my-4" />
           <div className="flex flex-col gap-2 w-full">
             <div className="flex flex-row w-full gap-1.5 justify-between">
-              <Label className='text-lg sm:text-xl font-light ' htmlFor="yearOfSale">Selling Year:</Label>
-              <Label className='text-lg sm:text-xl font-light ' htmlFor="yearOfSale">Year {yearOfSale}</Label>
-              
-          </div>
-
-          <Slider
-                defaultValue={[yearOfSale]}
-                min={0}
-                max={loanTermYears}
-                step={1}
-                onValueChange={(value) => setYearOfSale(value[0])}
-                className="flex mt-1"
-              />
+              <Label
+                className="text-lg sm:text-xl font-light "
+                htmlFor="yearOfSale"
+              >
+                Selling Year:
+              </Label>
+              <Label
+                className="text-lg sm:text-xl font-light "
+                htmlFor="yearOfSale"
+              >
+                Year {yearOfSale}
+              </Label>
             </div>
+
+            <Slider
+              defaultValue={[yearOfSale]}
+              min={0}
+              max={loanTermYears}
+              step={1}
+              onValueChange={(value) => setYearOfSale(value[0])}
+              className="flex mt-1"
+            />
+          </div>
         </div>
         <h2 className="text-xl font-bold text-primary ">
           Comparison of Rent and House Costs
