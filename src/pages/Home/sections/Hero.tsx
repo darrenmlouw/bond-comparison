@@ -5,12 +5,10 @@ const Hero = () => {
   const handleGetStartedClick = () => {
     const element = document.getElementById('howto');
     if (element) {
-      const contentWrapper = document.getElementById('content-wrapper');
-      const offsetTop = element.getBoundingClientRect().top + window.scrollY;
-      if (element && contentWrapper) {
-        contentWrapper.scrollTo({
-          top: offsetTop,
+      if (element) {
+        element.scrollIntoView({
           behavior: 'smooth',
+          block: 'start',
         });
       }
     }
