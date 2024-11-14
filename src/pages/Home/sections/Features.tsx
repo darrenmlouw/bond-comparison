@@ -1,9 +1,10 @@
 import Feature from '@/types/Feature';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRef, useState } from 'react';
-import { X } from 'lucide-react';
+import { Maximize , X } from 'lucide-react';
 import useClickOutside from '@/hooks/useClickOutside';
 import { useTheme } from '@/hooks/useTheme';
+import { Link } from 'react-router-dom';
 
 interface FeaturesProps {
   constantData: Feature[];
@@ -41,13 +42,29 @@ const Features = (props: FeaturesProps) => {
                 className="relative p-1 rounded-2xl cursor-pointer"
                 style={{
                   background: item.borderGradient,
-                  boxShadow: `${theme === 'dark' ? item.boxShadowDark : item.boxShadowLight}`,
+                  boxShadow: `${
+                    theme === 'dark' ? item.boxShadowDark : item.boxShadowLight
+                  }`,
                 }}
               >
                 <div
                   // layoutId={`1.${item.id}`}
                   className="p-4 sm:p-6 md:p-8 bg-card h-full flex flex-col rounded-xl items-center flex-1 justify-center gap-1 sm:gap-2 md:gap-4 lg:gap-8 xl:gap-10"
                 >
+                  <motion.button
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="absolute top-3 right-3 opacity-25"
+                    onClick={() => {
+                      () => setSelectedId(item.id)
+                    }}
+                  >
+                    <Maximize className="h-6 w-6 text-secondary" />
+                  </motion.button>
+
                   <motion.div
                     layoutId={`${item.id}.icon`}
                     className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-[#cc66ff]"
@@ -97,7 +114,11 @@ const Features = (props: FeaturesProps) => {
                   background: props.constantData.find(
                     (item) => item.id === selectedId
                   )?.borderGradient,
-                  boxShadow: `${theme === 'dark' ? selectedFeature.boxShadowDark : selectedFeature.boxShadowLight}`,
+                  boxShadow: `${
+                    theme === 'dark'
+                      ? selectedFeature.boxShadowDark
+                      : selectedFeature.boxShadowLight
+                  }`,
                 }}
               >
                 <motion.div
@@ -151,9 +172,14 @@ const Features = (props: FeaturesProps) => {
                     exit={{ opacity: 0 }}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
-                    className=" w-20 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+                    className="w-20 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
                   >
-                    Try
+                    <Link
+                      to={selectedFeature.to}
+                      className="w-full h-full flex items-center justify-center"
+                    >
+                      Try
+                    </Link>
                   </motion.button>
                 </motion.div>
               </motion.div>

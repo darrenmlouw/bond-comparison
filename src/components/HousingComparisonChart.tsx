@@ -14,6 +14,20 @@ import {
 import annotationPlugin from 'chartjs-plugin-annotation';
 import { useTheme } from '@/hooks/useTheme';
 
+function interpolateData(data: number[], factor: number): number[] {
+  const interpolatedData: number[] = [];
+  for (let i = 0; i < data.length - 1; i++) {
+    interpolatedData.push(data[i]);
+    for (let j = 1; j < factor; j++) {
+      const interpolatedValue =
+        data[i] + ((data[i + 1] - data[i]) * j) / factor;
+      interpolatedData.push(interpolatedValue);
+    }
+  }
+  interpolatedData.push(data[data.length - 1]);
+  return interpolatedData;
+}
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -27,30 +41,32 @@ ChartJS.register(
 
 interface HousingComparisonChartProps {
   rentData: number[];
-  houseValueAfterAppreciationData: number[];
   moneyMadeFromSellingHouse: number[];
-  bondData: number[];
   sellingYear: number;
 }
 
 const HousingComparisonChart: React.FC<HousingComparisonChartProps> = ({
   rentData,
-  // houseValueAfterAppreciationData,
   moneyMadeFromSellingHouse,
-  // bondData,
   sellingYear,
 }) => {
   const { theme } = useTheme();
-  const labels = rentData.map((_, index) => `Year ${index}`);
-
-  // Find break even year looking for first index where value is more than 0
-  const breakEvenYear = moneyMadeFromSellingHouse.findIndex(
-    (value) => value > 0
+  const interpolationFactor = 10; // Adjust for smoother data
+  const interpolatedRentData = interpolateData(rentData, interpolationFactor);
+  const interpolatedHouseData = interpolateData(
+    moneyMadeFromSellingHouse,
+    interpolationFactor
   );
 
-  // Find the year where money made from selling the house is greater than the rent cost
-  const yearWhenHouseValueExceedsRent = moneyMadeFromSellingHouse.findIndex(
-    (value, index) => value > rentData[index]
+  const labels = interpolatedRentData.map(
+    (_, index) => `Year ${(index / interpolationFactor).toFixed(1)}`
+  );
+
+  const breakEvenYear = interpolatedHouseData.findIndex(
+    (value) => value > 0
+  );
+  const yearWhenHouseValueExceedsRent = interpolatedHouseData.findIndex(
+    (value, index) => value > interpolatedRentData[index]
   );
 
   const data = {
@@ -58,7 +74,7 @@ const HousingComparisonChart: React.FC<HousingComparisonChartProps> = ({
     datasets: [
       {
         label: 'Rent Cost',
-        data: rentData,
+        data: interpolatedRentData,
         borderColor:
           theme === 'light'
             ? 'rgba(255, 99, 132, 1)'
@@ -75,12 +91,11 @@ const HousingComparisonChart: React.FC<HousingComparisonChartProps> = ({
       },
       {
         label: 'Money Made From Selling House',
-        data: moneyMadeFromSellingHouse,
+        data: interpolatedHouseData,
         borderColor:
           theme === 'light'
             ? 'rgba(132, 99, 210, 1)'
             : 'rgba(132, 99, 210, 0.6)',
-
         borderWidth: 2,
         pointRadius: 0,
         pointHoverRadius: 3,
@@ -124,7 +139,7 @@ const HousingComparisonChart: React.FC<HousingComparisonChartProps> = ({
           sellingYear !== null && {
             type: 'line',
             scaleID: 'x',
-            value: sellingYear,
+            value: sellingYear * interpolationFactor,
             borderColor:
               moneyMadeFromSellingHouse[sellingYear] > 0
                 ? 'rgba(75, 255, 140, 0.6)'
@@ -134,7 +149,7 @@ const HousingComparisonChart: React.FC<HousingComparisonChartProps> = ({
             label: {
               display: true,
               content:
-                moneyMadeFromSellingHouse[sellingYear] >= 0 ? 'Gain' : 'Loss',
+                moneyMadeFromSellingHouse[sellingYear] >= 0 ? 'Profit' : 'Loss',
               position: 'start',
               backgroundColor:
                 moneyMadeFromSellingHouse[sellingYear] > 0
@@ -218,7 +233,7 @@ const HousingComparisonChart: React.FC<HousingComparisonChartProps> = ({
         min: 0,
         max: labels.length - 1,
         ticks: {
-          callback: (value) => abbreviateNumber(value as number), // Abbreviate x-axis labels
+          callback: (value) => abbreviateNumber((value as number)/interpolationFactor), // Abbreviate x-axis labels
           autoSkip: true, // Automatically skip some labels if space is tight
           maxTicksLimit: window.innerWidth < 768 ? 6 : 21, // Adjust tick number based on screen size
           font: {

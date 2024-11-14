@@ -92,7 +92,7 @@ const Socials = () => {
               <img
                 src={BuyMeCoffeeLogo}
                 alt="Coffee logo"
-                className="w-[32px] h-[32px] rounded-full shadow-xl"
+                className="w-[32px] h-[32px] rounded-full"
               />
 
               <span className="text-lg sm:text-xl font-medium text-center flex-grow">

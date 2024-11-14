@@ -24,7 +24,6 @@ import TotalBondRepaymentExplanationPopover from '@/pages/Comparison/components/
 import { formatNumber } from '@/utils/formatNumber';
 import RentVsHouseProfitPopover from '@/pages/Comparison/components/RentVsHouseProfitPopover';
 
-// creat a function for this return isNaN(value) ? 0 : value;
 const checkIfNumber = (value: number, defaultValue: number | undefined = 0) => {
   return isNaN(value) ? defaultValue : value;
 };
@@ -593,7 +592,6 @@ const ComparisonPage: React.FC = () => {
                 {moneyMadeFromSellingHouse[yearOfSale] >= 0
                   ? `House Profit after ${yearOfSale} years`
                   : `House Loss after ${yearOfSale} years`}
-                {/* Net Money from Selling House after {yearOfSale} years */}
               </p>
               <p className="text-3xl font-light tracking-wide">
                 R {formatNumber(Number(moneyMadeFromSellingHouse[yearOfSale]))}
@@ -604,13 +602,6 @@ const ComparisonPage: React.FC = () => {
           <div className="w-full h-[1px] bg-foreground/10 my-4" />
 
           <div className="flex flex-col justify-center items-center my-4">
-            {/* Show whether renting or buying saved more money */}
-            {/* <p className="text-foreground/50">
-              {moneyMadeFromSellingHouse[yearOfSale] > rentData[yearOfSale]
-                ? `Buying becomes more beneficial after ${yearOfSale} years`
-                : `Renting is still more cost-effective after ${yearOfSale} years`}
-            </p> */}
-
             <p className="text-foreground/50">
               After {yearOfSale} years, you would have saved
             </p>
@@ -673,9 +664,7 @@ const ComparisonPage: React.FC = () => {
         <div className="h-96 w-full bg-card rounded-xl p-4 shadow-xl">
           <HousingComparisonChart
             rentData={rentData}
-            houseValueAfterAppreciationData={houseValueAfterAppreciationData}
             moneyMadeFromSellingHouse={moneyMadeFromSellingHouse}
-            bondData={bondCosts}
             sellingYear={yearOfSale}
           />
         </div>

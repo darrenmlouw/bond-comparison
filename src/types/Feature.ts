@@ -7,6 +7,7 @@ interface Feature {
   borderGradient: string;
   boxShadowDark: string;
   boxShadowLight: string;
+  to: string;
 }
 
 export default Feature;
