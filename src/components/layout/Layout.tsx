@@ -26,7 +26,7 @@ const Layout = () => {
       </div>
       <Analytics />
       <SpeedInsights />
-      <div className="z-20 fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-primary/20 backdrop-blur-[6px] outline outline-1 outline-foreground/30 rounded-full">
+      <div className="z-20 fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-primary/20 backdrop-blur-[6px] outline outline-1 outline-foreground/30 rounded-2xl">
         <FloatingDock
           items={dockItems}
           desktopClassName="shadow-xl"

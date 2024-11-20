@@ -16,8 +16,8 @@ const ComparisonPage: React.FC = () => {
         <p className="text-center text-base sm:text-lg text-primary-foreground/70 pb-3">
           Compare renting vs buying costs over time.
         </p>
+        
         <SectionHeader label="Property Information" />
-
         <InputComponents />
 
         <SectionHeader label="House Evaluation" />
