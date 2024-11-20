@@ -57,23 +57,31 @@ const InputComponents = () => {
   } = useComparison();
 
   return (
-    <Accordion type="single" collapsible className="" >
+    <Accordion type="single" collapsible className="space-y-4">
       {/* Bond Section */}
-      <AccordionItem value="bond" className='border-b-0'>
-        <AccordionTrigger>
-          <div className="flex flex-row">
-            <Home className="w-6 h-6 mr-2" />
-            Bond
+      <AccordionItem
+        value="bond"
+        className="bg-card border border-card-foreground/20 shadow-2xl rounded-xl "
+      >
+        <AccordionTrigger className="hover:no-underline hover:bg-primary/20 px-4 rounded-xl">
+          <div className="flex flex-row text-2xl tracking-wide font-light justify-center items-center">
+            <Home className="w-6 h-6 mr-2 text-secondary " />
+            Bond Details
           </div>
         </AccordionTrigger>
         <AccordionContent>
-          <Accordion type="single" collapsible className='ml-8 mr-8 mt-0'>
-            <AccordionItem value="property-data">
-              <AccordionTrigger>Property Data</AccordionTrigger>
-              <AccordionContent>
+          <Accordion type="single" collapsible className="ml-0 mt-0">
+            <AccordionItem
+              value="property-data"
+              className="border-t border-card-foreground/20"
+            >
+              <AccordionTrigger className="hover:no-underline hover:bg-secondary/50 pr-4 pl-12 h-10 text-card-foreground/70 tracking-wider font-light text-base">
+                Property Data
+              </AccordionTrigger>
+              <AccordionContent className="pr-4 pl-12 mt-2">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   <div className="flex flex-col gap-1.5">
-                    <Label htmlFor="propertyPrice">House Price (R)</Label>
+                    <Label htmlFor="propertyPrice">Property Price (R)</Label>
                     <Input
                       id="propertyPrice"
                       type="number"
@@ -84,7 +92,7 @@ const InputComponents = () => {
                     />
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <Label htmlFor="depositAmount">Deposit</Label>
+                    <Label htmlFor="depositAmount">Initial Deposit</Label>
                     <Input
                       id="depositAmount"
                       type="number"
@@ -95,7 +103,7 @@ const InputComponents = () => {
                     />
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <Label htmlFor="years">Years</Label>
+                    <Label htmlFor="years">Loan Period (Years)</Label>
                     <Input
                       id="years"
                       type="number"
@@ -137,12 +145,15 @@ const InputComponents = () => {
               </AccordionContent>
             </AccordionItem>
 
-            {/* Nested Accordions */}
-
             {/* Capital Gains Section */}
-            <AccordionItem value="capital-gains">
-              <AccordionTrigger>Capital Gains Tax Variables</AccordionTrigger>
-              <AccordionContent>
+            <AccordionItem
+              value="capital-gains"
+              className="border-card-foreground/20"
+            >
+              <AccordionTrigger className="hover:no-underline hover:bg-secondary/50 pr-4 pl-12 h-10 text-card-foreground/70 tracking-wider font-light text-base">
+                Capital Gains Tax Variables
+              </AccordionTrigger>
+              <AccordionContent className="pr-4 pl-12 mt-2">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   <ExclusionCombobox
                     exclusionType={exclusionType}
@@ -165,9 +176,14 @@ const InputComponents = () => {
             </AccordionItem>
 
             {/* Monthly Fees Section */}
-            <AccordionItem value="monthly-fees">
-              <AccordionTrigger>Monthly Fees</AccordionTrigger>
-              <AccordionContent>
+            <AccordionItem
+              value="monthly-fees"
+              className="border-card-foreground/20"
+            >
+              <AccordionTrigger className="hover:no-underline hover:bg-secondary/50 pr-4 pl-12 h-10 text-card-foreground/70 tracking-wider font-light text-base">
+                Monthly Fees
+              </AccordionTrigger>
+              <AccordionContent className="pr-4 pl-12 mt-2">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   <div className="flex flex-col gap-1.5">
                     <Label htmlFor="monthlyRates">Rates</Label>
@@ -218,19 +234,31 @@ const InputComponents = () => {
             </AccordionItem>
 
             {/* Buying Costs Section */}
-            <AccordionItem value="buying-costs">
-              <AccordionTrigger>Buying Costs</AccordionTrigger>
-              <AccordionContent>
+            <AccordionItem
+              value="buying-costs"
+              className="border-card-foreground/20"
+            >
+              <AccordionTrigger className="hover:no-underline hover:bg-secondary/50 pr-4 pl-12 h-10 text-card-foreground/70 tracking-wider font-light text-base">
+                Buying Costs
+              </AccordionTrigger>
+              <AccordionContent className="pr-4 pl-12 mt-2">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   <div className="flex flex-col gap-1.5">
-                    <Label htmlFor="buyingCosts">Buying Costs</Label>
-                    <Checkbox
-                      id="addBuyingCostsToBond"
-                      checked={addBuyingCostsToBond}
-                      onCheckedChange={() =>
-                        setAddBuyingCostsToBond(!addBuyingCostsToBond)
-                      }
-                    />
+                    <div className="flex flex-row justify-between">
+                      <Label htmlFor="buyingCosts">Buying Costs</Label>
+                      <div className="flex flex-row space-x-2">
+                        <Checkbox
+                          id="addBuyingCostsToBond"
+                          checked={addBuyingCostsToBond}
+                          onCheckedChange={() =>
+                            setAddBuyingCostsToBond(!addBuyingCostsToBond)
+                          }
+                        />
+                        <Label htmlFor="buyingCosts">Add to Bond</Label>
+                      </div>
+
+                    </div>
+
                     <Input
                       id="buyingCosts"
                       type="number"
@@ -256,9 +284,14 @@ const InputComponents = () => {
             </AccordionItem>
 
             {/* Selling Costs Section */}
-            <AccordionItem value="selling-costs">
-              <AccordionTrigger>Selling Costs</AccordionTrigger>
-              <AccordionContent>
+            <AccordionItem
+              value="selling-costs"
+              className="border-card-foreground/20"
+            >
+              <AccordionTrigger className="hover:no-underline hover:bg-secondary/50 pr-4 pl-12 h-10 text-card-foreground/70 tracking-wider font-light text-base">
+                Selling Costs
+              </AccordionTrigger>
+              <AccordionContent className="pr-4 pl-12 mt-2">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   <div className="flex flex-col gap-1.5">
                     <Label htmlFor="sellingCosts">Selling Costs</Label>
@@ -292,14 +325,17 @@ const InputComponents = () => {
       </AccordionItem>
 
       {/* Rent Section */}
-      <AccordionItem value="rent">
-        <AccordionTrigger>
-          <div className="flex flex-row">
-            <Building className="w-6 h-6 mr-2" />
-            Rent
+      <AccordionItem
+        value="rent"
+        className="bg-card border border-card-foreground/20 shadow-2xl rounded-xl"
+      >
+        <AccordionTrigger className="hover:no-underline hover:bg-primary/20 px-4 rounded-xl">
+          <div className="flex flex-row text-2xl tracking-wide font-light justify-center items-center">
+            <Building className="w-6 h-6 mr-2 text-secondary" />
+            Rent Details
           </div>
         </AccordionTrigger>
-        <AccordionContent>
+        <AccordionContent className="pr-4 pl-12 pt-2 border-t border-card-foreground/20">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="monthlyRent">Monthly Rent</Label>

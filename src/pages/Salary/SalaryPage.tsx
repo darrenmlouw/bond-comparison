@@ -45,7 +45,7 @@ const SalaryPage = () => {
         Salary and Tax
       </p>
 
-      <p className="text-primary-foreground/70 mb-3 sm:mb-4 md:mb-6">
+      <p className="text-lg sm:text-xl text-primary-foreground/70 mb-3 sm:mb-4 md:mb-6">
         Calculate Tax Bracket and Capital Gains
       </p>
 

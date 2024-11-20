@@ -68,8 +68,8 @@ export const ExclusionCombobox = ({
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-full p-0">
-          <Command>
+        <PopoverContent className="w-full p-0 border-primary/30 rounded-xl bg-card/30 backdrop-blur-md shadow-lg">
+          <Command className='rounded-xl bg-transparent '>
             <CommandInput placeholder="Search exclusion type..." />
             <CommandList>
               <CommandEmpty>No exclusion type found.</CommandEmpty>
@@ -88,6 +88,7 @@ export const ExclusionCombobox = ({
                     }}
                   >
                     <Check
+                      color='green'
                       className={`mr-2 h-4 w-4 ${
                         exclusionType === option.value
                           ? 'opacity-100'

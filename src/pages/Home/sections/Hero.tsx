@@ -1,5 +1,6 @@
 import { LazyMotion, domAnimation, m } from 'framer-motion';
-import AnimatedText from '@/components/AnimatedText'; // Import the AnimatedText component
+import AnimatedText from '@/components/AnimatedText';
+import BuyMeCoffeeLogo from '@/assets/BuyMeCoffee/BuyMeCoffeeLogo32.webp';
 
 const Hero = () => {
   const handleGetStartedClick = () => {
@@ -11,6 +12,11 @@ const Hero = () => {
       });
     }
   };
+
+  const handleBuyMeCoffee = () => {
+    // Navigate to Buy Me Coffee page
+  }
+  
 
   return (
     <LazyMotion features={domAnimation}>
@@ -59,22 +65,45 @@ const Hero = () => {
             Compare renting and buying to make informed homeowner decisions.
           </m.p>
 
-          <m.span
+          <m.div
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.0 }}
+            className="flex flex-col sm:flex-row gap-4 w-full justify-center items-center"
           >
+            <m.a
+              href="https://www.buymeacoffee.com/darrenmlouw"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => {
+                setTimeout(handleBuyMeCoffee, 200);
+              }}
+              className="w-40 h-12 flex items-center text-foreground hover:text-background  rounded-full border-2 border-[#FFDD00] hover:bg-[#FFDD00] bg-[#FFDD00]/10 ring-0 focus:ring-0"
+            >
+                <img
+                  src={BuyMeCoffeeLogo}
+                  alt="Coffee logo"
+                  className="w-[36px] h-[36px] rounded-full ml-1"
+                />
+
+                <span className="text-base font-semibold tracking-wider text-center flex-grow">
+                  Coffee
+                </span>
+            </m.a>
+
             <m.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={() => {
                 setTimeout(handleGetStartedClick, 200);
               }}
-              className="border-2 border-primary bg-primary/30 hover:bg-primary hover:border-primary rounded-full text-base font-medium transition-colors text-primary-foreground h-10 px-4 py-2-8 ring-2 ring-primary ring-offset-2 ring-offset-background focus:ring-primary focus:outline-none active:ring-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-foreground"
+              className="w-40 h-12 flex items-center justify-center text-primary-foreground hover:text-background border-2 border-primary bg-primary/10 hover:bg-primary hover:border-primary rounded-full text-base font-semibold tracking-wider transition-colors   px-4 py-2-8 ring-0 focus:ring-0"
             >
               Get Started
             </m.button>
-          </m.span>
+          </m.div>
         </m.div>
       </section>
     </LazyMotion>

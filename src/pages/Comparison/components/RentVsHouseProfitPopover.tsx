@@ -25,7 +25,7 @@ const RentVsHouseComparisonPopover: React.FC<RentVsHouseComparisonPopoverProps> 
       <p>The net difference in money after buying and selling the house versus renting is calculated as:</p>
 
       <BlockMath>
-        {String.raw`\text{Net Difference} = HV + RC`}
+        {String.raw`\text{Net Difference} = HV - RC`}
       </BlockMath>
 
       <p>Where:</p>
@@ -41,7 +41,7 @@ const RentVsHouseComparisonPopover: React.FC<RentVsHouseComparisonPopoverProps> 
       </div>
 
       <InlineMath>
-        {String.raw`\text{Net Difference} = (${formatNumber(houseValue)}) + (${formatNumber(rentCost)})`}
+        {String.raw`\text{Net Difference} = (${formatNumber(houseValue)}) - (${formatNumber(rentCost)})`}
       </InlineMath>
 
       <InlineMath>

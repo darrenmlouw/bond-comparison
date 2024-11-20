@@ -1,4 +1,3 @@
-import React from 'react';
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -13,6 +12,7 @@ import {
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
 import { useTheme } from '@/hooks/useTheme';
+import { useComparison } from '@/hooks/useComparison';
 
 function interpolateData(data: number[], factor: number): number[] {
   const interpolatedData: number[] = [];
@@ -39,19 +39,11 @@ ChartJS.register(
   annotationPlugin
 );
 
-interface HousingComparisonChartProps {
-  rentData: number[];
-  moneyMadeFromSellingHouse: number[];
-  sellingYear: number;
-}
-
-const HousingComparisonChart: React.FC<HousingComparisonChartProps> = ({
-  rentData,
-  moneyMadeFromSellingHouse,
-  sellingYear,
-}) => {
+const HousingComparisonChart = () => {
   const { theme } = useTheme();
-  const interpolationFactor = 10; // Adjust for smoother data
+  const { rentData, moneyMadeFromSellingHouse, yearOfSale } = useComparison();
+  
+  const interpolationFactor = 10;
   const interpolatedRentData = interpolateData(rentData, interpolationFactor);
   const interpolatedHouseData = interpolateData(
     moneyMadeFromSellingHouse,
@@ -62,9 +54,7 @@ const HousingComparisonChart: React.FC<HousingComparisonChartProps> = ({
     (_, index) => `Year ${(index / interpolationFactor).toFixed(1)}`
   );
 
-  const breakEvenYear = interpolatedHouseData.findIndex(
-    (value) => value > 0
-  );
+  const breakEvenYear = interpolatedHouseData.findIndex((value) => value > 0);
   const yearWhenHouseValueExceedsRent = interpolatedHouseData.findIndex(
     (value, index) => value > interpolatedRentData[index]
   );
@@ -126,8 +116,6 @@ const HousingComparisonChart: React.FC<HousingComparisonChartProps> = ({
             size: window.innerWidth < 768 ? 10 : 14, // Adjust font size for mobile screens
           },
         },
-        
-        
       },
       title: {
         display: false,
@@ -136,12 +124,12 @@ const HousingComparisonChart: React.FC<HousingComparisonChartProps> = ({
       },
       annotation: {
         annotations: [
-          sellingYear !== null && {
+          yearOfSale !== null && {
             type: 'line',
             scaleID: 'x',
-            value: sellingYear * interpolationFactor,
+            value: yearOfSale * interpolationFactor,
             borderColor:
-              moneyMadeFromSellingHouse[sellingYear] > 0
+              moneyMadeFromSellingHouse[yearOfSale] > 0
                 ? 'rgba(75, 255, 140, 0.6)'
                 : 'rgba(255, 80, 80, 0.6)',
             borderDash: [5, 5],
@@ -149,15 +137,15 @@ const HousingComparisonChart: React.FC<HousingComparisonChartProps> = ({
             label: {
               display: true,
               content:
-                moneyMadeFromSellingHouse[sellingYear] >= 0 ? 'Profit' : 'Loss',
+                moneyMadeFromSellingHouse[yearOfSale] >= 0 ? 'Profit' : 'Loss',
               position: 'start',
               backgroundColor:
-                moneyMadeFromSellingHouse[sellingYear] > 0
+                moneyMadeFromSellingHouse[yearOfSale] > 0
                   ? 'rgba(75, 255, 140, 0.1)'
                   : 'rgba(255, 50, 50, 0.1)',
               borderWidth: 1,
               borderColor:
-                moneyMadeFromSellingHouse[sellingYear] > 0
+                moneyMadeFromSellingHouse[yearOfSale] > 0
                   ? 'rgba(75, 255, 140, 0.6)'
                   : 'rgba(255, 50, 50, 0.6)',
               // change font size based on screen size
@@ -233,7 +221,8 @@ const HousingComparisonChart: React.FC<HousingComparisonChartProps> = ({
         min: 0,
         max: labels.length - 1,
         ticks: {
-          callback: (value) => abbreviateNumber((value as number)/interpolationFactor), // Abbreviate x-axis labels
+          callback: (value) =>
+            abbreviateNumber((value as number) / interpolationFactor), // Abbreviate x-axis labels
           autoSkip: true, // Automatically skip some labels if space is tight
           maxTicksLimit: window.innerWidth < 768 ? 6 : 21, // Adjust tick number based on screen size
           font: {
