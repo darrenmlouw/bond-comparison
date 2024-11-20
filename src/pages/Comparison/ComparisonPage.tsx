@@ -2,7 +2,6 @@ import HousingComparisonChart from '@/components/HousingComparisonChart';
 
 import InputComponents from '@/pages/Comparison/components/InputComponents';
 import EvaluationCard from '@/pages/Comparison/components/EvaluationCard';
-import SectionSubHeading from '@/pages/Comparison/components/SectionSubHeading';
 import RentVsHouseCard from '@/pages/Comparison/components/RentVsHouseCard';
 import { SectionHeader } from '@/components/SectionHeader';
 
