@@ -53,7 +53,7 @@ const SalaryPage = () => {
         <div className="flex flex-col w-full max-w-2xl gap-y-2">
           <SectionHeader label="Income Details" />
 
-          <div className="flex flex-row w-full gap-2">
+          <div className="flex flex-row w-full gap-2 items-end">
             <div className="flex flex-col w-1/2 gap-1.5">
               <div className="flex flex-row, justify-start items-center">
                 <Label htmlFor="income" className="text-sm ">
