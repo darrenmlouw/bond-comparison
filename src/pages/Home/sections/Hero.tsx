@@ -88,7 +88,7 @@ const Hero = () => {
                   className="w-[36px] h-[36px] rounded-full ml-1"
                 />
 
-                <span className="text-base font-semibold tracking-wider ml-4">
+                <span className="text-base font-semibold tracking-wider text-center flex-grow">
                   Coffee
                 </span>
             </m.a>
