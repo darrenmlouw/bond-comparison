@@ -41,11 +41,11 @@ const SalaryPage = () => {
 
   return (
     <div className="flex flex-col h-full w-full items-center ">
-      <p className="font-bold text-5xl md:text-6xl lg:text-7xl text-primary-foreground mt-6 mb-4 sm:mt-8 sm:mb-6 md:mt-10 md:mb-8">
+      <p className="pt-5 font-bold px-4 pointer-events-none text-4xl text-center md:text-5xl lg:text-6xl mb-5">
         Salary and Tax
       </p>
 
-      <p className="text-lg sm:text-xl text-primary-foreground/70 mb-3 sm:mb-4 md:mb-6">
+      <p className="text-center text-base sm:text-lg text-primary-foreground/70 mb-3 sm:mb-4 md:mb-6">
         Calculate Tax Bracket and Capital Gains
       </p>
 
@@ -87,7 +87,7 @@ const SalaryPage = () => {
             <div className="flex flex-col w-1/2 gap-1.5">
               <div className="flex flex-row, justify-bet items-center">
                 <Label htmlFor="tax" className="text-sm ">
-                  Monthly Tax Deductables
+                  Pre-Tax Deductions
                 </Label>
 
                 <InfoPopOver

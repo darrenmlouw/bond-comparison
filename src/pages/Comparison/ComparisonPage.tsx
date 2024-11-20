@@ -4,30 +4,30 @@ import InputComponents from '@/pages/Comparison/components/InputComponents';
 import EvaluationCard from '@/pages/Comparison/components/EvaluationCard';
 import SectionSubHeading from '@/pages/Comparison/components/SectionSubHeading';
 import RentVsHouseCard from '@/pages/Comparison/components/RentVsHouseCard';
+import { SectionHeader } from '@/components/SectionHeader';
 
 const ComparisonPage: React.FC = () => {
   return (
     <div className="flex flex-col h-full w-full items-center ">
       <div className="px-4 space-y-2 container">
-        <p className="pt-10 font-bold px-4 pointer-events-none text-5xl text-center md:text-6xl lg:text-7xl mb-10">
-          Rent vs Buy Comparison
+        <p className="pt-5 font-bold px-4 pointer-events-none text-4xl text-center md:text-5xl lg:text-6xl mb-5">
+          Rent vs Buy
         </p>
 
-        <p className="text-center text-lg sm:text-xl text-primary-foreground/70 mb-3 sm:mb-4 md:mb-6">
-          Analyze and compare the costs of renting versus buying a home over
-          time.
+        <p className="text-center text-base sm:text-lg text-primary-foreground/70 pb-3">
+          Compare renting vs buying costs over time.
         </p>
+        <SectionHeader label="Property Information" />
 
-        <SectionSubHeading label="Property Information" />
         <InputComponents />
 
-        <SectionSubHeading label="House Evaluation" />
+        <SectionHeader label="House Evaluation" />
         <EvaluationCard />
 
-        <SectionSubHeading label="Rent vs House Costs" />
+        <SectionHeader label="Rent vs House Costs" />
         <RentVsHouseCard />
 
-        <SectionSubHeading label="Comparison of Rent and House Costs" />
+        <SectionHeader label="Comparison" />
         <div className="h-96 w-full bg-card rounded-xl p-4 shadow-2xl border border-card-foreground/20">
           <HousingComparisonChart />
         </div>
