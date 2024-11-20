@@ -49,7 +49,7 @@ const FloatingDockMobile = ({
   return (
     <div
       className={cn(
-        'mx-auto flex h-16 gap-6 items-end rounded-2xl px-8 pb-3 md:hidden',
+        'mx-auto flex w-screen justify-around h-16  items-end rounded-t-xlmd:rounded-2xl px-8 pb-3 md:hidden',
         className
       )}
     >
