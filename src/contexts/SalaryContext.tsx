@@ -1,6 +1,7 @@
 import ageCategory from '@/enums/ageCategory';
 import { useStorage } from '@/hooks/useStorage';
-import { createContext, ReactNode } from 'react';
+import { createContext, ReactNode } from 'react'
+import TAX_PERIODS from '@/constants/TAX_PERIODS';
 
 // Define the shape of the context
 interface SalaryContextType {
@@ -22,6 +23,22 @@ export const SalaryContext = createContext<SalaryContextType | undefined>(
   undefined
 );
 
+function findCurrentTaxPeriodYear(): number | null {
+  const currentDate = new Date();
+
+  for (const [year, period] of Object.entries(TAX_PERIODS)) {
+    const startDate = new Date(period.start.year, period.start.month - 1, period.start.day);
+    const endDate = new Date(period.end.year, period.end.month - 1, period.end.day);
+
+    if (currentDate >= startDate && currentDate <= endDate) {
+      return parseInt(year, 10);
+    }
+  }
+
+  return null; // Return null if no matching period is found
+}
+
+
 export const SalaryProvider = ({ children }: { children: ReactNode }) => {
   const [grossMonthlyIncome, setGrossMonthlyIncome, , storageAvailable] =
     useStorage('grossMonthlyIncome', '0', 'localStorage');
@@ -37,7 +54,7 @@ export const SalaryProvider = ({ children }: { children: ReactNode }) => {
   );
   const [year, setYear] = useStorage(
     'year',
-    new Date().getFullYear().toString(),
+    findCurrentTaxPeriodYear()?.toString() ?? new Date().getFullYear().toString(),
     'localStorage'
   );
   const grossAnnualIncome = isNaN(Number(grossMonthlyIncome)) ? 0 : Number(grossMonthlyIncome) * 12;

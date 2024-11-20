@@ -12,8 +12,8 @@ const InfoPopOver: React.FC<InfoPopOverProps> = ({ children }) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="ghost" size="icon" className="w-6 h-6 rounded-full ml-1">
-          <InfoCircledIcon className="h-4 w-4 text-orange-400" />
+        <Button variant="ghost" size="icon" className="w-6 h-6 rounded-full ml-1 text-accent hover:text-background">
+          <InfoCircledIcon className="h-4 w-4 text-inherit" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className=" bg-primary/10 backdrop-blur-md border-primary/30 shadow-xl w-80 sm:w-96">

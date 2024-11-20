@@ -3,13 +3,14 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { ExclusionCombobox } from "@/components/ExclusionCombobox";
-import { InclusionCombobox } from "@/components/InclusionCombobox";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useComparison } from "@/hooks/useComparison";
+} from '@/components/ui/accordion';
+import { ExclusionCombobox } from '@/components/ExclusionCombobox';
+import { InclusionCombobox } from '@/components/InclusionCombobox';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useComparison } from '@/hooks/useComparison';
+import { Home, Building } from 'lucide-react';
 
 const InputComponents = () => {
   const {
@@ -56,63 +57,88 @@ const InputComponents = () => {
   } = useComparison();
 
   return (
-    <Accordion type="single" collapsible>
+    <Accordion type="single" collapsible className="" >
       {/* Bond Section */}
-      <AccordionItem value="bond">
-        <AccordionTrigger>Bond</AccordionTrigger>
-        <AccordionContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-            <div className="flex flex-col gap-1.5">
-              <Label htmlFor="propertyPrice">House Price (R)</Label>
-              <Input
-                id="propertyPrice"
-                type="number"
-                value={propertyPrice}
-                onChange={(e) => setPropertyPrice(parseFloat(e.target.value))}
-              />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <Label htmlFor="depositAmount">Deposit</Label>
-              <Input
-                id="depositAmount"
-                type="number"
-                value={depositAmount}
-                onChange={(e) => setDepositAmount(parseFloat(e.target.value))}
-              />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <Label htmlFor="years">Years</Label>
-              <Input
-                id="years"
-                type="number"
-                value={loanTermYears}
-                onChange={(e) => setLoanTermYearsYears(parseInt(e.target.value))}
-              />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <Label htmlFor="annualInterestRate">Interest Rate (%)</Label>
-              <Input
-                id="annualInterestRate"
-                type="number"
-                step="0.01"
-                value={annualInterestRate}
-                onChange={(e) => setAnnualInterestRate(parseFloat(e.target.value))}
-              />
-            </div>
-            <div className="flex flex-col gap-1.5 col-span-2">
-              <Label htmlFor="annualAppreciationRate">Appreciation Rate (%)</Label>
-              <Input
-                id="annualAppreciationRate"
-                type="number"
-                step="0.01"
-                value={annualAppreciationRate}
-                onChange={(e) => setAnnualAppreciationRate(parseFloat(e.target.value))}
-              />
-            </div>
+      <AccordionItem value="bond" className='border-b-0'>
+        <AccordionTrigger>
+          <div className="flex flex-row">
+            <Home className="w-6 h-6 mr-2" />
+            Bond
           </div>
+        </AccordionTrigger>
+        <AccordionContent>
+          <Accordion type="single" collapsible className='ml-8 mr-8 mt-0'>
+            <AccordionItem value="property-data">
+              <AccordionTrigger>Property Data</AccordionTrigger>
+              <AccordionContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                  <div className="flex flex-col gap-1.5">
+                    <Label htmlFor="propertyPrice">House Price (R)</Label>
+                    <Input
+                      id="propertyPrice"
+                      type="number"
+                      value={propertyPrice}
+                      onChange={(e) =>
+                        setPropertyPrice(parseFloat(e.target.value))
+                      }
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <Label htmlFor="depositAmount">Deposit</Label>
+                    <Input
+                      id="depositAmount"
+                      type="number"
+                      value={depositAmount}
+                      onChange={(e) =>
+                        setDepositAmount(parseFloat(e.target.value))
+                      }
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <Label htmlFor="years">Years</Label>
+                    <Input
+                      id="years"
+                      type="number"
+                      value={loanTermYears}
+                      onChange={(e) =>
+                        setLoanTermYearsYears(parseInt(e.target.value))
+                      }
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <Label htmlFor="annualInterestRate">
+                      Interest Rate (%)
+                    </Label>
+                    <Input
+                      id="annualInterestRate"
+                      type="number"
+                      step="0.01"
+                      value={annualInterestRate}
+                      onChange={(e) =>
+                        setAnnualInterestRate(parseFloat(e.target.value))
+                      }
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5 col-span-2">
+                    <Label htmlFor="annualAppreciationRate">
+                      Appreciation Rate (%)
+                    </Label>
+                    <Input
+                      id="annualAppreciationRate"
+                      type="number"
+                      step="0.01"
+                      value={annualAppreciationRate}
+                      onChange={(e) =>
+                        setAnnualAppreciationRate(parseFloat(e.target.value))
+                      }
+                    />
+                  </div>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
 
-          {/* Nested Accordions */}
-          <Accordion type="single" collapsible>
+            {/* Nested Accordions */}
+
             {/* Capital Gains Section */}
             <AccordionItem value="capital-gains">
               <AccordionTrigger>Capital Gains Tax Variables</AccordionTrigger>
@@ -122,9 +148,13 @@ const InputComponents = () => {
                     exclusionType={exclusionType}
                     onExclusionTypeChange={setExclusionType}
                     numberOfPeopleInJointBond={numberOfPeopleInJointBond}
-                    onNumberOfPeopleInJointBondChange={setNumberOfPeopleInJointBond}
+                    onNumberOfPeopleInJointBondChange={
+                      setNumberOfPeopleInJointBond
+                    }
                     smallBusinessMarketValue={smallBusinessMarketValue}
-                    onSmallBusinessMarketValueChange={setSmallBusinessMarketValue}
+                    onSmallBusinessMarketValueChange={
+                      setSmallBusinessMarketValue
+                    }
                   />
                   <InclusionCombobox
                     inclusionType={inclusionType}
@@ -145,7 +175,9 @@ const InputComponents = () => {
                       id="monthlyRates"
                       type="number"
                       value={monthlyRates}
-                      onChange={(e) => setMonthlyRates(parseFloat(e.target.value))}
+                      onChange={(e) =>
+                        setMonthlyRates(parseFloat(e.target.value))
+                      }
                     />
                   </div>
                   <div className="flex flex-col gap-1.5">
@@ -154,7 +186,9 @@ const InputComponents = () => {
                       id="monthlyLevies"
                       type="number"
                       value={monthlyLevies}
-                      onChange={(e) => setMonthlyLevies(parseFloat(e.target.value))}
+                      onChange={(e) =>
+                        setMonthlyLevies(parseFloat(e.target.value))
+                      }
                     />
                   </div>
                   <div className="flex flex-col gap-1.5">
@@ -163,7 +197,9 @@ const InputComponents = () => {
                       id="monthlyInsurance"
                       type="number"
                       value={monthlyInsurance}
-                      onChange={(e) => setMonthlyInsurance(parseFloat(e.target.value))}
+                      onChange={(e) =>
+                        setMonthlyInsurance(parseFloat(e.target.value))
+                      }
                     />
                   </div>
                   <div className="flex flex-col gap-1.5">
@@ -172,7 +208,9 @@ const InputComponents = () => {
                       id="other"
                       type="number"
                       value={additionalMonthlyFees}
-                      onChange={(e) => setAdditionalMonthlyFees(parseFloat(e.target.value))}
+                      onChange={(e) =>
+                        setAdditionalMonthlyFees(parseFloat(e.target.value))
+                      }
                     />
                   </div>
                 </div>
@@ -189,13 +227,17 @@ const InputComponents = () => {
                     <Checkbox
                       id="addBuyingCostsToBond"
                       checked={addBuyingCostsToBond}
-                      onCheckedChange={() => setAddBuyingCostsToBond(!addBuyingCostsToBond)}
+                      onCheckedChange={() =>
+                        setAddBuyingCostsToBond(!addBuyingCostsToBond)
+                      }
                     />
                     <Input
                       id="buyingCosts"
                       type="number"
                       value={buyingCosts}
-                      onChange={(e) => setBuyingCosts(parseFloat(e.target.value))}
+                      onChange={(e) =>
+                        setBuyingCosts(parseFloat(e.target.value))
+                      }
                     />
                   </div>
                   <div className="flex flex-col gap-1.5">
@@ -204,7 +246,9 @@ const InputComponents = () => {
                       id="otherBuyingCosts"
                       type="number"
                       value={otherBuyingCosts}
-                      onChange={(e) => setOtherBuyingCosts(parseFloat(e.target.value))}
+                      onChange={(e) =>
+                        setOtherBuyingCosts(parseFloat(e.target.value))
+                      }
                     />
                   </div>
                 </div>
@@ -222,16 +266,22 @@ const InputComponents = () => {
                       id="sellingCosts"
                       type="number"
                       value={sellingCosts}
-                      onChange={(e) => setSellingCosts(parseFloat(e.target.value))}
+                      onChange={(e) =>
+                        setSellingCosts(parseFloat(e.target.value))
+                      }
                     />
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <Label htmlFor="otherSellingCosts">Other Selling Costs</Label>
+                    <Label htmlFor="otherSellingCosts">
+                      Other Selling Costs
+                    </Label>
                     <Input
                       id="otherSellingCosts"
                       type="number"
                       value={otherSellingCosts}
-                      onChange={(e) => setOtherSellingCosts(parseFloat(e.target.value))}
+                      onChange={(e) =>
+                        setOtherSellingCosts(parseFloat(e.target.value))
+                      }
                     />
                   </div>
                 </div>
@@ -243,7 +293,12 @@ const InputComponents = () => {
 
       {/* Rent Section */}
       <AccordionItem value="rent">
-        <AccordionTrigger>Rent</AccordionTrigger>
+        <AccordionTrigger>
+          <div className="flex flex-row">
+            <Building className="w-6 h-6 mr-2" />
+            Rent
+          </div>
+        </AccordionTrigger>
         <AccordionContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             <div className="flex flex-col gap-1.5">
@@ -256,12 +311,16 @@ const InputComponents = () => {
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="annualRentIncrease">Annual Rent Increase (%)</Label>
+              <Label htmlFor="annualRentIncrease">
+                Annual Rent Increase (%)
+              </Label>
               <Input
                 id="annualRentIncrease"
                 type="number"
                 value={annualRentIncrease}
-                onChange={(e) => setAnnualRentIncrease(parseFloat(e.target.value))}
+                onChange={(e) =>
+                  setAnnualRentIncrease(parseFloat(e.target.value))
+                }
               />
             </div>
           </div>

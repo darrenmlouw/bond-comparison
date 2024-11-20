@@ -2,8 +2,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
   calculateTax,
-  // getTaxBracket,
-  // getTaxRebate,
 } from '@/utils/incomeTaxCalculations';
 import { formatNumber } from '@/utils/formatNumber'; // Import the utility function
 import TaxComparisonChart from '@/components/TaxComparisonChart';
@@ -89,7 +87,7 @@ const SalaryPage = () => {
             <div className="flex flex-col w-1/2 gap-1.5">
               <div className="flex flex-row, justify-bet items-center">
                 <Label htmlFor="tax" className="text-sm ">
-                  Tax Deductables
+                  Monthly Tax Deductables
                 </Label>
 
                 <InfoPopOver
@@ -158,7 +156,7 @@ const SalaryPage = () => {
                   Net Annual Income
                 </p>
                 <p className="text-xl sm:text-2xl md:text-3xl font-light tracking-wide text-green-600 dark:text-green-400">
-                  R {formatNumber(grossAnnualIncome - annualDeductions)}
+                  R {formatNumber(grossAnnualIncome - tax- annualDeductions)}
                 </p>
               </div>
             </div>
