@@ -35,8 +35,6 @@ const taxThresholdKeyMap: Record<ageCategory, keyof typeof TAX_THRESHOLDS[2025]>
 export function AgeCombobox({ age, taxYear, onAgeChange }: AgeComboboxProps) {
   const [open, setOpen] = useState(false);
 
-  console.log(taxYear);
-
   const ageCategories = [
     { label: 'None', value: ageCategory.None },
     { label: 'Under 65', value: ageCategory.Under65 },

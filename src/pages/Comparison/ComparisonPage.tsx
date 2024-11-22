@@ -8,7 +8,7 @@ import { SectionHeader } from '@/components/SectionHeader';
 const ComparisonPage = () => {
   return (
     <div className="flex flex-col h-full w-full items-center ">
-      <div className="px-4 space-y-2 container">
+      <div className="px-2 sm:px-4 space-y-2 sm:space-y-4 container">
         <p className="pt-5 font-bold px-4 pointer-events-none text-4xl text-center md:text-5xl lg:text-6xl">
           Rent vs Buy
         </p>

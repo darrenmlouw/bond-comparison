@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Cookies from 'js-cookie'; // Import js-cookie
+import Cookies from 'js-cookie';
 
 // Helper to check if localStorage or sessionStorage is available
 const isStorageAvailable = (type: 'localStorage' | 'sessionStorage'): boolean => {
@@ -14,69 +14,61 @@ const isStorageAvailable = (type: 'localStorage' | 'sessionStorage'): boolean =>
   }
 };
 
-// Overload definitions for the hook
-// 1. For cookies, expiryDays is required
-export function useStorage(
-  key: string,
-  defaultValue: string,
-  storageType: 'cookie',
-  expiryDays: number
-): [string, (value: string) => void, () => void, boolean];
+type Transformer<T> = {
+  parse: (value: string) => T;
+  serialize: (value: T) => string;
+};
 
-// 2. For localStorage and sessionStorage, expiryDays is not allowed
-export function useStorage(
+// Generic useStorage hook
+export function useStorage<T>(
   key: string,
-  defaultValue: string,
-  storageType: 'localStorage' | 'sessionStorage'
-): [string, (value: string) => void, () => void, boolean];
-
-// Implementation signature
-export function useStorage(
-  key: string,
-  defaultValue: string,
+  defaultValue: T,
   storageType: 'localStorage' | 'sessionStorage' | 'cookie',
-  expiryDays?: number // Optional, required only for cookies
-): [string, (value: string) => void, () => void, boolean] {
-  // Check storage availability for localStorage or sessionStorage
+  expiryDays?: number, // Only for cookies
+  transformer: Transformer<T> = {
+    parse: (value: string) => JSON.parse(value) as T,
+    serialize: (value: T) => JSON.stringify(value),
+  }
+): [T, (value: T) => void, () => void, boolean] {
   const storageAvailable = storageType !== 'cookie' && isStorageAvailable(storageType);
 
-  const getInitialValue = (): string => {
+  const getInitialValue = (): T => {
     if (!storageAvailable && storageType !== 'cookie') return defaultValue;
 
     let storedValue: string | null = null;
     if (storageType === 'cookie') {
-      const cookieValue = Cookies.get(key); // Returns string | undefined
-      storedValue = cookieValue !== undefined ? cookieValue : null; // Handle undefined by converting it to null
+      const cookieValue = Cookies.get(key);
+      storedValue = cookieValue !== undefined ? cookieValue : null;
     } else if (storageAvailable) {
       const storage = window[storageType];
       storedValue = storage.getItem(key);
     }
 
-    return storedValue !== null ? storedValue : defaultValue;
+    return storedValue !== null ? transformer.parse(storedValue) : defaultValue;
   };
 
-  const [value, setValue] = useState<string>(getInitialValue);
+  const [value, setValue] = useState<T>(getInitialValue);
 
-  // Save the value in the correct storage when it changes
   useEffect(() => {
+    const serializedValue = transformer.serialize(value);
+
     if (storageType === 'cookie') {
-      Cookies.set(key, value, { expires: expiryDays || 365 }); // Use js-cookie to set cookie value with expiration
+      Cookies.set(key, serializedValue, { expires: expiryDays || 365 });
     } else if (storageAvailable) {
       const storage = window[storageType];
-      storage.setItem(key, value);
+      storage.setItem(key, serializedValue);
     }
-  }, [key, value, storageType, storageAvailable, expiryDays]);
+  }, [key, value, storageType, storageAvailable, expiryDays, transformer]);
 
-  // Function to remove value from storage
   const removeValue = () => {
     if (storageType === 'cookie') {
-      Cookies.remove(key); // Use js-cookie to remove the cookie
+      Cookies.remove(key);
     } else if (storageAvailable) {
       const storage = window[storageType];
       storage.removeItem(key);
     }
 
-    setValue(defaultValue); // Reset value to default
+    setValue(defaultValue);
   };
 
   return [value, setValue, removeValue, storageAvailable] as const;

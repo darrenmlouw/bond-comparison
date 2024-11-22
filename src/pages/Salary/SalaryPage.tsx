@@ -3,7 +3,7 @@ import { Label } from '@/components/ui/label';
 import {
   calculateTax,
 } from '@/utils/incomeTaxCalculations';
-import { formatNumber } from '@/utils/formatNumber'; // Import the utility function
+import { formatNumber } from '@/utils/formatNumber';
 import TaxComparisonChart from '@/components/TaxComparisonChart';
 import { SectionHeader } from '@/components/SectionHeader';
 import { useSalary } from '@/hooks/useSalary';
@@ -32,12 +32,7 @@ const SalaryPage = () => {
     setYear,
   } = useSalary();
 
-  console.log('!@#!@#!@#@!#!#!@');
-  console.log(grossMonthlyIncome, deductions, age, year);
-
   const tax = calculateTax(grossAnnualIncome, annualDeductions, age, year);
-  // const taxBracket = getTaxBracket(netAnnualIncome, year);
-  // const taxRebate = getTaxRebate(age, year);
 
   return (
     <div className="flex flex-col h-full w-full items-center ">
@@ -183,33 +178,6 @@ const SalaryPage = () => {
               </div>
             </div>
           </div>
-
-          {/* Column 2 */}
-          {/* <div className="grid grid-cols-1 grid-rows-3 gap-6">
-            <div className="flex flex-col">
-              <p className="text-sm sm:text-lg">Tax Bracket</p>
-              <p className="text-md sm:text-xl font-light tracking-wide">
-                R{formatNumber(taxBracket.lower)} - R
-                {taxBracket.upper === Infinity
-                  ? 'Inf'
-                  : formatNumber(taxBracket.upper)}
-              </p>
-            </div>
-
-            <div className="flex flex-col">
-              <p className="text-md sm:text-lg">Tax Rate</p>
-              <p className="text-xl font-light tracking-wide">
-                R{formatNumber(taxBracket.base)} + {taxBracket.rate * 100}%
-              </p>
-            </div>
-
-            <div className="flex flex-col">
-              <p className="text-md sm:text-lg">Tax Rebate</p>
-              <p className="text-xl font-light tracking-wide">
-                R{formatNumber(taxRebate)}
-              </p>
-            </div>
-          </div> */}
         </div>
 
         <motion.div

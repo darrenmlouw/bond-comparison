@@ -1,6 +1,6 @@
 import ageCategory from '@/enums/ageCategory';
 import { useStorage } from '@/hooks/useStorage';
-import { createContext, ReactNode } from 'react'
+import { createContext, ReactNode } from 'react';
 import TAX_PERIODS from '@/constants/TAX_PERIODS';
 
 // Define the shape of the context
@@ -19,9 +19,7 @@ interface SalaryContextType {
 }
 
 // Create the context with an initial default value
-export const SalaryContext = createContext<SalaryContextType | undefined>(
-  undefined
-);
+export const SalaryContext = createContext<SalaryContextType | undefined>(undefined);
 
 function findCurrentTaxPeriodYear(): number | null {
   const currentDate = new Date();
@@ -38,42 +36,55 @@ function findCurrentTaxPeriodYear(): number | null {
   return null; // Return null if no matching period is found
 }
 
-
 export const SalaryProvider = ({ children }: { children: ReactNode }) => {
-  const [grossMonthlyIncome, setGrossMonthlyIncome, , storageAvailable] =
-    useStorage('grossMonthlyIncome', '0', 'localStorage');
-  const [deductions, setDeductions] = useStorage(
+  const [grossMonthlyIncome, setGrossMonthlyIncome, , storageAvailable] = useStorage<number>(
+    'grossMonthlyIncome',
+    0,
+    'localStorage',
+    undefined,
+    { parse: parseFloat, serialize: String }
+  );
+
+  const [deductions, setDeductions] = useStorage<number>(
     'deductions',
-    '0',
-    'localStorage'
+    0,
+    'localStorage',
+    undefined,
+    { parse: parseFloat, serialize: String }
   );
-  const [age, setAge] = useStorage(
+
+  const [age, setAge] = useStorage<ageCategory>(
     'age',
-    ageCategory.None.toString(),
-    'localStorage'
+    ageCategory.None,
+    'localStorage',
+    undefined,
+    { parse: (value) => value as ageCategory, serialize: String }
   );
-  const [year, setYear] = useStorage(
+
+  const [year, setYear] = useStorage<number>(
     'year',
-    findCurrentTaxPeriodYear()?.toString() ?? new Date().getFullYear().toString(),
-    'localStorage'
+    findCurrentTaxPeriodYear() ?? new Date().getFullYear(),
+    'localStorage',
+    undefined,
+    { parse: parseFloat, serialize: String }
   );
-  const grossAnnualIncome = isNaN(Number(grossMonthlyIncome)) ? 0 : Number(grossMonthlyIncome) * 12;
-  const annualDeductions = isNaN(Number(deductions)) ? 0 : Number(deductions) * 12;
+
+  const grossAnnualIncome = grossMonthlyIncome * 12;
+  const annualDeductions = deductions * 12;
 
   return (
     <SalaryContext.Provider
       value={{
-        grossMonthlyIncome: Number(grossMonthlyIncome),
-        setGrossMonthlyIncome: (value: number) =>
-          setGrossMonthlyIncome(value.toString()),
+        grossMonthlyIncome,
+        setGrossMonthlyIncome,
         grossAnnualIncome,
-        deductions: Number(deductions),
-        setDeductions: (value: number) => setDeductions(value.toString()),
+        deductions,
+        setDeductions,
         annualDeductions,
-        age: age as ageCategory,
-        setAge: (value: ageCategory) => setAge(value.toString()),
-        year: Number(year),
-        setYear: (value: number) => setYear(value.toString()),
+        age,
+        setAge,
+        year,
+        setYear,
         storageAvailable,
       }}
     >

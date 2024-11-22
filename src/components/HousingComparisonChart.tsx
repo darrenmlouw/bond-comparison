@@ -41,7 +41,7 @@ ChartJS.register(
 
 const HousingComparisonChart = () => {
   const { theme } = useTheme();
-  const { rentData, moneyMadeFromSellingHouse, yearOfSale } = useComparison();
+  const { rentData, moneyMadeFromSellingHouse, yearOfSale = 0 } = useComparison();
   
   const interpolationFactor = 10;
   const interpolatedRentData = interpolateData(rentData, interpolationFactor);
@@ -76,7 +76,6 @@ const HousingComparisonChart = () => {
         borderWidth: 2,
         pointRadius: 0,
         pointHoverRadius: 3,
-        fill: true,
         pointHitRadius: 5,
       },
       {
@@ -89,7 +88,6 @@ const HousingComparisonChart = () => {
         borderWidth: 2,
         pointRadius: 0,
         pointHoverRadius: 3,
-        fill: true,
         pointHitRadius: 5,
       },
     ],

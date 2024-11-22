@@ -5,25 +5,22 @@ import { useComparison } from '@/hooks/useComparison';
 const CapitalGainsExplanationPopover = () => {
   const {
     houseValueAfterAppreciationData,
-    principleAmount,
-    totalBuyingCosts,
-    yearOfSale,
-    exclusion,
-    inclusionRate,
-    marginalTaxRate,
+    principleAmount = 0, // Fallback to 0
+    totalBuyingCosts = 0, // Fallback to 0
+    yearOfSale = 0, // Default year
+    exclusion = 0, // Fallback to 0
+    inclusionRate = 0, // Fallback to 0
+    marginalTaxRate = 0, // Fallback to 0
   } = useComparison();
 
-  const sellingPrice = houseValueAfterAppreciationData[yearOfSale];
+  const sellingPrice =
+    houseValueAfterAppreciationData?.[yearOfSale] ?? 0; // Fallback to 0
   const baseCost = principleAmount + totalBuyingCosts;
 
-  const capitalGain = parseFloat((sellingPrice - baseCost).toFixed(2));
-  const netCapitalGain = parseFloat(
-    Math.max(0, capitalGain - exclusion).toFixed(2)
-  );
-  const taxableGain = parseFloat((netCapitalGain * inclusionRate).toFixed(2));
-  const capitalGainsTax = parseFloat(
-    (taxableGain * marginalTaxRate).toFixed(2)
-  );
+  const capitalGain = sellingPrice - baseCost;
+  const netCapitalGain = Math.max(0, capitalGain - exclusion);
+  const taxableGain = netCapitalGain * inclusionRate;
+  const capitalGainsTax = taxableGain * marginalTaxRate;
 
   return (
     <InfoPopOver>

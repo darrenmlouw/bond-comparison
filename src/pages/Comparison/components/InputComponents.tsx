@@ -14,54 +14,56 @@ import { Home, Building } from 'lucide-react';
 
 const InputComponents = () => {
   const {
-    propertyPrice,
+    propertyPrice = 0,
     setPropertyPrice,
-    depositAmount,
+    depositAmount = 0,
     setDepositAmount,
-    loanTermYears,
-    setLoanTermYearsYears,
-    annualInterestRate,
+    loanTermYears = 0,
+    setLoanTermYears,
+    annualInterestRate = 0,
     setAnnualInterestRate,
-    annualAppreciationRate,
+    annualAppreciationRate = 0,
     setAnnualAppreciationRate,
-    buyingCosts,
+    buyingCosts = 0,
     setBuyingCosts,
-    otherBuyingCosts,
+    otherBuyingCosts = 0,
     setOtherBuyingCosts,
-    addBuyingCostsToBond,
+    addBuyingCostsToBond = false,
     setAddBuyingCostsToBond,
-    monthlyLevies,
+    monthlyLevies = 0,
     setMonthlyLevies,
-    monthlyRates,
+    monthlyRates = 0,
     setMonthlyRates,
-    monthlyInsurance,
+    monthlyInsurance = 0,
     setMonthlyInsurance,
-    additionalMonthlyFees,
+    additionalMonthlyFees = 0,
     setAdditionalMonthlyFees,
-    sellingCosts,
+    sellingCosts = 0,
     setSellingCosts,
-    otherSellingCosts,
+    otherSellingCosts = 0,
     setOtherSellingCosts,
-    monthlyRent,
+    monthlyRent = 0,
     setMonthlyRent,
-    annualRentIncrease,
+    annualRentIncrease = 0,
     setAnnualRentIncrease,
     exclusionType,
     setExclusionType,
     inclusionType,
     setInclusionType,
-    smallBusinessMarketValue,
+    smallBusinessMarketValue = 0,
     setSmallBusinessMarketValue,
-    numberOfPeopleInJointBond,
+    numberOfPeopleInJointBond = 2,
     setNumberOfPeopleInJointBond,
   } = useComparison();
 
+  console.log("Loan Term Years: ", loanTermYears);
+
   return (
-    <Accordion type="single" collapsible className="space-y-4">
+    <Accordion type="single" collapsible className="space-y-2 sm:space-y-4 ">
       {/* Bond Section */}
       <AccordionItem
         value="bond"
-        className="bg-card border border-card-foreground/20 shadow-2xl rounded-xl overflow-hidden"
+        className="bg-card border border-card-foreground/20 shadow-2xl rounded-lg overflow-hidden"
       >
         <AccordionTrigger className="flex text-start hover:no-underline bg-card hover:bg-primary/20 p-2.5 sm:p-4  overflow-hidden">
           <div className="flex flex-row text-xl sm:text-2xl tracking-wide font-light justify-center items-center">
@@ -85,7 +87,7 @@ const InputComponents = () => {
                     <Input
                       id="propertyPrice"
                       type="number"
-                      value={propertyPrice}
+                      value={isNaN(propertyPrice) ? '' : propertyPrice}
                       onChange={(e) =>
                         setPropertyPrice(parseFloat(e.target.value))
                       }
@@ -97,7 +99,7 @@ const InputComponents = () => {
                     <Input
                       id="depositAmount"
                       type="number"
-                      value={depositAmount}
+                      value={isNaN(depositAmount) ? '' : depositAmount}
                       onChange={(e) =>
                         setDepositAmount(parseFloat(e.target.value))
                       }
@@ -109,9 +111,9 @@ const InputComponents = () => {
                     <Input
                       id="years"
                       type="number"
-                      value={loanTermYears}
+                      value={isNaN(loanTermYears) ? '' : loanTermYears}
                       onChange={(e) =>
-                        setLoanTermYearsYears(parseInt(e.target.value))
+                        setLoanTermYears(parseInt(e.target.value))
                       }
                       className="w-full"
                     />
@@ -124,7 +126,7 @@ const InputComponents = () => {
                       id="annualInterestRate"
                       type="number"
                       step="0.01"
-                      value={annualInterestRate}
+                      value={isNaN(annualInterestRate) ? '' : annualInterestRate}
                       onChange={(e) =>
                         setAnnualInterestRate(parseFloat(e.target.value))
                       }
@@ -139,7 +141,7 @@ const InputComponents = () => {
                       id="annualAppreciationRate"
                       type="number"
                       step="0.01"
-                      value={annualAppreciationRate}
+                      value={isNaN(annualAppreciationRate) ? '' : annualAppreciationRate}
                       onChange={(e) =>
                         setAnnualAppreciationRate(parseFloat(e.target.value))
                       }
@@ -195,7 +197,7 @@ const InputComponents = () => {
                     <Input
                       id="monthlyRates"
                       type="number"
-                      value={monthlyRates}
+                      value={isNaN(monthlyRates) ? '' : monthlyRates}
                       onChange={(e) =>
                         setMonthlyRates(parseFloat(e.target.value))
                       }
@@ -206,7 +208,7 @@ const InputComponents = () => {
                     <Input
                       id="monthlyLevies"
                       type="number"
-                      value={monthlyLevies}
+                      value={isNaN(monthlyLevies) ? '' : monthlyLevies}
                       onChange={(e) =>
                         setMonthlyLevies(parseFloat(e.target.value))
                       }
@@ -217,7 +219,7 @@ const InputComponents = () => {
                     <Input
                       id="monthlyInsurance"
                       type="number"
-                      value={monthlyInsurance}
+                      value={isNaN(monthlyInsurance) ? '' : monthlyInsurance}
                       onChange={(e) =>
                         setMonthlyInsurance(parseFloat(e.target.value))
                       }
@@ -228,7 +230,7 @@ const InputComponents = () => {
                     <Input
                       id="other"
                       type="number"
-                      value={additionalMonthlyFees}
+                      value={isNaN(additionalMonthlyFees) ? '' : additionalMonthlyFees}
                       onChange={(e) =>
                         setAdditionalMonthlyFees(parseFloat(e.target.value))
                       }
@@ -266,7 +268,7 @@ const InputComponents = () => {
                     <Input
                       id="buyingCosts"
                       type="number"
-                      value={buyingCosts}
+                      value={isNaN(buyingCosts) ? '' : buyingCosts}
                       onChange={(e) =>
                         setBuyingCosts(parseFloat(e.target.value))
                       }
@@ -277,7 +279,7 @@ const InputComponents = () => {
                     <Input
                       id="otherBuyingCosts"
                       type="number"
-                      value={otherBuyingCosts}
+                      value={isNaN(otherBuyingCosts) ? '' : otherBuyingCosts}
                       onChange={(e) =>
                         setOtherBuyingCosts(parseFloat(e.target.value))
                       }
@@ -302,7 +304,7 @@ const InputComponents = () => {
                     <Input
                       id="sellingCosts"
                       type="number"
-                      value={sellingCosts}
+                      value={isNaN(sellingCosts) ? '' : sellingCosts}
                       onChange={(e) =>
                         setSellingCosts(parseFloat(e.target.value))
                       }
@@ -315,7 +317,7 @@ const InputComponents = () => {
                     <Input
                       id="otherSellingCosts"
                       type="number"
-                      value={otherSellingCosts}
+                      value={isNaN(otherSellingCosts) ? '' : otherSellingCosts}
                       onChange={(e) =>
                         setOtherSellingCosts(parseFloat(e.target.value))
                       }
@@ -331,7 +333,7 @@ const InputComponents = () => {
       {/* Rent Section */}
       <AccordionItem
         value="rent"
-        className="bg-card border border-card-foreground/20 shadow-2xl rounded-xl overflow-hidden"
+        className="bg-card border border-card-foreground/20 shadow-2xl rounded-lg overflow-hidden"
       >
         <AccordionTrigger className="flex text-start hover:no-underline bg-card hover:bg-primary/20 p-2.5 sm:p-4">
           <div className="flex flex-row text-xl sm:text-2xl tracking-wide font-light justify-center items-center">
@@ -346,7 +348,7 @@ const InputComponents = () => {
               <Input
                 id="monthlyRent"
                 type="number"
-                value={monthlyRent}
+                value={isNaN(monthlyRent) ? '' : monthlyRent}
                 onChange={(e) => setMonthlyRent(parseFloat(e.target.value))}
               />
             </div>
@@ -357,7 +359,7 @@ const InputComponents = () => {
               <Input
                 id="annualRentIncrease"
                 type="number"
-                value={annualRentIncrease}
+                value={isNaN(annualRentIncrease) ? '' : annualRentIncrease}
                 onChange={(e) =>
                   setAnnualRentIncrease(parseFloat(e.target.value))
                 }

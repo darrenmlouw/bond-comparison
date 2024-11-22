@@ -17,7 +17,13 @@ const ThemeContext = createContext<ThemeContextType>({
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   // Use `useStorage` hook to manage theme with fallback if storage is unavailable
-  const [theme, setTheme, , storageAvailable] = useStorage('theme', 'dark', 'localStorage');
+  const [theme, setTheme, , storageAvailable] = useStorage<string>(
+    'theme',
+    'dark',
+    'localStorage',
+    undefined,
+    { parse: String, serialize: String }
+  );
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';

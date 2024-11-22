@@ -57,8 +57,6 @@ const TaxComparisonChart: React.FC = () => {
     (_, i) => lowerBound * 100000 + i * step
   );
 
-  console.log(labels);
-
   const datasets = Object.keys(TAX_BRACKETS).map((taxYear) => {
     const isCurrentYear = parseInt(taxYear) === year;
 
@@ -76,7 +74,6 @@ const TaxComparisonChart: React.FC = () => {
       borderWidth: isCurrentYear ? 2 : 1,
       pointRadius: isCurrentYear ? 0.5 : 0,
       pointHoverRadius: isCurrentYear ? 3 : 0,
-      fill: false,
       pointHitRadius: 5,
     };
   });

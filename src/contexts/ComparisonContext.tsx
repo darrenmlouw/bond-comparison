@@ -28,12 +28,12 @@ const checkIfNumber = (value: number, defaultValue: number | undefined = 0) => {
 };
 
 interface ComparisonContextType {
-  propertyPrice: number;
+  propertyPrice: number ;
   setPropertyPrice: (income: number) => void;
   depositAmount: number;
   setDepositAmount: (deductions: number) => void;
   loanTermYears: number;
-  setLoanTermYearsYears: (age: number) => void;
+  setLoanTermYears: (age: number) => void;
   annualInterestRate: number;
   setAnnualInterestRate: (year: number) => void;
   annualAppreciationRate: number;
@@ -93,225 +93,215 @@ export const ComparisonContext = createContext<
 
 export const ComparisonProvider = ({ children }: { children: ReactNode }) => {
   // State Variables
-  const [propertyPrice, setPropertyPrice, , storageAvailable] = useStorage(
+  const [propertyPrice, setPropertyPrice, , storageAvailable] = useStorage<number>(
     'propertyPrice',
-    '1000000',
-    'localStorage'
-  );
-  const [annualInterestRate, setAnnualInterestRate] = useStorage(
-    'annualInterestRate',
-    '11.5',
-    'localStorage'
-  );
-  const [depositAmount, setDepositAmount] = useStorage(
-    'depositAmount',
-    '0',
-    'localStorage'
-  );
-  const [loanTermYears, setLoanTermYearsYears] = useStorage(
-    'loanTermYears',
-    '20',
-    'localStorage'
-  );
-  const [annualAppreciationRate, setAnnualAppreciationRate] = useStorage(
-    'annualAppreciationRate',
-    '4',
-    'localStorage'
-  );
-  const [buyingCosts, setBuyingCosts] = useStorage(
-    'buyingCosts',
-    '100000',
-    'localStorage'
-  );
-  const [otherBuyingCosts, setOtherBuyingCosts] = useStorage(
-    'otherBuyingCosts',
-    '0',
-    'localStorage'
-  );
-  const [addBuyingCostsToBond, setAddBuyingCostsToBond] = useStorage(
-    'addBuyingCostsToBond',
-    'false',
-    'localStorage'
-  );
-  const [monthlyLevies, setMonthlyLevies] = useStorage(
-    'monthlyLevies',
-    '1000',
-    'localStorage'
-  );
-  const [monthlyRates, setMonthlyRates] = useStorage(
-    'monthlyRates',
-    '1000',
-    'localStorage'
-  );
-  const [monthlyInsurance, setMonthlyInsurance] = useStorage(
-    'monthlyInsurance',
-    '1000',
-    'localStorage'
-  );
-  const [additionalMonthlyFees, setAdditionalMonthlyFees] = useStorage(
-    'additionalMonthlyFees',
-    '500',
-    'localStorage'
-  );
-  const [yearOfSale, setYearOfSale] = useStorage(
-    'yearOfSale',
-    '4',
-    'localStorage'
-  );
-  const [sellingCosts, setSellingCosts] = useStorage(
-    'sellingCosts',
-    '50000',
-    'localStorage'
-  );
-  const [otherSellingCosts, setOtherSellingCosts] = useStorage(
-    'otherSellingCosts',
-    '50000',
-    'localStorage'
-  );
-  const [monthlyRent, setMonthlyRent] = useStorage(
-    'monthlyRent',
-    '10000',
-    'localStorage'
-  );
-  const [annualRentIncrease, setAnnualRentIncrease] = useStorage(
-    'annualRentIncrease',
-    '8',
-    'localStorage'
+    0,
+    'localStorage',
+    undefined,
+    { parse: parseFloat, serialize: String }
   );
 
-  const [storedExclusionType, setExclusionType] = useStorage(
+  const [depositAmount, setDepositAmount] = useStorage<number>(
+    'depositAmount',
+    0,
+    'localStorage',
+    undefined,
+    { parse: parseFloat, serialize: String }
+  );
+  const [loanTermYears, setLoanTermYears] = useStorage<number>(
+    'loanTermYears',
+    20,
+    'localStorage',
+    undefined,
+    { parse: parseFloat, serialize: String }
+  );
+  const [annualInterestRate, setAnnualInterestRate] = useStorage<number>(
+    'annualInterestRate',
+    11.5,
+    'localStorage',
+    undefined,
+    { parse: parseFloat, serialize: String }
+  );
+  const [annualAppreciationRate, setAnnualAppreciationRate] = useStorage<number>(
+    'annualAppreciationRate',
+    4,
+    'localStorage',
+    undefined,
+    { parse: parseFloat, serialize: String }
+  );
+  const [buyingCosts, setBuyingCosts] = useStorage<number>(
+    'buyingCosts',
+    0,
+    'localStorage',
+    undefined,
+    { parse: parseFloat, serialize: String }
+  );
+  const [otherBuyingCosts, setOtherBuyingCosts] = useStorage<number>(
+    'otherBuyingCosts',
+    0,
+    'localStorage',
+    undefined,
+    { parse: parseFloat, serialize: String }
+  );
+  const [addBuyingCostsToBond, setAddBuyingCostsToBond] = useStorage<boolean>(
+    'addBuyingCostsToBond',
+    false,
+    'localStorage',
+    undefined,
+    { parse: (value) => value === 'true', serialize: String }
+  );
+  const [monthlyLevies, setMonthlyLevies] = useStorage<number>(
+    'monthlyLevies',
+    0,
+    'localStorage',
+    undefined,
+    { parse: parseFloat, serialize: String }
+  );
+  const [monthlyRates, setMonthlyRates] = useStorage<number>(
+    'monthlyRates',
+    0,
+    'localStorage',
+    undefined,
+    { parse: parseFloat, serialize: String }
+  );
+  const [monthlyInsurance, setMonthlyInsurance] = useStorage<number>(
+    'monthlyInsurance',
+    0,
+    'localStorage',
+    undefined,
+    { parse: parseFloat, serialize: String }
+  );
+  const [additionalMonthlyFees, setAdditionalMonthlyFees] = useStorage<number>(
+    'additionalMonthlyFees',
+    0,
+    'localStorage',
+    undefined,
+    { parse: parseFloat, serialize: String }
+  );
+  const [yearOfSale, setYearOfSale] = useStorage<number>(
+    'yearOfSale',
+    4,
+    'localStorage',
+    undefined,
+    { parse: parseFloat, serialize: String }
+  );
+  const [sellingCosts, setSellingCosts] = useStorage<number>(
+    'sellingCosts',
+    0,
+    'localStorage',
+    undefined,
+    { parse: parseFloat, serialize: String }
+  );
+  const [otherSellingCosts, setOtherSellingCosts] = useStorage<number>(
+    'otherSellingCosts',
+    0,
+    'localStorage',
+    undefined,
+    { parse: parseFloat, serialize: String }
+  );
+  const [monthlyRent, setMonthlyRent] = useStorage<number>(
+    'monthlyRent',
+    0,
+    'localStorage',
+    undefined,
+    { parse: parseFloat, serialize: String }
+  );
+  const [annualRentIncrease, setAnnualRentIncrease] = useStorage<number>(
+    'annualRentIncrease',
+    10,
+    'localStorage',
+    undefined,
+    { parse: parseFloat, serialize: String }
+  );
+  const [storedExclusionType, setExclusionType] = useStorage<string>(
     'exclusionType',
     exclusionOption.PrimaryResidence,
-    'localStorage'
+    'localStorage',
+    undefined,
+    { parse: String, serialize: String }
   );
-  const [storedInclusionType, setInclusionType] = useStorage(
+  const [storedInclusionType, setInclusionType] = useStorage<string>(
     'inclusionType',
     inclusionOption.Individual,
-    'localStorage'
+    'localStorage',
+    undefined,
+    { parse: String, serialize: String }
   );
+  const [smallBusinessMarketValue, setSmallBusinessMarketValue] = useStorage<number>(
+    'smallBusinessMarketValue',
+    0,
+    'localStorage',
+    undefined,
+    { parse: parseFloat, serialize: String }
+  );
+  const [numberOfPeopleInJointBond, setNumberOfPeopleInJointBond] = useStorage<number>(
+    'numberOfPeopleInJointBond',
+    2,
+    'localStorage',
+    undefined,
+    { parse: parseFloat, serialize: String }
+  );
+
   const parsedExclusionType = validateExclusionType(storedExclusionType);
   const parsedInclusionType = validateInclusionType(storedInclusionType);
 
-  const [smallBusinessMarketValue, setSmallBusinessMarketValue] = useStorage(
-    'smallBusinessMarketValue',
-    '0',
-    'localStorage'
-  );
-  const [numberOfPeopleInJointBond, setNumberOfPeopleInJointBond] = useStorage(
-    'numberOfPeopleInJointBond',
-    '2',
-    'localStorage'
-  );
-
-  const handleSetHousePrice = (income: number) =>
-    setPropertyPrice(income.toString());
-  const handleSetDeposit = (deductions: number) =>
-    setDepositAmount(deductions.toString());
-  const handlesetLoanTermYearsYears = (years: number) =>
-    setLoanTermYearsYears(years.toString());
-  const handlesetAnnualInterestRate = (annualInterestRate: number) =>
-    setAnnualInterestRate(annualInterestRate.toString());
-  const handleSetAppreciationRate = (annualAppreciationRate: number) =>
-    setAnnualAppreciationRate(annualAppreciationRate.toString());
-  const handleSetBuyingCosts = (cost: number) =>
-    setBuyingCosts(cost.toString());
-  const handleSetOtherBuyingCosts = (cost: number) =>
-    setOtherBuyingCosts(cost.toString());
-  const handleSetAddBuyingCostsToBond = (add: boolean) =>
-    setAddBuyingCostsToBond(add.toString());
-  const handleSetLevies = (levy: number) => setMonthlyLevies(levy.toString());
-  const handleSetRates = (rate: number) => setMonthlyRates(rate.toString());
-  const handleSetInsurance = (monthlyInsurance: number) =>
-    setMonthlyInsurance(monthlyInsurance.toString());
-  const handleSetOtherMonthlyFees = (fees: number) =>
-    setAdditionalMonthlyFees(fees.toString());
-  const handleSetSellingYear = (year: number) => setYearOfSale(year.toString());
-  const handleSetSellingCosts = (cost: number) =>
-    setSellingCosts(cost.toString());
-  const handleSetOtherSellingCosts = (cost: number) =>
-    setOtherSellingCosts(cost.toString());
-  const handleSetMonthlyRent = (rent: number) =>
-    setMonthlyRent(rent.toString());
-  const handleSetAnnualRentIncrease = (increase: number) =>
-    setAnnualRentIncrease(increase.toString());
-  const handleSetExclusionType = (type: exclusionOption) =>
-    setExclusionType(type);
-  const handleSetInclusionType = (type: inclusionOption) =>
-    setInclusionType(type);
-  const handleSetSmallBusinessMarketValue = (value: number) =>
-    setSmallBusinessMarketValue(value.toString());
-  const handleSetNumberOfPeopleInJointBond = (count: number) =>
-    setNumberOfPeopleInJointBond(count.toString());
-
+  // Derived Calculations
   const principleAmount = useMemo(() => {
     return addBuyingCostsToBond
-      ? checkIfNumber(Number(buyingCosts)) +
-          checkIfNumber(Number(propertyPrice)) -
-          checkIfNumber(Number(depositAmount))
-      : checkIfNumber(Number(propertyPrice)) -
-          checkIfNumber(Number(depositAmount));
+      ? checkIfNumber(buyingCosts) + checkIfNumber(propertyPrice) - checkIfNumber(depositAmount)
+      : checkIfNumber(propertyPrice) - checkIfNumber(depositAmount);
   }, [addBuyingCostsToBond, buyingCosts, propertyPrice, depositAmount]);
 
   const totalBuyingCosts = useMemo(() => {
-    return addBuyingCostsToBond
-      ? checkIfNumber(Number(otherBuyingCosts))
-      : checkIfNumber(Number(buyingCosts)) +
-          checkIfNumber(Number(otherBuyingCosts));
+    return addBuyingCostsToBond ? checkIfNumber(otherBuyingCosts) : checkIfNumber(buyingCosts) + checkIfNumber(otherBuyingCosts);
   }, [addBuyingCostsToBond, buyingCosts, otherBuyingCosts]);
 
   const monthlyFees = useMemo(() => {
-    return (
-      checkIfNumber(Number(monthlyLevies)) +
-      checkIfNumber(Number(monthlyRates)) +
-      checkIfNumber(Number(monthlyInsurance)) +
-      checkIfNumber(Number(additionalMonthlyFees))
-    );
+    return checkIfNumber(monthlyLevies) + checkIfNumber(monthlyRates) + checkIfNumber(monthlyInsurance) + checkIfNumber(additionalMonthlyFees);
   }, [monthlyLevies, monthlyRates, monthlyInsurance, additionalMonthlyFees]);
 
   const rentData = useMemo(() => {
-    return calculateRentCost(
-      checkIfNumber(Number(loanTermYears)),
-      checkIfNumber(Number(monthlyRent)),
-      checkIfNumber(Number(annualRentIncrease))
-    );
+    return calculateRentCost(loanTermYears, monthlyRent, annualRentIncrease);
   }, [loanTermYears, monthlyRent, annualRentIncrease]);
 
   const houseValueAfterAppreciationData = useMemo(() => {
-    return calculateHouseValueAfterAppreciation(
-      checkIfNumber(Number(loanTermYears)),
-      checkIfNumber(Number(propertyPrice)),
-      checkIfNumber(Number(annualAppreciationRate))
-    );
+    return calculateHouseValueAfterAppreciation(loanTermYears, propertyPrice, annualAppreciationRate);
   }, [loanTermYears, propertyPrice, annualAppreciationRate]);
 
   const totalSellingCosts = useMemo(() => {
-    return (
-      checkIfNumber(Number(sellingCosts)) +
-      checkIfNumber(Number(otherSellingCosts))
-    );
+    return checkIfNumber(sellingCosts) + checkIfNumber(otherSellingCosts);
   }, [sellingCosts, otherSellingCosts]);
 
-  const { capitalGainsTax, marginalTaxRate, inclusionRate, exclusion } =
-    calculateCapitalGainsTax(
-      Number(loanTermYears),
+  const { capitalGainsTax, marginalTaxRate, inclusionRate, exclusion } = useMemo(() => {
+    return calculateCapitalGainsTax(
+      loanTermYears,
       houseValueAfterAppreciationData,
-      Number(propertyPrice),
+      propertyPrice,
       parsedInclusionType,
       parsedExclusionType,
-      Number(numberOfPeopleInJointBond),
-      Number(smallBusinessMarketValue)
+      numberOfPeopleInJointBond,
+      smallBusinessMarketValue
     );
+  }, [
+    loanTermYears,
+    houseValueAfterAppreciationData,
+    propertyPrice,
+    parsedInclusionType,
+    parsedExclusionType,
+    numberOfPeopleInJointBond,
+    smallBusinessMarketValue,
+  ]);
 
   const moneyMadeFromSellingHouse = useMemo(() => {
     return calculateMoneyMadeFromSellingHouse(
-      checkIfNumber(Number(loanTermYears), 1),
-      checkIfNumber(Number(propertyPrice)),
-      checkIfNumber(Number(depositAmount)),
-      checkIfNumber(Number(annualAppreciationRate)),
-      checkIfNumber(totalBuyingCosts),
-      checkIfNumber(totalSellingCosts),
-      checkIfNumber(monthlyFees),
-      checkIfNumber(Number(annualInterestRate)),
+      loanTermYears,
+      propertyPrice,
+      depositAmount,
+      annualAppreciationRate,
+      totalBuyingCosts,
+      totalSellingCosts,
+      monthlyFees,
+      annualInterestRate,
       capitalGainsTax
     );
   }, [
@@ -327,83 +317,73 @@ export const ComparisonProvider = ({ children }: { children: ReactNode }) => {
   ]);
 
   const { bondCosts, monthlyPayment } = useMemo(() => {
-    return calculateBondCost(
-      checkIfNumber(Number(loanTermYears)),
-      checkIfNumber(Number(principleAmount)),
-      checkIfNumber(Number(depositAmount)),
-      checkIfNumber(Number(annualInterestRate))
-    );
+    return calculateBondCost(loanTermYears, principleAmount, depositAmount, annualInterestRate);
   }, [loanTermYears, principleAmount, depositAmount, annualInterestRate]);
 
   const remainingPrincipal = useMemo(() => {
-    return calculateRemainingPrincipal(
-      checkIfNumber(Number(loanTermYears)),
-      checkIfNumber(principleAmount),
-      checkIfNumber(Number(depositAmount)),
-      checkIfNumber(Number(annualInterestRate))
-    );
+    return calculateRemainingPrincipal(loanTermYears, principleAmount, depositAmount, annualInterestRate);
   }, [loanTermYears, principleAmount, depositAmount, annualInterestRate]);
 
   return (
     <ComparisonContext.Provider
       value={{
-        propertyPrice: Number(propertyPrice),
-        setPropertyPrice: handleSetHousePrice,
-        depositAmount: Number(depositAmount),
-        setDepositAmount: handleSetDeposit,
-        loanTermYears: Number(loanTermYears),
-        setLoanTermYearsYears: handlesetLoanTermYearsYears,
-        annualInterestRate: Number(annualInterestRate),
-        setAnnualInterestRate: handlesetAnnualInterestRate,
-        annualAppreciationRate: Number(annualAppreciationRate),
-        setAnnualAppreciationRate: handleSetAppreciationRate,
-        buyingCosts: Number(buyingCosts),
-        setBuyingCosts: handleSetBuyingCosts,
-        otherBuyingCosts: Number(otherBuyingCosts),
-        setOtherBuyingCosts: handleSetOtherBuyingCosts,
-        addBuyingCostsToBond: addBuyingCostsToBond === 'true',
-        setAddBuyingCostsToBond: handleSetAddBuyingCostsToBond,
-        monthlyLevies: Number(monthlyLevies),
-        setMonthlyLevies: handleSetLevies,
-        monthlyRates: Number(monthlyRates),
-        setMonthlyRates: handleSetRates,
-        monthlyInsurance: Number(monthlyInsurance),
-        setMonthlyInsurance: handleSetInsurance,
-        additionalMonthlyFees: Number(additionalMonthlyFees),
-        setAdditionalMonthlyFees: handleSetOtherMonthlyFees,
-        yearOfSale: Number(yearOfSale),
-        setYearOfSale: handleSetSellingYear,
-        sellingCosts: Number(sellingCosts),
-        setSellingCosts: handleSetSellingCosts,
-        otherSellingCosts: Number(otherSellingCosts),
-        setOtherSellingCosts: handleSetOtherSellingCosts,
-        monthlyRent: Number(monthlyRent),
-        setMonthlyRent: handleSetMonthlyRent,
-        annualRentIncrease: Number(annualRentIncrease),
-        setAnnualRentIncrease: handleSetAnnualRentIncrease,
-        exclusionType: parsedExclusionType,
-        setExclusionType: handleSetExclusionType,
-        inclusionType: parsedInclusionType,
-        setInclusionType: handleSetInclusionType,
-        smallBusinessMarketValue: Number(smallBusinessMarketValue),
-        setSmallBusinessMarketValue: handleSetSmallBusinessMarketValue,
-        numberOfPeopleInJointBond: Number(numberOfPeopleInJointBond),
-        setNumberOfPeopleInJointBond: handleSetNumberOfPeopleInJointBond,
-        principleAmount,
-        totalBuyingCosts,
-        monthlyFees,
-        rentData,
-        houseValueAfterAppreciationData,
-        totalSellingCosts,
-        capitalGainsTax,
-        marginalTaxRate,
-        inclusionRate,
-        exclusion,
-        moneyMadeFromSellingHouse,
-        bondCosts,
-        monthlyPayment,
-        remainingPrincipal,
-        storageAvailable,
+        propertyPrice: propertyPrice ?? 0,
+        setPropertyPrice,
+        depositAmount: depositAmount ?? 0,
+        setDepositAmount,
+        loanTermYears: loanTermYears ?? 0,
+        setLoanTermYears,
+        annualInterestRate: annualInterestRate ?? 0,
+        setAnnualInterestRate,
+        annualAppreciationRate: annualAppreciationRate ?? 0,
+        setAnnualAppreciationRate,
+        buyingCosts: buyingCosts ?? 0,
+        setBuyingCosts,
+        otherBuyingCosts: otherBuyingCosts ?? 0,
+        setOtherBuyingCosts,
+        addBuyingCostsToBond: addBuyingCostsToBond ?? false,
+        setAddBuyingCostsToBond,
+        monthlyLevies: monthlyLevies ?? 0,
+        setMonthlyLevies,
+        monthlyRates: monthlyRates ?? 0,
+        setMonthlyRates,
+        monthlyInsurance: monthlyInsurance ?? 0,
+        setMonthlyInsurance,
+        additionalMonthlyFees: additionalMonthlyFees ?? 0,
+        setAdditionalMonthlyFees,
+        yearOfSale: yearOfSale ?? 0,
+        setYearOfSale,
+        sellingCosts: sellingCosts ?? 0,
+        setSellingCosts,
+        otherSellingCosts: otherSellingCosts ?? 0,
+        setOtherSellingCosts,
+        monthlyRent: monthlyRent ?? 0,
+        setMonthlyRent,
+        annualRentIncrease: annualRentIncrease ?? 0,
+        setAnnualRentIncrease,
+        exclusionType: parsedExclusionType ?? exclusionOption.None,
+        setExclusionType,
+        inclusionType: parsedInclusionType ?? inclusionOption.Individual,
+        setInclusionType,
+        smallBusinessMarketValue: smallBusinessMarketValue ?? 0,
+        setSmallBusinessMarketValue,
+        numberOfPeopleInJointBond: numberOfPeopleInJointBond ?? 0,
+        setNumberOfPeopleInJointBond,
+        principleAmount: principleAmount ?? 0,
+        totalBuyingCosts: totalBuyingCosts ?? 0,
+        monthlyFees: monthlyFees ?? 0,
+        rentData: rentData,
+        houseValueAfterAppreciationData: houseValueAfterAppreciationData ?? [],
+        totalSellingCosts: totalSellingCosts ?? 0,
+        capitalGainsTax: capitalGainsTax ?? [],
+        marginalTaxRate: marginalTaxRate ?? 0,
+        inclusionRate: inclusionRate ?? 0,
+        exclusion: exclusion ?? 0,
+        moneyMadeFromSellingHouse: moneyMadeFromSellingHouse ?? [],
+        bondCosts: bondCosts ?? [],
+        monthlyPayment: monthlyPayment ?? 0,
+        remainingPrincipal : remainingPrincipal ?? [],
+        storageAvailable : storageAvailable ?? false,
       }}
     >
       {children}
