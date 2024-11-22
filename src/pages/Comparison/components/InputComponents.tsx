@@ -56,10 +56,8 @@ const InputComponents = () => {
     setNumberOfPeopleInJointBond,
   } = useComparison();
 
-  console.log("Loan Term Years: ", loanTermYears);
-
   return (
-    <Accordion type="single" collapsible className="space-y-2 sm:space-y-4 ">
+    <Accordion type="single" collapsible className="space-y-3 sm:space-y-4 ">
       {/* Bond Section */}
       <AccordionItem
         value="bond"
