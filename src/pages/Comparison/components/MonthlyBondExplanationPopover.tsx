@@ -1,19 +1,11 @@
 import { InlineMath, BlockMath } from 'react-katex';
 import InfoPopOver from '@/components/InfoPopOver';
+import { useComparison } from '@/hooks/useComparison';
 
-interface MonthlyBondExplanationPopoverProps {
-  principleAmount: number;
-  annualInterestRate: number;
-  loanTermYears: number;
-  monthlyPayment: number;
-}
 
-const MonthlyBondExplanationPopover = ({
-  principleAmount,
-  annualInterestRate,
-  loanTermYears,
-  monthlyPayment,
-}: MonthlyBondExplanationPopoverProps) => {
+const MonthlyBondExplanationPopover = () => {
+  const { principleAmount, annualInterestRate, loanTermYears, monthlyPayment } = useComparison()
+
   return (
     <InfoPopOver>
       <div className="flex flex-col space-y-2 text-xs">

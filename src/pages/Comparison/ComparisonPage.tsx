@@ -5,16 +5,12 @@ import EvaluationCard from '@/pages/Comparison/components/EvaluationCard';
 import RentVsHouseCard from '@/pages/Comparison/components/RentVsHouseCard';
 import { SectionHeader } from '@/components/SectionHeader';
 
-const ComparisonPage: React.FC = () => {
+const ComparisonPage = () => {
   return (
     <div className="flex flex-col h-full w-full items-center ">
       <div className="px-4 space-y-2 container">
-        <p className="pt-5 font-bold px-4 pointer-events-none text-4xl text-center md:text-5xl lg:text-6xl mb-5">
+        <p className="pt-5 font-bold px-4 pointer-events-none text-4xl text-center md:text-5xl lg:text-6xl">
           Rent vs Buy
-        </p>
-
-        <p className="text-center text-base sm:text-lg text-primary-foreground/70 pb-3">
-          Compare renting vs buying costs over time.
         </p>
         
         <SectionHeader label="Property Information" />

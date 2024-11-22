@@ -63,7 +63,7 @@ const InputComponents = () => {
         value="bond"
         className="bg-card border border-card-foreground/20 shadow-2xl rounded-xl overflow-hidden"
       >
-        <AccordionTrigger className="flex text-start hover:no-underline hover:bg-primary/20 px-4 overflow-hidden">
+        <AccordionTrigger className="flex text-start hover:no-underline bg-card hover:bg-primary/20 p-2.5 sm:p-4  overflow-hidden">
           <div className="flex flex-row text-xl sm:text-2xl tracking-wide font-light justify-center items-center">
             <Home className="w-6 h-6 mr-2 text-secondary " />
             Bond Details
@@ -333,7 +333,7 @@ const InputComponents = () => {
         value="rent"
         className="bg-card border border-card-foreground/20 shadow-2xl rounded-xl overflow-hidden"
       >
-        <AccordionTrigger className="flex text-start hover:no-underline hover:bg-primary/20 px-4">
+        <AccordionTrigger className="flex text-start hover:no-underline bg-card hover:bg-primary/20 p-2.5 sm:p-4">
           <div className="flex flex-row text-xl sm:text-2xl tracking-wide font-light justify-center items-center">
             <Building className="w-6 h-6 mr-2 text-secondary" />
             Rent Details

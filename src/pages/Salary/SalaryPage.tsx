@@ -41,13 +41,13 @@ const SalaryPage = () => {
 
   return (
     <div className="flex flex-col h-full w-full items-center ">
-      <p className="pt-5 font-bold px-4 pointer-events-none text-4xl text-center md:text-5xl lg:text-6xl mb-5">
+      <p className="pt-5 font-bold px-4 pointer-events-none text-4xl text-center md:text-5xl lg:text-6xl ">
         Salary and Tax
       </p>
 
-      <p className="text-center text-base sm:text-lg text-primary-foreground/70 mb-3 sm:mb-4 md:mb-6">
+      {/* <p className="text-center text-base sm:text-lg text-primary-foreground/70 mb-3 sm:mb-4 md:mb-6">
         Calculate Tax Bracket and Capital Gains
-      </p>
+      </p> */}
 
       <div className="px-4 sm:px-6 gap-4 sm:gap-6 md:gap-8 flex flex-col w-full justify-center items-center ">
         <div className="flex flex-col w-full max-w-2xl gap-y-2">

@@ -1,19 +1,21 @@
-import React from 'react';
 import { InlineMath, BlockMath } from 'react-katex';
 import InfoPopOver from '@/components/InfoPopOver';
+import { useComparison } from '@/hooks/useComparison';
 
-interface CapitalGainsExplanationPopoverProps {
-  sellingPrice: number;
-  baseCost: number;
-  exclusion: number;
-  inclusionRate: number;
-  marginalTaxRate: number;
-}
+const CapitalGainsExplanationPopover = () => {
+  const {
+    houseValueAfterAppreciationData,
+    principleAmount,
+    totalBuyingCosts,
+    yearOfSale,
+    exclusion,
+    inclusionRate,
+    marginalTaxRate,
+  } = useComparison();
 
-const CapitalGainsExplanationPopover: React.FC<
-  CapitalGainsExplanationPopoverProps
-> = ({ sellingPrice, baseCost, exclusion, inclusionRate, marginalTaxRate }) => {
-  // Calculate intermediate values for the display, rounded to two decimal places
+  const sellingPrice = houseValueAfterAppreciationData[yearOfSale];
+  const baseCost = principleAmount + totalBuyingCosts;
+
   const capitalGain = parseFloat((sellingPrice - baseCost).toFixed(2));
   const netCapitalGain = parseFloat(
     Math.max(0, capitalGain - exclusion).toFixed(2)
