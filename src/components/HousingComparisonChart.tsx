@@ -193,7 +193,7 @@ const HousingComparisonChart = () => {
             borderWidth: 1,
             label: {
               display: true,
-              content: 'House > Rent',
+              content: 'Buy > Rent',
               position: 'end',
               backgroundColor: 'rgba(255, 255, 0, 0.1)',
               borderWidth: 1,

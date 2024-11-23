@@ -124,7 +124,9 @@ const InputComponents = () => {
                       id="annualInterestRate"
                       type="number"
                       step="0.01"
-                      value={isNaN(annualInterestRate) ? '' : annualInterestRate}
+                      value={
+                        isNaN(annualInterestRate) ? '' : annualInterestRate
+                      }
                       onChange={(e) =>
                         setAnnualInterestRate(parseFloat(e.target.value))
                       }
@@ -139,7 +141,11 @@ const InputComponents = () => {
                       id="annualAppreciationRate"
                       type="number"
                       step="0.01"
-                      value={isNaN(annualAppreciationRate) ? '' : annualAppreciationRate}
+                      value={
+                        isNaN(annualAppreciationRate)
+                          ? ''
+                          : annualAppreciationRate
+                      }
                       onChange={(e) =>
                         setAnnualAppreciationRate(parseFloat(e.target.value))
                       }
@@ -189,7 +195,7 @@ const InputComponents = () => {
                 Monthly Fees
               </AccordionTrigger>
               <AccordionContent className="pr-4 pl-4 mt-2">
-              <div className="grid grid-cols-2 gap-2 items-end">
+                <div className="grid grid-cols-2 gap-2 items-end">
                   <div className="flex flex-col gap-1.5">
                     <Label htmlFor="monthlyRates">Rates</Label>
                     <Input
@@ -228,7 +234,11 @@ const InputComponents = () => {
                     <Input
                       id="other"
                       type="number"
-                      value={isNaN(additionalMonthlyFees) ? '' : additionalMonthlyFees}
+                      value={
+                        isNaN(additionalMonthlyFees)
+                          ? ''
+                          : additionalMonthlyFees
+                      }
                       onChange={(e) =>
                         setAdditionalMonthlyFees(parseFloat(e.target.value))
                       }
