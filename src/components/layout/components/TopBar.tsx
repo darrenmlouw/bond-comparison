@@ -2,13 +2,16 @@ import { motion } from 'framer-motion';
 import { SunIcon } from '@radix-ui/react-icons';
 import { MoonIcon } from 'lucide-react';
 import { useTheme } from '@/hooks/useTheme';
+import InstallButton from '@/components/InstallButton';
 
 // src/components/layout/components/TopBar.tsx
 const TopBar = () => {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <div className="fixed top-1.5 right-1.5 md:top-1 md:right-1 lg:top-1 lg:right-1 flex justify-between items-center z-30">
+    <div className="fixed w-full p-1.5 top-0 flex justify-between items-center z-30">
+      
+      <InstallButton />
       <motion.button
         layout
         whileHover={{
