@@ -55,7 +55,7 @@ export const SalaryProvider = ({ children }: { children: ReactNode }) => {
 
   const [age, setAge] = useStorage<ageCategory>(
     'age',
-    ageCategory.None,
+    ageCategory.Under65,
     'localStorage',
     undefined,
     { parse: (value) => value as ageCategory, serialize: String }
