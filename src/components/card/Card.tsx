@@ -11,7 +11,7 @@ type Props = {
   suffix?: string;
   footer: string;
   color?: string;
-  explanation?: React.ReactNode;
+  icon?: React.ReactNode;
 };
 
 function Card({
@@ -21,14 +21,14 @@ function Card({
   suffix,
   footer,
   color,
-  explanation,
+  icon,
 }: Props) {
   return (
     <motion.div
       whileHover={{ scale: 1.05 }}
       className="flex flex-col space-y-1 bg-card outline outline-1 outline-card-foreground/20 shadow-2xl p-2.5 sm:p-4 rounded-lg"
     >
-      <CardHeading label={label} explanationPopover={explanation} />
+      <CardHeading label={label} icon={icon} />
 
       <CardValue value={value} prefix={prefix} suffix={suffix} color={color} />
 

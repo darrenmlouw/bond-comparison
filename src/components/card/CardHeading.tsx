@@ -1,15 +1,15 @@
 type Props = {
   label: string;
-  explanationPopover?: React.ReactNode;
+  icon?: React.ReactNode;
 };
 
-function CardHeading({ label, explanationPopover }: Props) {
+function CardHeading({ label, icon }: Props) {
   return (
     <div className="flex flex-row items-center justify-between">
       <p className="text-sm sm:text-base md:text-lg font-light tracking-wide text-card-foreground/80">
         {label}
       </p>
-      {explanationPopover && <div className="">{explanationPopover}</div>}
+      {icon && <div className="">{icon}</div>}
     </div>
   );
 }

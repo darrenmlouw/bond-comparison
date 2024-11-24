@@ -34,7 +34,7 @@ function EvaluationCards() {
         value={monthlyPayment}
         prefix="R"
         footer="Per Month"
-        explanation={<MonthlyBondExplanationPopover />}
+        icon={<MonthlyBondExplanationPopover />}
       />
 
       <Card
@@ -42,7 +42,7 @@ function EvaluationCards() {
         value={bondCosts[loanTermYears]}
         prefix='R'
         footer={`Over ${formatNumber(loanTermYears)} Years`}
-        explanation={<TotalBondRepaymentExplanationPopover />}
+        icon={<TotalBondRepaymentExplanationPopover />}
       />
     </div>
   );
