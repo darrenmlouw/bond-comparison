@@ -7,7 +7,6 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@/contexts/ThemeContext.tsx';
 import { SalaryProvider } from '@/contexts/SalaryContext';
 import { ComparisonProvider } from '@/contexts/ComparisonContext.tsx';
-import { ViewportHeightProvider } from '@/contexts/ViewportHeightContext.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -15,9 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <ThemeProvider>
         <SalaryProvider>
           <ComparisonProvider>
-            <ViewportHeightProvider>
-              <App />
-            </ViewportHeightProvider>
+            <App />
           </ComparisonProvider>
         </SalaryProvider>
       </ThemeProvider>
