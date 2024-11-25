@@ -3,7 +3,7 @@ import InputComponents from '@/pages/Comparison/components/InputComponents';
 import EvaluationCards from '@/pages/Comparison/components/EvaluationCards';
 import RentVsHouseCard from '@/pages/Comparison/components/RentVsHouseCard';
 import { SectionHeader } from '@/components/SectionHeader';
-import { motion } from 'framer-motion';
+import { EasingDefinition, motion } from 'framer-motion';
 
 const ComparisonPage = () => {
   const animationDelay: number = 0.1;
