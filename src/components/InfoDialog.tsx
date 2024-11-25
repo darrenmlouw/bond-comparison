@@ -34,7 +34,7 @@ const InfoDialog = ({ title, children }: InfoDialogProps) => {
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
-        <div className="flex flex-col">{children}</div>
+        <div className="flex flex-col text-xs">{children}</div>
         <DialogFooter>
           <DialogClose>
             <Button className='w-full'>Close</Button>

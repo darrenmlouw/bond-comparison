@@ -317,12 +317,12 @@ export const ComparisonProvider = ({ children }: { children: ReactNode }) => {
   ]);
 
   const { bondCosts, monthlyPayment } = useMemo(() => {
-    return calculateBondCost(loanTermYears, principleAmount, depositAmount, annualInterestRate);
-  }, [loanTermYears, principleAmount, depositAmount, annualInterestRate]);
+    return calculateBondCost(loanTermYears, propertyPrice, depositAmount, annualInterestRate);
+  }, [loanTermYears, propertyPrice, depositAmount, annualInterestRate]);
 
   const remainingPrincipal = useMemo(() => {
-    return calculateRemainingPrincipal(loanTermYears, principleAmount, depositAmount, annualInterestRate);
-  }, [loanTermYears, principleAmount, depositAmount, annualInterestRate]);
+    return calculateRemainingPrincipal(loanTermYears, propertyPrice, depositAmount, annualInterestRate);
+  }, [loanTermYears, propertyPrice, depositAmount, annualInterestRate]);
 
   return (
     <ComparisonContext.Provider

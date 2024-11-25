@@ -39,7 +39,7 @@ export const calculateMonthlyFees = (
 ): number[] => {
   const fees = [];
   for (let i = 0; i <= years; i++) {
-    fees.push(-monthlyFees * 12 * i); // Negative value to indicate a cost
+    fees.push(monthlyFees * 12 * i); // Negative value to indicate a cost
   }
   return fees;
 };
@@ -136,7 +136,7 @@ export const calculateMoneyMadeFromSellingHouse = (
   annualInterestRate: number,
   capitalGainsTaxes: number[]
 ): number[] => {
-  const moneyMade = [];
+  const moneyMade: number[] = [];
 
   // Calculate house value after appreciation for each year
   const houseValues = calculateHouseValueAfterAppreciation(
@@ -154,14 +154,17 @@ export const calculateMoneyMadeFromSellingHouse = (
   );
 
   // Calculate total bond repayments for each year
-  const totalBondRepayments = calculateTotalBondRepayments(
+  const totalBondRepayments = calculateBondCost(
     years,
-    housePrice - deposit,
+    housePrice,
+    deposit,
     annualInterestRate
   );
 
+  console.log("Monthly Fees:", totalMonthlyFees)
   // Calculate cumulative monthly fees for each year
   const monthlyFees = calculateMonthlyFees(years, totalMonthlyFees);
+  console.log("Monthly Fees:", monthlyFees)
 
   // Loop through each year to calculate net money made
   for (let i = 0; i <= years; i++) {
@@ -169,7 +172,7 @@ export const calculateMoneyMadeFromSellingHouse = (
     const debt = remainingPrincipal[i]; // Remaining loan principal at year i
     const taxes = capitalGainsTaxes[i] || 0; // Capital gains tax for year i
     const cumulativeFees = monthlyFees[i]; // Total monthly fees paid until year i
-    const cumulativeBondRepayments = totalBondRepayments[i]; // Total bond repayments made until year i
+    const cumulativeBondRepayments = totalBondRepayments.bondCosts[i]; // Total bond repayments made until year i
 
     // Calculate net selling proceeds
     const netSellingProceeds =
@@ -183,7 +186,23 @@ export const calculateMoneyMadeFromSellingHouse = (
     const moneyMadeFromSelling = netSellingProceeds - totalOwnershipCosts;
 
     moneyMade.push(moneyMadeFromSelling);
+
+    if(i === 20) {
+      console.log("=== Calc ============================================")
+      console.log('Selling Price:', houseValues[i]);
+      console.log('Debt:', remainingPrincipal[i]);
+      console.log('Taxes:', capitalGainsTaxes[i] || 0);
+      console.log('Selling Costs:', totalSellingFee);
+      console.log('Buying Costs:', totalBuyingFee);
+      console.log('Cumulative Bond', totalBondRepayments.bondCosts[i]);
+      console.log('Cumulative Fees:', monthlyFees[i]);
+      console.log("OC:", totalOwnershipCosts)
+      console.log('NSP:', houseValues[i] - remainingPrincipal[i] - capitalGainsTaxes[i] - totalSellingFee);
+      console.log(netSellingProceeds)
+      console.log("===============================================")
+    }
   }
+
 
   return moneyMade;
 };
@@ -197,6 +216,15 @@ export const calculateTotalBondRepayments = (
   const totalRepayments = [];
   const monthlyInterestRate = annualInterestRate / 12 / 100; // Convert annual rate to monthly
   const numberOfPayments = years * 12;
+
+  // Handle 0% interest edge case
+  if (annualInterestRate === 0) {
+    const equalAnnualRepayment = bondAmount / years;
+    for (let i = 0; i <= years; i++) {
+      totalRepayments.push(equalAnnualRepayment * i);
+    }
+    return totalRepayments;
+  }
 
   // Calculate fixed monthly repayment using the bond formula
   const monthlyPayment =
@@ -213,6 +241,7 @@ export const calculateTotalBondRepayments = (
 };
 
 
+
 export const calculateBondCost = (
   years: number,
   housePrice: number,
@@ -222,11 +251,23 @@ export const calculateBondCost = (
   const monthlyInterestRate = annualInterestRate / 12 / 100;
   const numberOfPayments = years * 12;
   const bondAmount = housePrice - deposit;
+
+  // Handle 0% interest edge case
+  if (annualInterestRate === 0) {
+    const equalMonthlyRepayment = bondAmount / numberOfPayments;
+    const bondCosts = [];
+    for (let i = 0; i <= years; i++) {
+      bondCosts.push(equalMonthlyRepayment * 12 * i);
+    }
+    return { bondCosts, monthlyPayment: equalMonthlyRepayment };
+  }
+
+  // Calculate fixed monthly repayment using the bond formula
   const monthlyPayment =
     (bondAmount * monthlyInterestRate) /
     (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments));
-  const bondCosts = [];
 
+  const bondCosts = [];
   for (let i = 0; i <= years; i++) {
     const totalPaymentsForYear = monthlyPayment * 12 * i;
     bondCosts.push(totalPaymentsForYear);

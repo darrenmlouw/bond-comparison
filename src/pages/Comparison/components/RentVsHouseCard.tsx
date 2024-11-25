@@ -5,6 +5,8 @@ import RentVsHouseProfitPopover from '@/pages/Comparison/components/RentVsHouseP
 import { Home, Building, GitCompare } from 'lucide-react';
 import { EasingDefinition, motion } from 'framer-motion';
 import CardValue from '@/components/card/CardValue';
+import CardHeading from '@/components/card/CardHeading';
+import MoneyMadeFromSellingHouseExplanation from '@/pages/Comparison/components/MoneyMadeFromSellingHouseExplanation';
 
 interface Props {
   animationDelay: number;
@@ -27,10 +29,27 @@ function RentVsHouseCard({
     loanTermYears,
     moneyMadeFromSellingHouse,
     rentData,
+    houseValueAfterAppreciationData,
+    remainingPrincipal,
+    capitalGainsTax,
+    totalSellingCosts,
+    totalBuyingCosts,
+    bondCosts,
+    monthlyFees,
   } = useComparison();
 
   const isBuyingBeneficial =
     moneyMadeFromSellingHouse[yearOfSale] > rentData[yearOfSale];
+
+    console.log("=== OUT ==================================")
+  console.log('Selling Price:', houseValueAfterAppreciationData[yearOfSale]);
+  console.log('Debt:', remainingPrincipal[yearOfSale]);
+  console.log('Taxes:', capitalGainsTax[yearOfSale] || 0);
+  console.log('Selling Costs:', totalSellingCosts);
+  console.log('Buying Costs:', totalBuyingCosts);
+  console.log('Cumulative Bond', bondCosts[yearOfSale]);
+  console.log('Cumulative Fees:', monthlyFees * yearOfSale * 12);
+  console.log("Monthly Fees:", monthlyFees)
 
   return (
     <motion.div
@@ -76,7 +95,7 @@ function RentVsHouseCard({
       {/* Comparison Section */}
       <div className="flex flex-row justify-between sm:justify-around items-center p-4 border-b border-card-foreground/20 bg-card/80 ">
         <div className="flex flex-col items-center w-full  border-r border-card-foreground/20">
-          <p className="text-foreground/60 text-pretty">Rent Loss:</p>
+          <CardHeading label="Rent Paid:" />
           <CardValue
             value={Number(rentData[yearOfSale])}
             color="text-red-600"
@@ -84,11 +103,10 @@ function RentVsHouseCard({
           />
         </div>
         <div className="flex flex-col items-center w-full  ">
-          <p className="text-foreground/60  text-pretty">
-            {moneyMadeFromSellingHouse[yearOfSale] >= 0
-              ? `House Profit:`
-              : `House Loss:`}
-          </p>
+          <CardHeading
+            label="Property Net Value:"
+            icon={<MoneyMadeFromSellingHouseExplanation />}
+          />
           <CardValue
             value={Number(moneyMadeFromSellingHouse[yearOfSale])}
             color={
@@ -107,7 +125,11 @@ function RentVsHouseCard({
           After {yearOfSale} years, you would have saved
         </p>
         <div className="flex items-center space-x-2">
-          <p className={`text-3xl font-semibold ${ isBuyingBeneficial ? 'text-green-600' : 'text-blue-600' }`}>
+          <p
+            className={`text-3xl font-semibold ${
+              isBuyingBeneficial ? 'text-green-600' : 'text-blue-600'
+            }`}
+          >
             R{' '}
             {formatNumber(
               Math.abs(
