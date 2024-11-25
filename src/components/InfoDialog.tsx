@@ -7,6 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
+  DialogClose,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 
@@ -18,25 +19,26 @@ interface InfoDialogProps {
 const InfoDialog = ({ title, children }: InfoDialogProps) => {
   return (
     <Dialog>
-      {/* Trigger Button */}
       <DialogTrigger asChild>
         <Button
           variant="ghost"
           size="icon"
-          className="w-6 h-6 rounded-full ml-1 text-accent hover:text-background"
+          className="w-6 h-6 rounded-full ml-1 hover:text-background text-accent"
         >
           <InfoCircledIcon className="h-4 w-4 text-inherit" />
         </Button>
       </DialogTrigger>
 
       {/* Dialog Content */}
-      <DialogContent className="rounded-lg bg-primary/10 backdrop-blur-md border-primary/30 shadow-xl ">
+      <DialogContent className="rounded-lg shadow-xl">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
-        <div className="flex flex-col space-y-2 text-xs w-full">{children}</div>
+        <div className="flex flex-col">{children}</div>
         <DialogFooter>
-          <Button type="submit">Close</Button>
+          <DialogClose>
+            <Button className='w-full'>Close</Button>
+          </DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>

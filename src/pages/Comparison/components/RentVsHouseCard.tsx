@@ -107,7 +107,7 @@ function RentVsHouseCard({
           After {yearOfSale} years, you would have saved
         </p>
         <div className="flex items-center space-x-2">
-          <p className="text-3xl font-semibold text-primary">
+          <p className={`text-3xl font-semibold ${ isBuyingBeneficial ? 'text-green-600' : 'text-blue-600' }`}>
             R{' '}
             {formatNumber(
               Math.abs(
