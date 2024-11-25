@@ -41,8 +41,12 @@ ChartJS.register(
 
 const HousingComparisonChart = () => {
   const { theme } = useTheme();
-  const { rentData, moneyMadeFromSellingHouse, yearOfSale = 0 } = useComparison();
-  
+  const {
+    rentData,
+    moneyMadeFromSellingHouse,
+    yearOfSale = 0,
+  } = useComparison();
+
   const interpolationFactor = 10;
   const interpolatedRentData = interpolateData(rentData, interpolationFactor);
   const interpolatedHouseData = interpolateData(
@@ -259,7 +263,15 @@ const HousingComparisonChart = () => {
     },
   };
 
-  return <Line data={data} options={options} />;
+  return (
+    <div style={{ width: '100%', height: '100%' }}>
+      {' '}
+      <Line
+        data={data}
+        options={options}
+      />{' '}
+    </div>
+  );
 };
 
 export default HousingComparisonChart;
