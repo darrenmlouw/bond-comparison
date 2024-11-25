@@ -1,5 +1,5 @@
 import { InlineMath, BlockMath } from 'react-katex';
-import InfoPopOver from '@/components/InfoPopOver';
+import InfoDialog from '@/components/InfoDialog';
 import { useComparison } from '@/hooks/useComparison';
 
 const PrincipleExplanation = () => {
@@ -12,7 +12,7 @@ const PrincipleExplanation = () => {
   } = useComparison();
 
   return (
-    <InfoPopOver>
+    <InfoDialog title='Principle'>
       <div className="flex flex-col space-y-2 text-xs">
         <p className="flex text-xs">
           The principal amount is the initial amount of the loan after subtracting any deposit and optionally adding buying costs, if applicable.
@@ -56,7 +56,7 @@ const PrincipleExplanation = () => {
 
         <BlockMath>{String.raw`P = \text{${principleAmount}}`}</BlockMath>
       </div>
-    </InfoPopOver>
+    </InfoDialog>
   );
 };
 

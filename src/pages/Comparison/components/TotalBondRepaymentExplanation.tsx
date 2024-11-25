@@ -1,5 +1,5 @@
 import { InlineMath, BlockMath } from 'react-katex';
-import InfoPopOver from '@/components/InfoPopOver';
+import InfoDialog from '@/components/InfoDialog';
 import { useComparison } from '@/hooks/useComparison';
 
 
@@ -7,7 +7,7 @@ const TotalBondRepaymentExplanation = () => {
   const {monthlyPayment, propertyPrice, depositAmount, annualInterestRate, loanTermYears} = useComparison();
 
   return (
-    <InfoPopOver>
+    <InfoDialog title='Total Bond Repayment'>
       <div className="flex flex-col space-y-2 text-xs">
         <p className="flex text-xs">
           The total repayment amount is calculated using the formula:
@@ -74,7 +74,7 @@ const TotalBondRepaymentExplanation = () => {
           12
         ).toFixed(2)}}`}</BlockMath>
       </div>
-    </InfoPopOver>
+    </InfoDialog>
   );
 };
 

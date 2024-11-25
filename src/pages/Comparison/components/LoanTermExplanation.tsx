@@ -1,5 +1,5 @@
 import { InlineMath, BlockMath } from 'react-katex';
-import InfoPopOver from '@/components/InfoPopOver';
+import InfoDialog from '@/components/InfoDialog';
 import { useComparison } from '@/hooks/useComparison';
 
 const LoanTermExplanation = () => {
@@ -7,7 +7,7 @@ const LoanTermExplanation = () => {
     useComparison();
 
   return (
-    <InfoPopOver>
+    <InfoDialog title='Loan Term'>
       <div className="flex flex-col space-y-4 text-xs">
         {/* Loan Term Explanation */}
         <div>
@@ -43,7 +43,7 @@ const LoanTermExplanation = () => {
           </div>
         </div>
       </div>
-    </InfoPopOver>
+    </InfoDialog>
   );
 };
 

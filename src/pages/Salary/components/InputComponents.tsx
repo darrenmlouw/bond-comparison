@@ -7,7 +7,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { DollarSign } from 'lucide-react';
-import InfoPopOver from '@/components/InfoPopOver';
+import InfoDialog from '@/components/InfoDialog';
 import { useSalary } from '@/hooks/useSalary';
 import { AgeCombobox } from '@/components/AgeCombobox';
 import { YearCombobox } from '@/components/YearCombobox';
@@ -70,7 +70,8 @@ const InputComponents = ({
                     Gross Monthly Income
                   </Label>
 
-                  <InfoPopOver
+                  <InfoDialog
+                    title='Gross Monthly Income'
                     children={
                       <p className="text-pretty">
                         This is the total amount of money you earn each month
@@ -100,7 +101,8 @@ const InputComponents = ({
                     Pre-Tax Deductions
                   </Label>
 
-                  <InfoPopOver
+                  <InfoDialog
+                    title='Pre-Tax Deductions'
                     children={
                       <p className="text-pretty">
                         This is the total amount of money you can deduct from

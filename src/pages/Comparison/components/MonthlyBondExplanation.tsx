@@ -1,5 +1,5 @@
 import { InlineMath, BlockMath } from 'react-katex';
-import InfoPopOver from '@/components/InfoPopOver';
+import InfoDialog from '@/components/InfoDialog';
 import { useComparison } from '@/hooks/useComparison';
 
 const MonthlyBondExplanation = () => {
@@ -7,7 +7,7 @@ const MonthlyBondExplanation = () => {
     useComparison();
 
   return (
-    <InfoPopOver>
+    <InfoDialog title='Bond Repayments'>
       <div className="flex flex-col space-y-2 text-xs">
         <p className="flex text-xs">
           The monthly repayment amount is calculated using the formula:
@@ -57,7 +57,7 @@ const MonthlyBondExplanation = () => {
           2
         )}}`}</BlockMath>
       </div>
-    </InfoPopOver>
+    </InfoDialog>
   );
 };
 

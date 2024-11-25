@@ -1,6 +1,6 @@
 import React from 'react';
 import { InlineMath, BlockMath } from 'react-katex';
-import InfoPopOver from '@/components/InfoPopOver';
+import InfoDialog from '@/components/InfoDialog';
 import { formatNumber } from '@/utils/formatNumber';
 
 interface RentVsHouseComparisonPopoverProps {
@@ -9,29 +9,28 @@ interface RentVsHouseComparisonPopoverProps {
   rentData: number[];
 }
 
-const RentVsHouseComparisonPopover: React.FC<RentVsHouseComparisonPopoverProps> = ({
-  yearOfSale,
-  moneyMadeFromSellingHouse,
-  rentData,
-}) => {
+const RentVsHouseComparisonPopover: React.FC<
+  RentVsHouseComparisonPopoverProps
+> = ({ yearOfSale, moneyMadeFromSellingHouse, rentData }) => {
   const houseValue = Number(moneyMadeFromSellingHouse[yearOfSale]);
   const rentCost = Number(rentData[yearOfSale]);
   const moneyDifference = houseValue - rentCost;
 
   return (
-    <InfoPopOver>
-      <div className="text-lg font-bold">Net Difference Calculation</div>
+    <InfoDialog title="Net Difference Calculation">
+      <p>
+        The net difference in money after buying and selling the house versus
+        renting is calculated as:
+      </p>
 
-      <p>The net difference in money after buying and selling the house versus renting is calculated as:</p>
-
-      <BlockMath>
-        {String.raw`\text{Net Difference} = HV - RC`}
-      </BlockMath>
+      <BlockMath>{String.raw`\text{Net Difference} = HV - RC`}</BlockMath>
 
       <p>Where:</p>
 
       <div className="flex justify-between">
-        <InlineMath math={`HV= ${formatNumber(moneyMadeFromSellingHouse[yearOfSale])}`} />
+        <InlineMath
+          math={`HV= ${formatNumber(moneyMadeFromSellingHouse[yearOfSale])}`}
+        />
         <p>House Value</p>
       </div>
 
@@ -41,13 +40,15 @@ const RentVsHouseComparisonPopover: React.FC<RentVsHouseComparisonPopoverProps> 
       </div>
 
       <InlineMath>
-        {String.raw`\text{Net Difference} = (${formatNumber(houseValue)}) - (${formatNumber(rentCost)})`}
+        {String.raw`\text{Net Difference} = (${formatNumber(
+          houseValue
+        )}) - (${formatNumber(rentCost)})`}
       </InlineMath>
 
       <InlineMath>
         {String.raw`\text{Net Difference} = ${formatNumber(moneyDifference)}`}
       </InlineMath>
-    </InfoPopOver>
+    </InfoDialog>
   );
 };
 

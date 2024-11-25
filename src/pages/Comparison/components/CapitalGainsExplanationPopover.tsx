@@ -1,5 +1,5 @@
 import { InlineMath, BlockMath } from 'react-katex';
-import InfoPopOver from '@/components/InfoPopOver';
+import InfoDialog from '@/components/InfoDialog';
 import { useComparison } from '@/hooks/useComparison';
 
 const CapitalGainsExplanationPopover = () => {
@@ -23,7 +23,7 @@ const CapitalGainsExplanationPopover = () => {
   const capitalGainsTax = taxableGain * marginalTaxRate;
 
   return (
-    <InfoPopOver>
+    <InfoDialog title='Capital Gains'>
       <div className="text-lg font-bold">Capital Gains Tax Calculation</div>
 
       <p>The capital gains tax (CGT) is calculated as:</p>
@@ -99,7 +99,7 @@ const CapitalGainsExplanationPopover = () => {
         Capital Gains Tax:{' '}
         <span className="">R {capitalGainsTax.toFixed(2)}</span>
       </div>
-    </InfoPopOver>
+    </InfoDialog>
   );
 };
 
