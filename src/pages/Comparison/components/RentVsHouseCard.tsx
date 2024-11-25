@@ -110,7 +110,7 @@ function RentVsHouseCard() {
 
       {/* Interactive Slider */}
       <div className="flex flex-col w-full p-4 pt-0 bg-card/60">
-        <div className="flex justify-between text-sm text-foreground/60 ">
+        <div className="flex justify-between text-sm text-foreground/60 mb-2">
           <p>Selling Year:</p>
           <p>Year {yearOfSale}</p>
         </div>
