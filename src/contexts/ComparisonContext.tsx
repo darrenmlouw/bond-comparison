@@ -296,7 +296,7 @@ export const ComparisonProvider = ({ children }: { children: ReactNode }) => {
     return calculateMoneyMadeFromSellingHouse(
       loanTermYears,
       propertyPrice,
-      depositAmount,
+      principleAmount,
       annualAppreciationRate,
       totalBuyingCosts,
       totalSellingCosts,
@@ -307,7 +307,7 @@ export const ComparisonProvider = ({ children }: { children: ReactNode }) => {
   }, [
     loanTermYears,
     propertyPrice,
-    depositAmount,
+    principleAmount,
     annualAppreciationRate,
     totalBuyingCosts,
     totalSellingCosts,
@@ -317,12 +317,12 @@ export const ComparisonProvider = ({ children }: { children: ReactNode }) => {
   ]);
 
   const { bondCosts, monthlyPayment } = useMemo(() => {
-    return calculateBondCost(loanTermYears, propertyPrice, depositAmount, annualInterestRate);
-  }, [loanTermYears, propertyPrice, depositAmount, annualInterestRate]);
+    return calculateBondCost(loanTermYears, principleAmount, annualInterestRate);
+  }, [loanTermYears, principleAmount, annualInterestRate]);
 
   const remainingPrincipal = useMemo(() => {
-    return calculateRemainingPrincipal(loanTermYears, propertyPrice, depositAmount, annualInterestRate);
-  }, [loanTermYears, propertyPrice, depositAmount, annualInterestRate]);
+    return calculateRemainingPrincipal(loanTermYears, principleAmount, annualInterestRate);
+  }, [loanTermYears, principleAmount, annualInterestRate]);
 
   return (
     <ComparisonContext.Provider

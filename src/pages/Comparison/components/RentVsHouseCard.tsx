@@ -5,8 +5,8 @@ import RentVsHouseProfitPopover from '@/pages/Comparison/components/RentVsHouseP
 import { Home, Building, GitCompare } from 'lucide-react';
 import { EasingDefinition, motion } from 'framer-motion';
 import CardValue from '@/components/card/CardValue';
-import CardHeading from '@/components/card/CardHeading';
-import MoneyMadeFromSellingHouseExplanation from '@/pages/Comparison/components/MoneyMadeFromSellingHouseExplanation';
+import PropertyReturnExplanation from '@/pages/Comparison/components/PropertyReturnExplanation';
+import RentLossExplanation from '@/pages/Comparison/components/RentLossExplanation';
 
 interface Props {
   animationDelay: number;
@@ -41,7 +41,7 @@ function RentVsHouseCard({
   const isBuyingBeneficial =
     moneyMadeFromSellingHouse[yearOfSale] > rentData[yearOfSale];
 
-    console.log("=== OUT ==================================")
+  console.log('=== OUT ==================================');
   console.log('Selling Price:', houseValueAfterAppreciationData[yearOfSale]);
   console.log('Debt:', remainingPrincipal[yearOfSale]);
   console.log('Taxes:', capitalGainsTax[yearOfSale] || 0);
@@ -49,7 +49,7 @@ function RentVsHouseCard({
   console.log('Buying Costs:', totalBuyingCosts);
   console.log('Cumulative Bond', bondCosts[yearOfSale]);
   console.log('Cumulative Fees:', monthlyFees * yearOfSale * 12);
-  console.log("Monthly Fees:", monthlyFees)
+  console.log('Monthly Fees:', monthlyFees);
 
   return (
     <motion.div
@@ -93,20 +93,28 @@ function RentVsHouseCard({
       </div>
 
       {/* Comparison Section */}
-      <div className="flex flex-row justify-between sm:justify-around items-center p-4 border-b border-card-foreground/20 bg-card/80 ">
+      <div className="relative flex flex-row justify-between sm:justify-around items-center py-4 border-b border-card-foreground/20 bg-card/80 ">
         <div className="flex flex-col items-center w-full  border-r border-card-foreground/20">
-          <CardHeading label="Rent Paid:" />
+          <div className="flex flex-row items-center w-full justify-center">
+            <p className="text-sm sm:text-base md:text-lg font-light tracking-wide text-card-foreground/80 text-center">
+              Rent Paid:
+            </p>
+
+            <RentLossExplanation />
+          </div>
           <CardValue
             value={Number(rentData[yearOfSale])}
             color="text-red-600"
-            // prefix="R"
           />
         </div>
         <div className="flex flex-col items-center w-full  ">
-          <CardHeading
-            label="Property Net Value:"
-            icon={<MoneyMadeFromSellingHouseExplanation />}
-          />
+          <div className="flex flex-row items-center w-full justify-center">
+            <p className="text-sm sm:text-base md:text-lg font-light tracking-wide text-card-foreground/80 text-center">
+              Property Return:
+            </p>
+
+            <PropertyReturnExplanation />
+          </div>
           <CardValue
             value={Number(moneyMadeFromSellingHouse[yearOfSale])}
             color={
@@ -114,7 +122,6 @@ function RentVsHouseCard({
                 ? 'text-green-600'
                 : 'text-red-600'
             }
-            // prefix="R"
           />
         </div>
       </div>

@@ -3,7 +3,7 @@ import inclusionOption from '@/enums/inclusionOption';
 import CapitalGainsTaxCalculator from '@/utils/capitalGainsCalculations';
 
 export const calculateRentCost = (
-  duration: number,
+  rentDurationYears: number,
   monthlyRent: number,
   annualRentIncreaseRate: number
 ): number[] => {
@@ -11,7 +11,7 @@ export const calculateRentCost = (
   let cumulativeRent = 0;
   let currentMonthlyRent = monthlyRent;
 
-  for (let year = 1; year <= duration; year++) {
+  for (let year = 1; year <= rentDurationYears; year++) {
     const annualRent = currentMonthlyRent * 12;
     cumulativeRent -= annualRent;
     rentCosts.push(cumulativeRent);
@@ -23,12 +23,12 @@ export const calculateRentCost = (
 
 export const calculateHouseValueAfterAppreciation = (
   years: number,
-  housePrice: number,
-  appreciationRate: number
+  initialPropertyPrice: number,
+  annualAppreciationRate: number
 ): number[] => {
   const houseValues = [];
   for (let i = 0; i <= years; i++) {
-    houseValues.push(housePrice * Math.pow(1 + appreciationRate / 100, i));
+    houseValues.push(initialPropertyPrice * Math.pow(1 + annualAppreciationRate / 100, i));
   }
   return houseValues;
 };
@@ -39,28 +39,26 @@ export const calculateMonthlyFees = (
 ): number[] => {
   const fees = [];
   for (let i = 0; i <= years; i++) {
-    fees.push(monthlyFees * 12 * i); // Negative value to indicate a cost
+    fees.push(monthlyFees * 12 * i);
   }
   return fees;
 };
 
 export const calculateRemainingPrincipal = (
   years: number,
-  housePrice: number,
-  deposit: number,
+  principal: number,
   annualInterestRate: number
 ): number[] => {
   const remainingPrincipal = [];
   const monthlyInterestRate = annualInterestRate / 12 / 100;
   const numberOfPayments = years * 12;
-  const bondAmount = housePrice - deposit;
 
   // Handle edge case where interest rate is 0
   if (annualInterestRate === 0) {
-    const equalMonthlyPayments = bondAmount / numberOfPayments;
+    const equalMonthlyPayments = principal / numberOfPayments;
     for (let i = 0; i <= years; i++) {
       const paymentsMade = i * 12;
-      const remainingBalance = Math.max(bondAmount - paymentsMade * equalMonthlyPayments, 0);
+      const remainingBalance = Math.max(principal  - paymentsMade * equalMonthlyPayments, 0);
       remainingPrincipal.push(remainingBalance);
     }
     return remainingPrincipal;
@@ -70,7 +68,7 @@ export const calculateRemainingPrincipal = (
   for (let i = 0; i <= years; i++) {
     const paymentsMade = i * 12;
     const remainingBalance =
-      (bondAmount *
+      (principal *
         (Math.pow(1 + monthlyInterestRate, numberOfPayments) -
           Math.pow(1 + monthlyInterestRate, paymentsMade))) /
       (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
@@ -128,7 +126,7 @@ export const calculateCapitalGainsTax = (
 export const calculateMoneyMadeFromSellingHouse = (
   years: number,
   housePrice: number,
-  deposit: number,
+  principal: number,
   appreciationRate: number,
   totalBuyingFee: number,
   totalSellingFee: number,
@@ -148,16 +146,14 @@ export const calculateMoneyMadeFromSellingHouse = (
   // Calculate remaining loan principal for each year
   const remainingPrincipal = calculateRemainingPrincipal(
     years,
-    housePrice,
-    deposit,
+    principal,
     annualInterestRate
   );
 
   // Calculate total bond repayments for each year
   const totalBondRepayments = calculateBondCost(
     years,
-    housePrice,
-    deposit,
+    principal,
     annualInterestRate
   );
 
@@ -244,17 +240,15 @@ export const calculateTotalBondRepayments = (
 
 export const calculateBondCost = (
   years: number,
-  housePrice: number,
-  deposit: number,
+  principal: number,
   annualInterestRate: number
 ): { bondCosts: number[]; monthlyPayment: number } => {
   const monthlyInterestRate = annualInterestRate / 12 / 100;
   const numberOfPayments = years * 12;
-  const bondAmount = housePrice - deposit;
 
   // Handle 0% interest edge case
   if (annualInterestRate === 0) {
-    const equalMonthlyRepayment = bondAmount / numberOfPayments;
+    const equalMonthlyRepayment = principal / numberOfPayments;
     const bondCosts = [];
     for (let i = 0; i <= years; i++) {
       bondCosts.push(equalMonthlyRepayment * 12 * i);
@@ -264,7 +258,7 @@ export const calculateBondCost = (
 
   // Calculate fixed monthly repayment using the bond formula
   const monthlyPayment =
-    (bondAmount * monthlyInterestRate) /
+    (principal * monthlyInterestRate) /
     (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments));
 
   const bondCosts = [];

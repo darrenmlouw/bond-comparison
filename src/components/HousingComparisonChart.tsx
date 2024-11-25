@@ -63,7 +63,7 @@ const HousingComparisonChart = () => {
     labels,
     datasets: [
       {
-        label: 'Rent Cost',
+        label: 'Rent Loss',
         data: interpolatedRentData,
         borderColor:
           theme === 'light'
@@ -79,7 +79,7 @@ const HousingComparisonChart = () => {
         pointHitRadius: 5,
       },
       {
-        label: 'Money Made From Selling House',
+        label: 'Property Return',
         data: interpolatedHouseData,
         borderColor:
           theme === 'light'

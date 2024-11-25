@@ -3,7 +3,7 @@ import InfoDialog from '@/components/InfoDialog';
 import { formatNumber } from '@/utils/formatNumber';
 import { useComparison } from '@/hooks/useComparison';
 
-const MoneyMadeFromSellingHouseExplanation = () => {
+const PropertyReturnExplanation = () => {
   const {
     houseValueAfterAppreciationData,
     remainingPrincipal,
@@ -31,15 +31,15 @@ const MoneyMadeFromSellingHouseExplanation = () => {
   const NM = NSP - OC; // Net Money Made
 
   return (
-    <InfoDialog title="Money Made from Selling the House">
+    <InfoDialog title="Property Return">
       <p className="mb-4">
-        The net money made from selling the house is calculated as:
+        The property return after selling is calculated as:
       </p>
 
       {/* Main Formula */}
       <BlockMath>
         {String.raw`
-        \text{Net Money Made (NM)} = (\text{SP} - \text{D} - \text{T} - \text{SC}) - \text{OC}
+        \text{Net Money Made (NM)} = (SP - D - T - SC) - OC
         `}
       </BlockMath>
 
@@ -48,7 +48,7 @@ const MoneyMadeFromSellingHouseExplanation = () => {
       <div className="flex flex-col space-y-2">
         <div className="flex justify-between">
           <InlineMath math={`SP = ${formatNumber(SP)}`} />
-          <p>Selling Price (House value after appreciation)</p>
+          <p>Selling Price (Property value after appreciation)</p>
         </div>
         <div className="flex justify-between">
           <InlineMath math={`D = ${formatNumber(D)}`} />
@@ -84,21 +84,21 @@ const MoneyMadeFromSellingHouseExplanation = () => {
       <p className="mt-4">The net selling proceeds (NSP) are:</p>
       <BlockMath>
         {String.raw`
-        \text{NSP} = \text{SP} - \text{D} - \text{T} - \text{SC}
+        NSP = SP - D - T - SC
         `}
       </BlockMath>
-      <BlockMath>{String.raw`\text{NSP} = ${formatNumber(NSP)}`}</BlockMath>
+      <BlockMath>{String.raw`NSP = ${formatNumber(NSP)}`}</BlockMath>
 
       {/* Net Money Made */}
       <p className="mt-4">Finally, the total net money made (NM) is:</p>
       <BlockMath>
         {String.raw`
-        \text{NM} = \text{NSP} - \text{OC}
+        NM = NSP - OC
         `}
       </BlockMath>
-      <BlockMath>{String.raw`\text{NM} = ${formatNumber(NM)}`}</BlockMath>
+      <BlockMath>{String.raw`NM = ${formatNumber(NM)}`}</BlockMath>
     </InfoDialog>
   );
 };
 
-export default MoneyMadeFromSellingHouseExplanation;
+export default PropertyReturnExplanation;

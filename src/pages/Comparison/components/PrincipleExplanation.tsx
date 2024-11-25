@@ -18,29 +18,24 @@ const PrincipleExplanation = () => {
           The principal amount is the initial amount of the loan after subtracting any deposit and optionally adding buying costs, if applicable.
         </p>
 
-        <BlockMath math="P = \text{PP} - \text{D} + \text{BC (if added to bond)}" />
+        <BlockMath math="\text{Principle} \ (P) = PP - D + BC \ \ \text{(if added to bond)}" />
 
         <div className="flex flex-col">
           <p className="text-xs">where:</p>
 
           <div className="flex flex-row justify-between">
-            <InlineMath math={`P = ${principleAmount}`} />
-            <p>Principal Amount</p>
-          </div>
-
-          <div className="flex flex-row justify-between">
-            <InlineMath math={`\\text{PP} = ${propertyPrice}`} />
+            <InlineMath math={`PP = ${propertyPrice}`} />
             <p>Price of the property</p>
           </div>
 
           <div className="flex flex-row justify-between">
-            <InlineMath math={`\\text{D} = ${depositAmount}`} />
+            <InlineMath math={`D = ${depositAmount}`} />
             <p>Deposit paid upfront</p>
           </div>
 
           <div className="flex flex-row justify-between">
             <InlineMath
-              math={`\\text{BC} = ${addBuyingCostsToBond ? buyingCosts : 0}`}
+              math={`BC = ${addBuyingCostsToBond ? buyingCosts : 0}`}
             />
             <p>Buying costs {addBuyingCostsToBond ? "(Added)" : "(Not Added)"}</p>
           </div>

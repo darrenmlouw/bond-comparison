@@ -17,7 +17,7 @@ const LoanTermExplanation = () => {
             payments but increases the total interest paid.
           </p>
 
-          <BlockMath math="n = \text{Years} \cdot 12" />
+          <BlockMath math="n = \text{[Loan Term (Years)]} \cdot 12" />
 
           <div className="flex flex-row justify-between">
             <InlineMath math={`n = ${loanTermYears * 12}`} />
