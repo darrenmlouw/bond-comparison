@@ -5,8 +5,23 @@ import TotalBondRepaymentExplanation from '@/pages/Comparison/components/TotalBo
 import { formatNumber } from '@/utils/formatNumber';
 import PrincipleExplanation from '@/pages/Comparison/components/PrincipleExplanation';
 import LoanTermExplanation from '@/pages/Comparison/components/LoanTermExplanation';
+import { EasingDefinition, motion } from 'framer-motion';
 
-function EvaluationCards() {
+interface Props {
+  animationDelay: number;
+  animationDuration: number;
+  animationEase?: EasingDefinition;
+  animationXDistance?: number;
+  animationYDistance?: number;
+}
+
+function EvaluationCards({
+  animationDelay,
+  animationDuration,
+  animationEase = 'easeOut',
+  animationXDistance = 0,
+  animationYDistance = 0,
+}: Props) {
   const {
     loanTermYears,
     bondCosts,
@@ -16,7 +31,16 @@ function EvaluationCards() {
   } = useComparison();
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 ">
+    <motion.div
+      initial={{ opacity: 0, x: animationXDistance, y: animationYDistance }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: animationDuration,
+        delay: animationDelay,
+        ease: animationEase,
+      }}
+      className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 "
+    >
       <Card
         label="Prinipal Amount"
         value={principleAmount}
@@ -48,7 +72,7 @@ function EvaluationCards() {
         footer={`Over ${formatNumber(loanTermYears)} Years`}
         icon={<TotalBondRepaymentExplanation />}
       />
-    </div>
+    </motion.div>
   );
 }
 

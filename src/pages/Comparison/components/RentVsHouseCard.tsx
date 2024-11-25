@@ -3,10 +3,24 @@ import { Slider } from '@/components/ui/slider';
 import { useComparison } from '@/hooks/useComparison';
 import RentVsHouseProfitPopover from '@/pages/Comparison/components/RentVsHouseProfitPopover';
 import { Home, Building, GitCompare } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { EasingDefinition, motion } from 'framer-motion';
 import CardValue from '@/components/card/CardValue';
 
-function RentVsHouseCard() {
+interface Props {
+  animationDelay: number;
+  animationDuration: number;
+  animationEase?: EasingDefinition;
+  animationXDistance?: number;
+  animationYDistance?: number;
+}
+
+function RentVsHouseCard({
+  animationDelay,
+  animationDuration,
+  animationEase = 'easeOut',
+  animationXDistance = 0,
+  animationYDistance = 0,
+}: Props) {
   const {
     yearOfSale,
     setYearOfSale,
@@ -19,7 +33,16 @@ function RentVsHouseCard() {
     moneyMadeFromSellingHouse[yearOfSale] > rentData[yearOfSale];
 
   return (
-    <div className="flex flex-col bg-transparent shadow-lg rounded-xl  w-full border border-1 border-card-foreground/20 overflow-hidden">
+    <motion.div
+      initial={{ opacity: 0, x: animationXDistance, y: animationYDistance }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: animationDuration,
+        delay: animationDelay,
+        ease: animationEase,
+      }}
+      className="flex flex-col bg-transparent shadow-lg rounded-xl  w-full border border-1 border-card-foreground/20 overflow-hidden"
+    >
       {/* <div className="flex flex-col bg-card outline outline-1 outline-card-foreground/20 shadow-2xl p-4 rounded-xl w-full justify-around items-center "> */}
       {/* Title */}
       <div className="flex flex-row border-b border-card-foreground/20 px-4 py-3 justify-between bg-card  items-center">
@@ -123,7 +146,7 @@ function RentVsHouseCard() {
           className="flex mt-1"
         />
       </div>
-    </div>
+    </motion.div>
   );
 }
 
