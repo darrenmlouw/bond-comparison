@@ -2,9 +2,9 @@ import { InlineMath, BlockMath } from 'react-katex';
 import InfoPopOver from '@/components/InfoPopOver';
 import { useComparison } from '@/hooks/useComparison';
 
-
-const MonthlyBondExplanationPopover = () => {
-  const { principleAmount, annualInterestRate, loanTermYears, monthlyPayment } = useComparison()
+const MonthlyBondExplanation = () => {
+  const { principleAmount, annualInterestRate, loanTermYears, monthlyPayment } =
+    useComparison();
 
   return (
     <InfoPopOver>
@@ -50,6 +50,8 @@ const MonthlyBondExplanationPopover = () => {
           100
         ).toFixed(5)}})^\text{${loanTermYears * 12}} - 1}`}</BlockMath>
 
+        <p>Based on the current inputs, the monthly payment is:</p>
+
         {/* calculate the monthly repayment */}
         <BlockMath>{String.raw`R = \text{${monthlyPayment.toFixed(
           2
@@ -59,4 +61,4 @@ const MonthlyBondExplanationPopover = () => {
   );
 };
 
-export default MonthlyBondExplanationPopover;
+export default MonthlyBondExplanation;

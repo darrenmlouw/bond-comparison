@@ -1,8 +1,10 @@
 import { useComparison } from '@/hooks/useComparison';
 import Card from '@/components/card/Card';
-import MonthlyBondExplanationPopover from '@/pages/Comparison/components/MonthlyBondExplanationPopover';
-import TotalBondRepaymentExplanationPopover from '@/pages/Comparison/components/TotalBondRepaymentExplanationPopover';
+import MonthlyBondExplanation from '@/pages/Comparison/components/MonthlyBondExplanation';
+import TotalBondRepaymentExplanation from '@/pages/Comparison/components/TotalBondRepaymentExplanation';
 import { formatNumber } from '@/utils/formatNumber';
+import PrincipleExplanation from '@/pages/Comparison/components/PrincipleExplanation';
+import LoanTermExplanation from '@/pages/Comparison/components/LoanTermExplanation';
 
 function EvaluationCards() {
   const {
@@ -20,6 +22,7 @@ function EvaluationCards() {
         value={principleAmount}
         prefix="R"
         footer="Initial Loan"
+        icon={<PrincipleExplanation />}
       />
 
       <Card
@@ -27,6 +30,7 @@ function EvaluationCards() {
         value={loanTermYears}
         suffix="Years"
         footer={`At ${annualInterestRate}% Interest`}
+        icon={<LoanTermExplanation />}
       />
 
       <Card
@@ -34,15 +38,15 @@ function EvaluationCards() {
         value={monthlyPayment}
         prefix="R"
         footer="Per Month"
-        icon={<MonthlyBondExplanationPopover />}
+        icon={<MonthlyBondExplanation />}
       />
 
       <Card
-        label='Total Bond Repayment'
+        label="Total Bond Repayment"
         value={bondCosts[loanTermYears]}
-        prefix='R'
+        prefix="R"
         footer={`Over ${formatNumber(loanTermYears)} Years`}
-        icon={<TotalBondRepaymentExplanationPopover />}
+        icon={<TotalBondRepaymentExplanation />}
       />
     </div>
   );

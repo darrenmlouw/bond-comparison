@@ -1,8 +1,10 @@
 import { formatNumber } from '@/utils/formatNumber';
-import RentVsHouseProfitPopover from '@/pages/Comparison/components/RentVsHouseProfitPopover';
-import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { useComparison } from '@/hooks/useComparison';
+import RentVsHouseProfitPopover from '@/pages/Comparison/components/RentVsHouseProfitPopover';
+import { Home, Building, GitCompare } from 'lucide-react';
+import { motion } from 'framer-motion';
+import CardValue from '@/components/card/CardValue';
 
 function RentVsHouseCard() {
   const {
@@ -13,50 +15,76 @@ function RentVsHouseCard() {
     rentData,
   } = useComparison();
 
+  const isBuyingBeneficial =
+    moneyMadeFromSellingHouse[yearOfSale] > rentData[yearOfSale];
+
   return (
-    <div className="flex flex-col bg-card outline outline-1 outline-card-foreground/20 shadow-2xl p-4 rounded-xl w-full justify-around items-center">
-      <h3 className="text-2xl sm:text3xl md:text-3xl font-light mt-4">
-        {moneyMadeFromSellingHouse[yearOfSale] > rentData[yearOfSale]
-          ? `Buying is Beneficial`
-          : `Renting is Beneficial`}
-      </h3>
-      <h3 className="text-2xl sm:text3xl md:text-3xl font-light mb-4">
-        after {yearOfSale} years
-      </h3>
-
-      <div className="w-full h-[1px] bg-foreground/10 my-4" />
-
-      <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 w-full justify-around items-center">
-        <div className="flex flex-col justify-center items-center">
-          <p className="text-foreground/50">
-            Rent Loss after {yearOfSale} years
-          </p>
-          <p className="text-3xl font-light tracking-wide">
-            R {formatNumber(Number(rentData[yearOfSale]))}
-          </p>
+    <div className="flex flex-col bg-transparent shadow-lg rounded-xl  w-full border border-1 border-card-foreground/20 overflow-hidden">
+      {/* <div className="flex flex-col bg-card outline outline-1 outline-card-foreground/20 shadow-2xl p-4 rounded-xl w-full justify-around items-center "> */}
+      {/* Title */}
+      <div className="flex flex-row border-b border-card-foreground/20 px-4 py-3 justify-between bg-card  items-center">
+        <div className="flex flex-row justify-center items-center">
+          <GitCompare className="w-6 h-6 mr-2 text-secondary" />
+          <div className="flex flex-col">
+            <h2 className="text-xl sm:text-2xl tracking-wide font-light">
+              Rent vs Buy
+            </h2>
+            <p className="text-xs sm:text-sm text-foreground/60">
+              Compare Your Savings after {yearOfSale} Years
+            </p>
+          </div>
         </div>
-        <p>vs</p>
-        <div className="flex flex-col justify-center items-center">
-          <p className="text-foreground/50">
+        <motion.div
+          key={isBuyingBeneficial ? 'home' : 'building'} // Key ensures proper animation between icons
+          initial={{ opacity: 0, scale: 0.8 }} // Start small and invisible
+          animate={{ opacity: 1, scale: 1 }} // Animate to full visibility and size
+          exit={{ opacity: 0, scale: 0.8 }} // Animate out with reverse effect
+          transition={{ duration: 0.3 }} // Duration for the transition
+          className="flex items-center justify-center"
+        >
+          {isBuyingBeneficial ? (
+            <Home size={24} className="text-green-600" />
+          ) : (
+            <Building size={24} className="text-blue-600" />
+          )}
+        </motion.div>
+      </div>
+
+      {/* Comparison Section */}
+      <div className="flex flex-row justify-between sm:justify-around items-center p-4 border-b border-card-foreground/20 bg-card/80 ">
+        <div className="flex flex-col items-center w-full  border-r border-card-foreground/20">
+          <p className="text-foreground/60 text-pretty">Rent Loss:</p>
+          <CardValue
+            value={Number(rentData[yearOfSale])}
+            color="text-red-600"
+            // prefix="R"
+          />
+        </div>
+        <div className="flex flex-col items-center w-full  ">
+          <p className="text-foreground/60  text-pretty">
             {moneyMadeFromSellingHouse[yearOfSale] >= 0
-              ? `House Profit after ${yearOfSale} years`
-              : `House Loss after ${yearOfSale} years`}
+              ? `House Profit:`
+              : `House Loss:`}
           </p>
-          <p className="text-3xl font-light tracking-wide">
-            R {formatNumber(Number(moneyMadeFromSellingHouse[yearOfSale]))}
-          </p>
+          <CardValue
+            value={Number(moneyMadeFromSellingHouse[yearOfSale])}
+            color={
+              moneyMadeFromSellingHouse[yearOfSale] >= 0
+                ? 'text-green-600'
+                : 'text-red-600'
+            }
+            // prefix="R"
+          />
         </div>
       </div>
 
-      <div className="w-full h-[1px] bg-foreground/10 my-4" />
-
-      <div className="flex flex-col justify-center items-center my-4">
-        <p className="text-foreground/50">
+      {/* Savings Summary */}
+      <div className="flex flex-col items-center text-center space-y-2 p-4 pb-2 bg-card/60">
+        <p className="text-foreground/60">
           After {yearOfSale} years, you would have saved
         </p>
-
-        <div className="flex flex-row justify-center items-center">
-          <p className="text-3xl font-light tracking-wide">
+        <div className="flex items-center space-x-2">
+          <p className="text-3xl font-semibold text-primary">
             R{' '}
             {formatNumber(
               Math.abs(
@@ -72,30 +100,20 @@ function RentVsHouseCard() {
             yearOfSale={yearOfSale}
           />
         </div>
-        <p className="text-foreground/50">
+        <p className="text-foreground/60">
           by{' '}
-          {moneyMadeFromSellingHouse[yearOfSale] > rentData[yearOfSale]
-            ? 'BUYING a Property'
-            : 'RENTING a Property'}
+          <span className="font-medium">
+            {isBuyingBeneficial ? 'BUYING a Property' : 'RENTING a Property'}
+          </span>
         </p>
       </div>
-      <div className="w-full h-[1px] bg-foreground/10 my-4" />
-      <div className="flex flex-col gap-2 w-full">
-        <div className="flex flex-row w-full gap-1.5 justify-between">
-          <Label
-            className="text-lg sm:text-xl font-light "
-            htmlFor="yearOfSale"
-          >
-            Selling Year:
-          </Label>
-          <Label
-            className="text-lg sm:text-xl font-light "
-            htmlFor="yearOfSale"
-          >
-            Year {yearOfSale}
-          </Label>
-        </div>
 
+      {/* Interactive Slider */}
+      <div className="flex flex-col w-full p-4 pt-0 bg-card/60">
+        <div className="flex justify-between text-sm text-foreground/60 ">
+          <p>Selling Year:</p>
+          <p>Year {yearOfSale}</p>
+        </div>
         <Slider
           defaultValue={[yearOfSale]}
           min={0}

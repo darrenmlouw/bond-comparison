@@ -3,7 +3,7 @@ import InfoPopOver from '@/components/InfoPopOver';
 import { useComparison } from '@/hooks/useComparison';
 
 
-const TotalBondRepaymentExplanationPopover = () => {
+const TotalBondRepaymentExplanation = () => {
   const {monthlyPayment, propertyPrice, depositAmount, annualInterestRate, loanTermYears} = useComparison();
 
   return (
@@ -78,4 +78,4 @@ const TotalBondRepaymentExplanationPopover = () => {
   );
 };
 
-export default TotalBondRepaymentExplanationPopover;
+export default TotalBondRepaymentExplanation;
