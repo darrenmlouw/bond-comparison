@@ -45,6 +45,7 @@ const HousingComparisonChart = () => {
     rentData,
     moneyMadeFromSellingHouse,
     yearOfSale = 0,
+    loanTermYears
   } = useComparison();
 
   const interpolationFactor = 10;
@@ -79,8 +80,8 @@ const HousingComparisonChart = () => {
             : 'rgba(255, 99, 132, 0.1)',
         borderWidth: 2,
         pointRadius: 0,
-        pointHoverRadius: 3,
-        pointHitRadius: 5,
+        pointHoverRadius: 6,
+        pointHitRadius: 6,
       },
       {
         label: 'Property Return',
@@ -91,8 +92,8 @@ const HousingComparisonChart = () => {
             : 'rgba(132, 99, 210, 0.6)',
         borderWidth: 2,
         pointRadius: 0,
-        pointHoverRadius: 3,
-        pointHitRadius: 5,
+        pointHoverRadius: 6,
+        pointHitRadius: 6,
       },
     ],
   };
@@ -220,44 +221,42 @@ const HousingComparisonChart = () => {
     },
     scales: {
       x: {
+        title:{
+          display: true,
+          text: "Selling Year",
+        },
         min: 0,
         max: labels.length - 1,
         ticks: {
+          
           callback: (value) =>
             abbreviateNumber((value as number) / interpolationFactor), // Abbreviate x-axis labels
-          autoSkip: true, // Automatically skip some labels if space is tight
-          maxTicksLimit: window.innerWidth < 768 ? 6 : 21, // Adjust tick number based on screen size
+          // autoSkip: true, // Automatically skip some labels if space is tight
+          maxTicksLimit: window.innerWidth < 768 ? (loanTermYears+1)/3 : loanTermYears+1, // Adjust tick number based on screen size
           font: {
             size: window.innerWidth < 768 ? 10 : 12,
           },
         },
         grid: {
-          color:
-            theme === 'light'
-              ? 'rgba(0, 0, 0, 0.1)'
-              : 'rgba(255, 255, 255, 0.1)',
+          display: false,
         },
       },
       y: {
         display: true,
         type: 'linear',
         title: {
-          display: false,
-          font: {
-            size: window.innerWidth < 768 ? 10 : 14,
-          },
+          display: true,
+          text: "Cost (R)",
         },
         ticks: {
+          // stepSize: 500000,
           callback: (value) => abbreviateNumber(value as number), // Abbreviate y-axis labels
           font: {
             size: window.innerWidth < 768 ? 10 : 12,
           },
         },
         grid: {
-          color:
-            theme === 'light'
-              ? 'rgba(0, 0, 0, 0.1)'
-              : 'rgba(255, 255, 255, 0.1)',
+          display: false,
         },
       },
     },

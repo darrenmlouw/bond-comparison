@@ -29,27 +29,10 @@ function RentVsHouseCard({
     loanTermYears,
     moneyMadeFromSellingHouse,
     rentData,
-    houseValueAfterAppreciationData,
-    remainingPrincipal,
-    capitalGainsTax,
-    totalSellingCosts,
-    totalBuyingCosts,
-    bondCosts,
-    monthlyFees,
   } = useComparison();
 
   const isBuyingBeneficial =
     moneyMadeFromSellingHouse[yearOfSale] > rentData[yearOfSale];
-
-  console.log('=== OUT ==================================');
-  console.log('Selling Price:', houseValueAfterAppreciationData[yearOfSale]);
-  console.log('Debt:', remainingPrincipal[yearOfSale]);
-  console.log('Taxes:', capitalGainsTax[yearOfSale] || 0);
-  console.log('Selling Costs:', totalSellingCosts);
-  console.log('Buying Costs:', totalBuyingCosts);
-  console.log('Cumulative Bond', bondCosts[yearOfSale]);
-  console.log('Cumulative Fees:', monthlyFees * yearOfSale * 12);
-  console.log('Monthly Fees:', monthlyFees);
 
   return (
     <motion.div

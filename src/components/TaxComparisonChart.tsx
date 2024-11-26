@@ -153,11 +153,8 @@ const TaxComparisonChart: React.FC = () => {
       x: {
         type: 'linear', // Set the x-axis to a linear scale
         title: {
-          display: false,
+          display: true,
           text: 'Income (R)',
-          font: {
-            size: window.innerWidth < 768 ? 10 : 14,
-          },
         },
         min: lowerBound * 100000,
         max: upperBound * 100000,
@@ -169,14 +166,14 @@ const TaxComparisonChart: React.FC = () => {
             size: window.innerWidth < 768 ? 10 : 12,
           },
         },
+        grid: {
+          display: false
+        }
       },
       y: {
         title: {
-          display: false,
+          display: true,
           text: 'Tax Paid (R)',
-          font: {
-            size: window.innerWidth < 768 ? 10 : 14,
-          },
         },
         beginAtZero: true, // Start y-axis at 0
         // min:Math.min(...datasets.map((dataset) => Math.min(...dataset.data))),
@@ -188,8 +185,8 @@ const TaxComparisonChart: React.FC = () => {
           },
         },
         grid: {
-          display: window.innerWidth >= 768,
-        },
+          display: false
+        }
       },
     },
   };

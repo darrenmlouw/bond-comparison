@@ -6,10 +6,19 @@ import { SectionHeader } from '@/components/SectionHeader';
 import { AnimatePresence, EasingDefinition, motion } from 'framer-motion';
 import MonthlyPaymentChart from '@/components/MonthlyPaymentChart';
 import { useState } from 'react';
+import { Home, CircleDollarSign } from 'lucide-react';
 
 const allIngredients = [
-  { icon: '🏠', label: 'Housing Chart', content: <HousingComparisonChart /> },
-  { icon: '💸', label: 'Payment Chart', content: <MonthlyPaymentChart /> },
+  {
+    icon: <Home size={20} className="text-accent" />,
+    label: 'Comparison Chart',
+    content: <HousingComparisonChart />,
+  },
+  {
+    icon: <CircleDollarSign size={20} className="text-accent" />,
+    label: 'Payment Chart',
+    content: <MonthlyPaymentChart />,
+  },
 ];
 
 const [Page1, Page2] = allIngredients;
@@ -104,36 +113,65 @@ const ComparisonPage = () => {
           delay: animationDelay + 7 * animationDelayStep,
           ease: ease,
         }}
-        className="flex  flex-col w-full h-96 bg-card rounded-xl shadow-2xl border border-card-foreground/20 overflow-hidden"
+        className="flex flex-col w-full h-96 sm:h-[30rem]  rounded-xl shadow-2xl border border-card-foreground/20 overflow-hidden"
       >
-          <nav className="border-b border-card-foreground/20 ">
-            <ul className="flex flex-row justify-around ">
-              {tabs.map((item) => (
-                <li
-                  key={item.label}
-                  className={`flex w-full justify-center items-center h-full cursor-pointer hover:bg-card-foreground/5 p-4 ${item === selectedTab ? '' : ''}`}
-                  onClick={() => setSelectedTab(item)}
-                >
-                  {`${item.icon} ${item.label}`}
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <main className='p-4 flex h-full w-full'>
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={selectedTab ? selectedTab.label : 'empty'}
-                initial={{ y: 10, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -10, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className='flex w-full h-full'
+        <nav className="border-b border-card-foreground/20 bg-card">
+          <ul className="flex flex-row justify-around items-center h-full">
+            {tabs.map((item) => (
+              <motion.li
+                layout
+                key={item.label}
+                className="relative flex w-full justify-center items-center h-full cursor-pointer"
+                onClick={() => setSelectedTab(item)}
               >
-                {selectedTab ? selectedTab.content : '😋'}
-              </motion.div>
-            </AnimatePresence>
-          </main>
+                <AnimatePresence mode="wait">
+                  {item === selectedTab && (
+                    <motion.div
+                      layout
+                      key="bg-animation"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="absolute inset-0 bg-primary/10 h-full"
+                    />
+                  )}
+                </AnimatePresence>
+                <motion.button
+                  layout
+                  type="button"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  className={`relative flex flex-row gap-2 w-full h-full p-4 justify-center z-10 text-sm sm:text-base items-center ${
+                    item === selectedTab ? '' : 'text-foreground/20'
+                  }`}
+                >
+                  {item.icon}
+                  {`${item.label}`}
+                </motion.button>
+              </motion.li>
+            ))}
+          </ul>
+        </nav>
+        <main className="p-2 flex h-full w-full bg-card/60">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={selectedTab ? selectedTab.label : 'empty'}
+              initial={{ y: 10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -10, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="flex w-full h-full"
+            >
+              {selectedTab ? selectedTab.content : '😋'}
+            </motion.div>
+          </AnimatePresence>
+        </main>
       </motion.div>
+
       <div className="flex flex-row min-h-32" />
     </div>
   );

@@ -157,10 +157,8 @@ export const calculateMoneyMadeFromSellingHouse = (
     annualInterestRate
   );
 
-  console.log("Monthly Fees:", totalMonthlyFees)
   // Calculate cumulative monthly fees for each year
   const monthlyFees = calculateMonthlyFees(years, totalMonthlyFees);
-  console.log("Monthly Fees:", monthlyFees)
 
   // Loop through each year to calculate net money made
   for (let i = 0; i <= years; i++) {
@@ -182,21 +180,6 @@ export const calculateMoneyMadeFromSellingHouse = (
     const moneyMadeFromSelling = netSellingProceeds - totalOwnershipCosts;
 
     moneyMade.push(moneyMadeFromSelling);
-
-    if(i === 20) {
-      console.log("=== Calc ============================================")
-      console.log('Selling Price:', houseValues[i]);
-      console.log('Debt:', remainingPrincipal[i]);
-      console.log('Taxes:', capitalGainsTaxes[i] || 0);
-      console.log('Selling Costs:', totalSellingFee);
-      console.log('Buying Costs:', totalBuyingFee);
-      console.log('Cumulative Bond', totalBondRepayments.bondCosts[i]);
-      console.log('Cumulative Fees:', monthlyFees[i]);
-      console.log("OC:", totalOwnershipCosts)
-      console.log('NSP:', houseValues[i] - remainingPrincipal[i] - capitalGainsTaxes[i] - totalSellingFee);
-      console.log(netSellingProceeds)
-      console.log("===============================================")
-    }
   }
 
 
