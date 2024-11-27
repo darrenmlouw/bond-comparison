@@ -1,7 +1,8 @@
 enum inclusionOption {
 	Individual = 'individual',
 	Company = 'company',
-	Trust = 'trust'
+	Trust = 'trust',
+  None = 'none',
 }
 
 export default inclusionOption;

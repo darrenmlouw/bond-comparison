@@ -13,6 +13,7 @@ import { useComparison } from '@/hooks/useComparison';
 import { Home, Building } from 'lucide-react';
 import { EasingDefinition, motion } from 'framer-motion';
 import { formatNumber } from '@/utils/formatNumber';
+
 interface Props {
   animationDelay: number;
   animationDuration: number;
@@ -70,6 +71,9 @@ const InputComponents = ({
     numberOfPeopleInJointBond = 2,
     setNumberOfPeopleInJointBond,
     principleAmount,
+    monthlyFees,
+    totalBuyingCosts,
+    totalSellingCosts,
   } = useComparison();
 
   return (
@@ -191,7 +195,11 @@ const InputComponents = ({
                 className="border-card-foreground/20"
               >
                 <AccordionTrigger className="flex text-start hover:no-underline hover:bg-secondary/50 pr-4 pl-12 h-10 text-card-foreground/70 tracking-wider font-light text-base">
-                  Capital Gains
+                  
+                  <div className='flex flex-row justify-between items-center w-full mr-2'>
+                    <p>Capital Gains</p>
+                    <p className='text-xs'>{`Ex: ${exclusionType} | Inc: ${inclusionType}`}</p>
+                  </div>
                 </AccordionTrigger>
                 <AccordionContent className="pr-4 pl-4 mt-2">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -209,7 +217,7 @@ const InputComponents = ({
                     />
                     <InclusionCombobox
                       inclusionType={inclusionType}
-                      oninclusionTypeChange={setInclusionType}
+                      onInclusionTypeChange={setInclusionType}
                     />
                   </div>
                 </AccordionContent>
@@ -221,7 +229,10 @@ const InputComponents = ({
                 className="border-card-foreground/20"
               >
                 <AccordionTrigger className="flex text-start hover:no-underline hover:bg-secondary/50 pr-4 pl-12 h-10 text-card-foreground/70 tracking-wider font-light text-base">
-                  Monthly Fees
+                  <div className='flex flex-row justify-between items-center w-full mr-2'>
+                    <p>Monthly Fees</p>
+                    <p className='text-xs'>{`Fees/m: R${formatNumber(monthlyFees)}`}</p>
+                  </div>
                 </AccordionTrigger>
                 <AccordionContent className="pr-4 pl-4 mt-2">
                   <div className="grid grid-cols-2 gap-2 items-end">
@@ -283,7 +294,10 @@ const InputComponents = ({
                 className="border-card-foreground/20"
               >
                 <AccordionTrigger className="flex text-start hover:no-underline hover:bg-secondary/50 pr-4 pl-12 h-10 text-card-foreground/70 tracking-wider font-light text-base">
-                  Buying Costs
+                  <div className='flex flex-row justify-between items-center w-full mr-2'>
+                    <p>Buying Costs</p>
+                    <p className='text-xs'>{`BC: R${formatNumber(totalBuyingCosts)}`}</p>
+                  </div>
                 </AccordionTrigger>
                 <AccordionContent className="pr-4 pl-4 mt-2">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -334,7 +348,11 @@ const InputComponents = ({
                 className="border-card-foreground/20"
               >
                 <AccordionTrigger className="flex text-start hover:no-underline hover:bg-secondary/50 pr-4 pl-12 h-10 text-card-foreground/70 tracking-wider font-light text-base">
-                  Selling Costs
+                  
+                  <div className='flex flex-row justify-between items-center w-full mr-2'>
+                    <p>Selling Costs</p>
+                    <p className='text-xs'>{`SC: R${formatNumber(totalSellingCosts)}`}</p>
+                  </div>
                 </AccordionTrigger>
                 <AccordionContent className="pr-4 pl-4 mt-2">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2">

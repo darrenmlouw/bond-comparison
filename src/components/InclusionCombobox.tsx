@@ -4,7 +4,6 @@ import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
@@ -20,19 +19,40 @@ import { useState } from "react";
 // Type definition for the props
 interface InclusionComboboxProps {
   inclusionType: inclusionOption;
-  oninclusionTypeChange: (value: inclusionOption) => void;
+  onInclusionTypeChange: (value: inclusionOption) => void;
 }
 
-// List of inclusion options
+// List of inclusion options with additional details
 const inclusionOptions = [
-  { value: inclusionOption.Individual, label: "Individual" },
-  { value: inclusionOption.Company, label: "Company" },
-  { value: inclusionOption.Trust, label: "Trust" },
+  {
+    value: inclusionOption.Individual,
+    label: "Individual",
+    inclusionRate: "40%",
+    marginalTaxRate: "Based on individual income tax bracket",
+  },
+  {
+    value: inclusionOption.Company,
+    label: "Company",
+    inclusionRate: "80%",
+    marginalTaxRate: "28% flat rate",
+  },
+  {
+    value: inclusionOption.Trust,
+    label: "Trust",
+    inclusionRate: "80%",
+    marginalTaxRate: "45% flat rate",
+  },
+  {
+    value: inclusionOption.None,
+    label: "None",
+    inclusionRate: "No inclusion",
+    marginalTaxRate: "No tax",
+  }
 ];
 
 export const InclusionCombobox: React.FC<InclusionComboboxProps> = ({
   inclusionType,
-  oninclusionTypeChange,
+  onInclusionTypeChange,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -47,15 +67,16 @@ export const InclusionCombobox: React.FC<InclusionComboboxProps> = ({
             aria-expanded={open}
             className="w-full justify-between"
           >
-            {inclusionType
-              ? inclusionOptions.find((option) => option.value === inclusionType)?.label
+            {inclusionType !== inclusionOption.None
+              ? inclusionOptions.find(
+                  (option) => option.value === inclusionType
+                )?.label
               : "Select Inclusion"}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-full p-0">
-          <Command>
-            <CommandInput placeholder="Search inclusion type..." />
+        <PopoverContent className="w-full p-0 border-primary/30 rounded-xl bg-card/30 backdrop-blur-md shadow-lg">
+          <Command className="rounded-xl bg-transparent">
             <CommandList>
               <CommandEmpty>No inclusion type found.</CommandEmpty>
               <CommandGroup>
@@ -64,16 +85,32 @@ export const InclusionCombobox: React.FC<InclusionComboboxProps> = ({
                     key={option.value}
                     value={option.value}
                     onSelect={(currentValue) => {
-                      oninclusionTypeChange(currentValue as inclusionOption);
+                      onInclusionTypeChange(
+                        currentValue === inclusionType
+                          ? inclusionOption.None
+                          : (currentValue as inclusionOption)
+                      );
                       setOpen(false);
                     }}
+                    className="p-2 rounded-lg hover:bg-primary/30"
                   >
                     <Check
+                      color="green"
                       className={`mr-2 h-4 w-4 ${
-                        inclusionType === option.value ? "opacity-100" : "opacity-0"
+                        inclusionType === option.value
+                          ? "opacity-100"
+                          : "opacity-0"
                       }`}
                     />
-                    {option.label}
+                    <div className="flex flex-col">
+                      <span className="mb-1">{option.label}</span>
+                      <span className="text-xs text-foreground/60">
+                        Inclusion Rate: {option.inclusionRate}
+                      </span>
+                      <span className="text-xs text-foreground/60">
+                        Marginal Tax Rate: {option.marginalTaxRate}
+                      </span>
+                    </div>
                   </CommandItem>
                 ))}
               </CommandGroup>

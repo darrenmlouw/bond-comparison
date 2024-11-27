@@ -5,21 +5,18 @@ import { useComparison } from '@/hooks/useComparison';
 
 const RentLossExplanation = () => {
   const {
-    monthlyRent,
-    annualRentIncrease,
-    yearOfSale,
-    rentData,
+    monthlyRent: MR, // Monthly Rent
+    annualRentIncrease: RIR, // Annual Rent Increase Rate
+    yearOfSale, // Year of Sale
+    rentData, // Rent Data
   } = useComparison();
 
-  // Variables
-  const MR = monthlyRent; // Monthly Rent
-  const RIR = annualRentIncrease; // Rent Increase Rate
-  const RL = Math.abs(rentData[yearOfSale]); // Rent Paid (absolute value for clarity)
+  const RL = Math.abs(rentData[yearOfSale]); // Total Rent Paid (absolute value for clarity)
 
   return (
     <InfoDialog title="Rent Paid Explanation">
       <p className="mb-4">
-        The total rent loss over the selected period is calculated as:
+        The total rent paid over the selected period is calculated as the sum of the annual rent for each year leading up to the year of sale:
       </p>
 
       {/* Main Formula */}
@@ -40,20 +37,25 @@ const RentLossExplanation = () => {
           <p>Annual Rent Increase Rate</p>
         </div>
         <div className="flex justify-between">
-          <InlineMath math={`RL = ${formatNumber(RL)}`} />
-          <p>Total Rent Loss after {yearOfSale} years</p>
+          <InlineMath math={`n = ${yearOfSale}`} />
+          <p>Number of Years</p>
         </div>
       </div>
 
-      {/* Rent Paid Explanation */}
-      <p className="mt-4">The rent paid each year accounts for annual increases:</p>
+      {/* Annual Rent Explanation */}
+      <p className="mt-4">
+        The rent paid for each year accounts for the annual rent increase and is calculated as:
+      </p>
       <BlockMath>
         {String.raw`
-        \text{Annual Rent}_i = MR \cdot 12 \cdot (1 + RIR/100)^{i-1}
+        \text{Annual Rent}_i = MR \cdot 12 \cdot (1 + \frac{RIR}{100})^{i-1}
         `}
       </BlockMath>
 
-      <p className="mt-4">Summing up for each year gives the total rent paid:</p>
+      {/* Total Rent Paid */}
+      <p className="mt-4">
+        Summing the annual rent for all years gives the total rent paid (RL):
+      </p>
       <BlockMath>{String.raw`RL = ${formatNumber(RL)}`}</BlockMath>
     </InfoDialog>
   );

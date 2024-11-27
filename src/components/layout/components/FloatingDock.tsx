@@ -2,7 +2,6 @@
 
 import { cn } from '@/lib/utils';
 import {
-  AnimatePresence,
   MotionValue,
   motion,
   useMotionValue,
@@ -10,7 +9,7 @@ import {
   useTransform,
 } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 interface DockItem {
   title: string;
@@ -19,6 +18,7 @@ interface DockItem {
   href: string;
   external?: boolean;
   isImageIcon?: boolean;
+  selected?: boolean; // Added selected property
 }
 
 export const FloatingDock = ({
@@ -92,6 +92,7 @@ function IconContainer({
   href,
   external = false,
   isImageIcon = false,
+  selected = false, // Added selected prop
 }: {
   mouseX: MotionValue<number>;
   title: string;
@@ -100,6 +101,7 @@ function IconContainer({
   href: string;
   external?: boolean;
   isImageIcon?: boolean;
+  selected?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -113,59 +115,44 @@ function IconContainer({
 
   const width = useSpring(widthTransform, {
     mass: 0.1,
-    stiffness: 150,
+    stiffness: 300,
     damping: 12,
   });
   const height = useSpring(heightTransform, {
     mass: 0.1,
-    stiffness: 150,
+    stiffness: 300,
     damping: 12,
   });
 
-  const [hovered, setHovered] = useState(false);
 
   const linkContent = (
     <motion.div
       ref={ref}
       style={{ width, height }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
       className={cn(
         'aspect-square rounded-full flex items-center justify-center relative overflow-hidden',
         isImageIcon
           ? 'bg-transparent'
+          : selected
+          ? 'backdrop-blur-md bg-primary active:bg-primary/60 scale-110' // Highlight selected items
           : 'backdrop-blur-md bg-primary/30 active:bg-primary/60'
       )}
     >
-      {/* Tooltip */}
-      <AnimatePresence>
-        {hovered && (
-          <motion.div
-            initial={{ opacity: 0, y: 10, x: '-50%' }}
-            animate={{ opacity: 1, y: 0, x: '-50%' }}
-            exit={{ opacity: 0, y: 2, x: '-50%' }}
-            className="hidden md:flex px-2 py-0.5 whitespace-pre rounded-md bg-secondary absolute left-1/2 -translate-x-1/2 -top-8 w-fit text-xs"
-          >
-            {title}
-          </motion.div>
-        )}
-      </AnimatePresence>
 
-      {/* Icon or Image */}
       {isImageIcon && imageSrc ? (
-        <motion.img
+        <img
           src={imageSrc}
           alt={title}
           style={{ width: '100%', height: '100%' }}
           className="rounded-full object-cover"
         />
       ) : (
-        <motion.div
-          style={{ width: '60%', height: '60%' }} // Adjusted to fit the icon nicely
+        <div
+          // style={{ width: '60%', height: '60%' }} // Adjusted to fit the icon nicely
           className="flex items-center justify-center"
         >
           {icon}
-        </motion.div>
+        </div>
       )}
     </motion.div>
   );

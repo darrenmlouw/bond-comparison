@@ -71,7 +71,7 @@ const ComparisonPage = () => {
       />
 
       <SectionHeader
-        label="House Evaluation"
+        label="Property Evaluation"
         animationDelay={animationDelay + 2 * animationDelayStep}
         animationDuration={duration}
         animationEase={ease}
@@ -85,7 +85,7 @@ const ComparisonPage = () => {
       />
 
       <SectionHeader
-        label="Rent vs House Costs"
+        label="Rent vs Buy Costs"
         animationDelay={animationDelay + 4 * animationDelayStep}
         animationDuration={duration}
         animationEase={ease}

@@ -5,7 +5,6 @@ import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
@@ -28,15 +27,43 @@ interface ExclusionComboboxProps {
   onSmallBusinessMarketValueChange: (value: number) => void;
 }
 
-// List of exclusion options
+// List of exclusion options with exclusion amounts
 const exclusionOptions = [
-  { value: exclusionOption.PrimaryResidence, label: 'Primary Residence' },
-  { value: exclusionOption.SecondProperty, label: 'Second Property' },
-  { value: exclusionOption.JointBond, label: 'Joint Bond' },
-  { value: exclusionOption.Deceased, label: 'Deceased' },
-  { value: exclusionOption.SmallBusinessOwner, label: 'Small Business Owner' },
-  { value: exclusionOption.Annual, label: 'Annual Exclusion' },
-  { value: exclusionOption.None, label: 'None' },
+  {
+    value: exclusionOption.PrimaryResidence,
+    label: 'Primary Residence',
+    amount: 'R2,000,000',
+  },
+  {
+    value: exclusionOption.SecondProperty,
+    label: 'Second Property',
+    amount: 'None',
+  },
+  {
+    value: exclusionOption.JointBond,
+    label: 'Joint Bond',
+    amount: 'Varies by bondholder share',
+  },
+  {
+    value: exclusionOption.Deceased,
+    label: 'Deceased',
+    amount: 'R300,000 (final year only)',
+  },
+  {
+    value: exclusionOption.SmallBusinessOwner,
+    label: 'Small Business Owner',
+    amount: 'R1,800,000',
+  },
+  {
+    value: exclusionOption.Annual,
+    label: 'Annual Exclusion',
+    amount: 'R40,000',
+  },
+  {
+    value: exclusionOption.None,
+    label: 'None',
+    amount: 'No exclusions',
+  },
 ];
 
 export const ExclusionCombobox = ({
@@ -69,8 +96,8 @@ export const ExclusionCombobox = ({
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-full p-0 border-primary/30 rounded-xl bg-card/30 backdrop-blur-md shadow-lg">
-          <Command className='rounded-xl bg-transparent '>
-            <CommandInput placeholder="Search exclusion type..." />
+          <Command className="rounded-xl bg-transparent">
+            {/* <CommandInput placeholder="Search exclusion type..." /> */}
             <CommandList>
               <CommandEmpty>No exclusion type found.</CommandEmpty>
               <CommandGroup>
@@ -86,16 +113,22 @@ export const ExclusionCombobox = ({
                       );
                       setOpen(false);
                     }}
+                    className="p-2 rounded-lg hover:bg-primary/30"
                   >
                     <Check
-                      color='green'
+                      color="green"
                       className={`mr-2 h-4 w-4 ${
                         exclusionType === option.value
                           ? 'opacity-100'
                           : 'opacity-0'
                       }`}
                     />
-                    {option.label}
+                    <div className="flex flex-col">
+                      <span className="mb-1">{option.label}</span>
+                      <span className="text-xs text-foreground/60">
+                        Exclusion Amount: {option.amount}
+                      </span>
+                    </div>
                   </CommandItem>
                 ))}
               </CommandGroup>
