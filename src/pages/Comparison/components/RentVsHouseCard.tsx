@@ -68,9 +68,9 @@ function RentVsHouseCard({
           className="flex items-center justify-center"
         >
           {isBuyingBeneficial ? (
-            <Home size={24} className="text-green-600" />
+            <Home size={24} className="text-success/50" />
           ) : (
-            <Building size={24} className="text-blue-600" />
+            <Building size={24} className="text-info/50" />
           )}
         </motion.div>
       </div>
@@ -87,7 +87,7 @@ function RentVsHouseCard({
           </div>
           <CardValue
             value={Number(rentData[yearOfSale])}
-            color="text-red-600"
+            color="text-destructive"
           />
         </div>
         <div className="flex flex-col items-center w-full  ">
@@ -102,8 +102,8 @@ function RentVsHouseCard({
             value={Number(moneyMadeFromSellingHouse[yearOfSale])}
             color={
               moneyMadeFromSellingHouse[yearOfSale] >= 0
-                ? 'text-green-600'
-                : 'text-red-600'
+                ? 'text-success/80'
+                : 'text-destructive'
             }
           />
         </div>
@@ -117,7 +117,7 @@ function RentVsHouseCard({
         <div className="flex items-center space-x-2">
           <p
             className={`text-3xl font-semibold ${
-              isBuyingBeneficial ? 'text-green-600' : 'text-blue-600'
+              isBuyingBeneficial ? 'text-success' : 'text-info'
             }`}
           >
             R{' '}

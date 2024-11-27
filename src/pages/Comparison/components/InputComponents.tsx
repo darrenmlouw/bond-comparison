@@ -12,6 +12,7 @@ import { Label } from '@/components/ui/label';
 import { useComparison } from '@/hooks/useComparison';
 import { Home, Building } from 'lucide-react';
 import { EasingDefinition, motion } from 'framer-motion';
+import { formatNumber } from '@/utils/formatNumber';
 interface Props {
   animationDelay: number;
   animationDuration: number;
@@ -68,6 +69,7 @@ const InputComponents = ({
     setSmallBusinessMarketValue,
     numberOfPeopleInJointBond = 2,
     setNumberOfPeopleInJointBond,
+    principleAmount,
   } = useComparison();
 
   return (
@@ -85,7 +87,7 @@ const InputComponents = ({
         {/* Bond Section */}
         <AccordionItem
           value="bond"
-          className="bg-card border border-card-foreground/20 shadow-2xl rounded-lg overflow-hidden"
+          className="bg-card border border-card-foreground/20 shadow-lg rounded-lg overflow-hidden"
         >
           <AccordionTrigger className="flex text-start hover:no-underline bg-card hover:bg-primary/20 p-2.5 sm:p-4  overflow-hidden">
             <div className="flex flex-row text-xl sm:text-2xl tracking-wide font-light justify-center items-center">
@@ -99,8 +101,11 @@ const InputComponents = ({
                 value="property-data"
                 className="border-t border-card-foreground/20"
               >
-                <AccordionTrigger className="flex text-start hover:no-underline hover:bg-secondary/50 pr-4 pl-12 h-10 text-card-foreground/70 tracking-wider font-light text-base">
-                  Property Data
+                <AccordionTrigger className="hover:no-underline hover:bg-secondary/50 pr-4 pl-12 h-10 text-card-foreground/70 tracking-wider font-light text-base">
+                  <div className='flex flex-row justify-between items-center w-full mr-2'>
+                    <p>Property Data</p>
+                    <p className='text-xs'>{`Principle: R${formatNumber( principleAmount)}`}</p>
+                  </div>
                 </AccordionTrigger>
                 <AccordionContent className="pr-4 pl-4 mt-2">
                   <div className="grid grid-cols-2 gap-2 items-end">
@@ -186,7 +191,7 @@ const InputComponents = ({
                 className="border-card-foreground/20"
               >
                 <AccordionTrigger className="flex text-start hover:no-underline hover:bg-secondary/50 pr-4 pl-12 h-10 text-card-foreground/70 tracking-wider font-light text-base">
-                  Capital Gains Tax Variables
+                  Capital Gains
                 </AccordionTrigger>
                 <AccordionContent className="pr-4 pl-4 mt-2">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -369,7 +374,7 @@ const InputComponents = ({
         {/* Rent Section */}
         <AccordionItem
           value="rent"
-          className="bg-card border border-card-foreground/20 shadow-2xl rounded-lg overflow-hidden"
+          className="bg-card border border-card-foreground/20 shadow-lg rounded-lg overflow-hidden"
         >
           <AccordionTrigger className="flex text-start hover:no-underline bg-card hover:bg-primary/20 p-2.5 sm:p-4">
             <div className="flex flex-row text-xl sm:text-2xl tracking-wide font-light justify-center items-center">

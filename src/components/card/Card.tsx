@@ -26,7 +26,7 @@ function Card({
   return (
     <motion.div
       whileHover={{ scale: 1.05 }}
-      className="flex flex-col space-y-1 bg-card outline outline-1 outline-card-foreground/20 shadow-2xl p-2.5 sm:p-4 rounded-lg"
+      className="flex flex-col space-y-1 bg-card outline outline-1 outline-card-foreground/20 shadow-lg p-2.5 sm:p-4 rounded-lg"
     >
       <CardHeading label={label} icon={icon} />
 

@@ -34,9 +34,17 @@ module.exports = {
           DEFAULT: 'hsl(var(--secondary))',
           foreground: 'hsl(var(--secondary-foreground))',
         },
+        info: {
+          DEFAULT: 'hsl(var(--info))',
+          foreground: 'hsl(var(--info-foreground))',
+        },
         destructive: {
           DEFAULT: 'hsl(var(--destructive))',
           foreground: 'hsl(var(--destructive-foreground))',
+        },
+        success: {
+          DEFAULT: 'hsl(var(--success))',
+          foreground: 'hsl(var(--success-foreground))',
         },
         warning: {
           DEFAULT: 'hsl(var(--warning))',
@@ -115,11 +123,6 @@ module.exports = {
         third: 'moveInCircle 40s linear infinite',
         fourth: 'moveHorizontal 40s ease infinite',
         fifth: 'moveInCircle 20s ease infinite',
-      },
-      boxShadow: {
-        'neumorphism-sm': 'var(--neumorphism-sm)',
-        'neumorphism-md': 'var(--neumorphism-md)',
-        'neumorphism-lg': 'var(--neumorphism-lg)',
       },
       textShadow: {
         inner: 'inset 2px 2px 4px rgba(0, 0, 0, 0.5)', // Example inner shadow
