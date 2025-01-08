@@ -15,7 +15,7 @@ const HomePage = () => {
       <AdSenseAd
         adClient="ca-pub-1928647206714490"  // Replace with your AdSense publisher ID
         adSlot="1234567890"                 // Replace with your AdSense ad slot ID
-        className='bg-red-500 rounded-lg mx-6 sm:mx-8 md:mx-12'
+        className='block rounded-lg mx-6 sm:mx-8 md:mx-12'
       />
       <Features constantData={FEATURES} />
       <Socials />
