@@ -5,18 +5,12 @@ import Features from '@/pages/Home/sections/Features';
 import Socials from '@/pages/Home/sections/Socials';
 import PageTracker from '@/pages/Home/components/PageTracker';
 import FEATURES from '@/constants/FEATURES';
-import AdSenseAd from '@/components/AdSenseAd';
 
 const HomePage = () => {
   return (
     <>
       <PageTracker />
       <Hero />
-      <AdSenseAd
-        adClient="ca-pub-1928647206714490"  // Replace with your AdSense publisher ID
-        adSlot="1234567890"                 // Replace with your AdSense ad slot ID
-        className='block rounded-lg mx-6 sm:mx-8 md:mx-12'
-      />
       <Features constantData={FEATURES} />
       <Socials />
       <div className="flex flex-row min-h-32"></div>
